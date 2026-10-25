@@ -31,13 +31,13 @@
         #map { height: 440px; width: 100%; border-radius: 1rem; }
         html { scroll-padding-top: 5rem; }
         .nav-link { transition: all 0.2s ease-in-out; }
-        .nav-link.active { color: #5B7837; font-weight: 700; border-bottom: 2px solid #5B7837; }
+        .nav-link.active { color: #5B7837; font-weight: 700; border-bottom: 2px solid #5B7837; padding-bottom: 2px; }
     </style>
 </head>
 <body class="bg-creamBg text-slateDark font-sans antialiased min-h-screen flex flex-col">
 
     <!-- Header / Sticky One-Page Navigation -->
-    <header class="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40">
+    <header class="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
             <!-- Logo & Brand Name -->
@@ -64,19 +64,19 @@
 
             <!-- One-Page Navigation Links -->
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                <a href="#marktplatz" data-section="marktplatz" class="nav-link active py-1 text-slateGray hover:text-moss">Marktplatz</a>
-                <a href="#rechner" data-section="rechner" class="nav-link py-1 text-slateGray hover:text-moss">Ersparnis-Rechner</a>
-                <a href="#ueber-uns" data-section="ueber-uns" class="nav-link py-1 text-slateGray hover:text-moss">Über das Projekt</a>
+                <a href="#marktplatz" data-section="marktplatz" class="nav-link active text-slateGray hover:text-moss">Marktplatz</a>
+                <a href="#rechner" data-section="rechner" class="nav-link text-slateGray hover:text-moss">Ersparnis-Rechner</a>
+                <a href="#ueber-uns" data-section="ueber-uns" class="nav-link text-slateGray hover:text-moss">Über das Projekt</a>
             </nav>
 
             <!-- Login & Action Button Area -->
             <div class="flex items-center space-x-3 sm:space-x-4">
-                <button onclick="toggleLoginModal(true)" class="text-slateDark hover:text-moss font-bold text-sm px-3 py-2 flex items-center space-x-1.5 transition duration-200">
+                <button onclick="toggleLoginModal(true)" class="text-slateDark hover:text-moss font-bold text-sm px-3 py-2 flex items-center space-x-1.5 transition duration-200 cursor-pointer">
                     <svg class="w-5 h-5 text-slateGray" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     <span>Anmelden</span>
                 </button>
 
-                <button class="bg-moss hover:bg-mossDark text-white px-4 sm:px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2 transform hover:-translate-y-0.5">
+                <button class="bg-moss hover:bg-mossDark text-white px-4 sm:px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2 transform hover:-translate-y-0.5 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                     <span>Inserat erstellen</span>
                 </button>
@@ -84,7 +84,7 @@
         </div>
     </header>
 
-    <!-- Section 1: Hero -->
+    <!-- Hero Section -->
     <section id="hero" class="relative bg-gradient-to-b from-warmSand to-creamBg py-16 lg:py-20 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl">
@@ -102,7 +102,7 @@
         </div>
     </section>
 
-    <!-- Section 2: Marketplace -->
+    <!-- Marketplace Section -->
     <main id="marktplatz" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="bg-white p-6 rounded-3xl shadow-soft border border-gray-200 mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
@@ -128,7 +128,7 @@
                 </select>
             </div>
             <div class="flex items-end">
-                <button class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2">
+                <button class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     <span>Suchen & Filtern</span>
                 </button>
@@ -167,7 +167,7 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-moss text-lg">Zu verschenken</span>
                             </div>
-                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200">
+                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -199,7 +199,7 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
                             </div>
-                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200">
+                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -220,7 +220,7 @@
         </div>
     </main>
 
-    <!-- Section 3: Calculator -->
+    <!-- Calculator Section -->
     <section id="rechner" class="py-20 bg-white border-t border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-gradient-to-br from-warmSand/60 to-creamBg p-8 lg:p-12 rounded-3xl border border-gray-200 shadow-soft grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -239,4 +239,218 @@
                             <span class="text-xl font-black text-moss bg-moss/10 px-3 py-1 rounded-xl"><span id="volumeValue">25</span> m³</span>
                         </div>
                         <input id="volumeSlider" type="range" min="5" max="250" step="5" value="25" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-moss">
-                        <div class="flex justify-
+                        <div class="flex justify-between text-xs text-slateGray mt-2 font-medium">
+                            <span>5 m³ (Garten)</span>
+                            <span>100 m³ (Hausbau)</span>
+                            <span>250 m³ (Gewerbe)</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+                        <div class="bg-creamBg p-5 rounded-2xl border border-gray-200">
+                            <span class="text-xs text-slateGray font-bold uppercase tracking-wider block">Geldersparnis Deponie</span>
+                            <span id="moneySavings" class="text-3xl font-black text-moss mt-1 block">450 €</span>
+                            <span class="text-[11px] text-slateGray block mt-1">~18 €/m³ Deponiegebühr gespart</span>
+                        </div>
+                        <div class="bg-creamBg p-5 rounded-2xl border border-gray-200">
+                            <span class="text-xs text-slateGray font-bold uppercase tracking-wider block">CO₂-Reduktion</span>
+                            <span id="co2Savings" class="text-3xl font-black text-terra mt-1 block">225 kg CO₂</span>
+                            <span class="text-[11px] text-slateGray block mt-1">Durch kurze Transportwege</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="ueber-uns" class="bg-creamBg py-20 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mb-14">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">Philosophie & Vision</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Über das Projekt BauStoffWechsel</h2>
+                <p class="text-slateGray text-lg mt-4 leading-relaxed">
+                    Jedes Jahr entstehen auf Baustellen Tonnen von wertvollem Aushub, Mutterboden und Restbaustoffen. Oft landete intaktes Material teuer auf der Deponie – während Nachbarn wenige Kilometer weiter dasselbe Material neu kaufen mussten.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-moss text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">1</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Die Idee</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Eine direkte digitale Brücke zwischen Angebot und Nachfrage vor Ort schaffen. Egal ob Häuslebauer, Gala-Bauer oder Bauunternehmen – Baustoffe werden lokal weitergegeben statt entsorgt.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-terra text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">2</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Ökologischer Vorteil</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Schonung natürlicher Ressourcen, Entlastung überfüllter Deponien und massive Reduktion von CO₂-Emissionen durch den Wegfall langer LKW-Transportwege.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-slateDark text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">3</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Abgrenzung zu Mitbewerbern</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Keine unübersichtliche Flut an Kleinanzeigen und keine teure, komplexe B2B-Software. BauStoffWechsel fokussiert sich rein auf Baustoffe mit präziser Umkreissuche und Mengeneinheiten.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slateGray font-medium">
+            <div class="flex items-center space-x-2">
+                <span class="font-bold text-slateDark text-sm">BauStoffWechsel</span>
+                <span>&copy; 2026. Alle Rechte vorbehalten.</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-moss transition">Impressum</a>
+                <a href="#" class="hover:text-moss transition">Datenschutz</a>
+                <a href="#" class="hover:text-moss transition">AGB</a>
+                <button onclick="resetCookieConsent()" class="hover:text-moss transition text-slateGray underline cursor-pointer">Cookie-Einstellungen</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 border border-gray-200 shadow-2xl relative">
+            <button onclick="toggleLoginModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <div class="mb-6">
+                <h3 class="text-2xl font-black text-slateDark">Willkommen zurück!</h3>
+                <p class="text-sm text-slateGray mt-1">Melde dich an, um Inserate zu verwalten oder Anfragen zu senden.</p>
+            </div>
+            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Login-Funktion wird vorbereitet!');">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">E-Mail Adresse</label>
+                    <input type="email" placeholder="name@beispiel.de" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Passwort</label>
+                    <input type="password" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <label class="flex items-center text-slateGray cursor-pointer">
+                        <input type="checkbox" class="rounded border-gray-300 text-moss focus:ring-moss mr-2"> Angemeldet bleiben
+                    </label>
+                    <a href="#" class="text-moss font-bold hover:underline">Passwort vergessen?</a>
+                </div>
+                <button type="submit" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3.5 rounded-xl text-sm shadow-md transition duration-200 cursor-pointer">
+                    Anmelden
+                </button>
+            </form>
+            <div class="mt-6 pt-6 border-t border-gray-100 text-center text-xs text-slateGray">
+                Noch kein Konto? <a href="#" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieBanner" class="fixed bottom-4 right-4 left-4 md:left-auto md:max-w-md bg-white border border-gray-200 rounded-3xl p-6 shadow-2xl z-50">
+        <div class="flex items-start space-x-3 mb-3">
+            <div class="w-9 h-9 bg-warmSand text-moss rounded-xl flex items-center justify-center font-bold text-lg shrink-0">
+                🍪
+            </div>
+            <div>
+                <h4 class="font-bold text-slateDark text-base">Datenschutz & Cookies</h4>
+                <p class="text-xs text-slateGray mt-1 leading-relaxed">
+                    Wir nutzen Cookies, um die Nutzung auf BauStoffWechsel optimal zu gestalten.
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2 mt-4">
+            <button onclick="acceptCookies('all')" class="bg-moss hover:bg-mossDark text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
+                Alle akzeptieren
+            </button>
+            <button onclick="acceptCookies('essential')" class="bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
+                Nur essenzielle
+            </button>
+        </div>
+    </div>
+
+    <!-- Leaflet JS & Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Leaflet Map Init
+        const map = L.map('map').setView([51.15, 8.28], 11);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        L.marker([51.16, 8.27]).addTo(map).bindPopup('<b>Mutterboden</b><br>Zu verschenken');
+        L.marker([51.12, 8.32]).addTo(map).bindPopup('<b>Betonpflaster</b><br>80 € / Palette');
+
+        // Calculator Logic
+        const slider = document.getElementById('volumeSlider');
+        const volumeVal = document.getElementById('volumeValue');
+        const moneySavings = document.getElementById('moneySavings');
+        const co2Savings = document.getElementById('co2Savings');
+
+        if (slider) {
+            slider.addEventListener('input', function() {
+                const m3 = parseInt(this.value);
+                volumeVal.innerText = m3;
+                moneySavings.innerText = (m3 * 18).toLocaleString('de-DE') + ' €';
+                co2Savings.innerText = (m3 * 9).toLocaleString('de-DE') + ' kg CO₂';
+            });
+        }
+
+        // Login Modal Trigger
+        function toggleLoginModal(show) {
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                if (show) modal.classList.remove('hidden');
+                else modal.classList.add('hidden');
+            }
+        }
+
+        // Scroll-Spy & Active Nav Highlighting
+        const sections = document.querySelectorAll('section[id], main[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 130;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Cookie Banner Visibility Logic
+        window.addEventListener('DOMContentLoaded', () => {
+            const consent = localStorage.getItem('bsw_cookie_consent');
+            const banner = document.getElementById('cookieBanner');
+            if (consent && banner) {
+                banner.classList.add('hidden');
+            }
+        });
+
+        function acceptCookies(type) {
+            localStorage.setItem('bsw_cookie_consent', type);
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.classList.add('hidden');
+        }
+
+        function resetCookieConsent() {
+            localStorage.removeItem('bsw_cookie_consent');
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
