@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BaustoffWechsel - Kreislaufwirtschaft für Aushub & Baustoffe</title>
+    <title>BauStoffWechsel - Regionale Kreislaufwirtschaft für Baustoffe & Aushub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,10 +13,14 @@
                         moss: '#5B7837',
                         mossDark: '#475F2A',
                         terra: '#985830',
-                        slateDark: '#3A424A',
-                        slateGray: '#5C656E',
-                        creamBg: '#F9F8F6',
-                        warmSand: '#EFECE6'
+                        slateDark: '#2D3748',
+                        slateGray: '#718096',
+                        creamBg: '#F8F9FA',
+                        warmSand: '#F3F0EA'
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
+                        'hover-card': '0 20px 30px -10px rgba(91, 120, 55, 0.12)'
                     }
                 }
             }
@@ -24,41 +28,40 @@
     </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        #map { height: 420px; width: 100%; border-radius: 0.75rem; }
+        #map { height: 440px; width: 100%; border-radius: 1rem; }
     </style>
 </head>
 <body class="bg-creamBg text-slateDark font-sans antialiased min-h-screen flex flex-col scroll-smooth">
 
     <!-- Header / Navigation -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <header class="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
             <!-- Logo & Brand Name -->
-            <div class="flex items-center space-x-3 cursor-pointer">
-                <div class="w-12 h-12 flex items-center justify-center">
-                    <!-- Integrated Map-Pin Leaf Logo SVG -->
-                    <svg class="w-12 h-12" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 0C22.3858 0 0 22.3858 0 50C0 75 35 110 50 120C65 110 100 75 100 50C100 22.3858 77.6142 0 50 0Z" fill="#3A424A"/>
+            <div class="flex items-center space-x-3 cursor-pointer group">
+                <div class="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105 duration-200">
+                    <svg class="w-12 h-12 drop-shadow-sm" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 0C22.3858 0 0 22.3858 0 50C0 75 35 110 50 120C65 110 100 75 100 50C100 22.3858 77.6142 0 50 0Z" fill="#2D3748"/>
                         <path d="M50 0C22.3858 0 0 22.3858 0 50H100C100 22.3858 77.6142 0 50 0Z" fill="#5B7837"/>
                         <circle cx="50" cy="50" r="18" fill="white"/>
                         <path d="M55 22C50 22 45 28 45 35C52 35 58 30 58 22H55Z" fill="#5B7837"/>
                         <path d="M15 65L38 52L48 70L25 83Z" fill="#985830"/>
-                        <path d="M52 70L62 52L85 65L75 83Z" fill="#7A838C"/>
-                        <path d="M30 87L50 74L70 87L50 100Z" fill="#9FA7AF"/>
+                        <path d="M52 70L62 52L85 65L75 83Z" fill="#718096"/>
+                        <path d="M30 87L50 74L70 87L50 100Z" fill="#A0AEC0"/>
                     </svg>
                 </div>
                 <div>
-                    <div class="flex items-center text-2xl font-extrabold tracking-tight">
+                    <div class="flex items-center text-2xl font-black tracking-tight">
                         <span class="text-slateDark">BauStoff</span>
                         <span class="text-moss">Wechsel</span>
                     </div>
-                    <span class="text-xs text-slateGray font-medium block -mt-1">Regionale Kreislaufwirtschaft</span>
+                    <span class="text-[11px] text-slateGray font-semibold tracking-wider uppercase block -mt-1">Regionale Kreislaufwirtschaft</span>
                 </div>
             </div>
 
             <!-- Navigation Links -->
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                <a href="#marktplatz" class="text-moss font-bold border-b-2 border-moss pb-1">Marktplatz</a>
+                <a href="#marktplatz" class="text-moss font-bold transition hover:text-mossDark">Marktplatz</a>
                 <a href="#rechner" class="text-slateGray hover:text-moss transition">Ersparnis-Rechner</a>
                 <a href="#ueber-uns" class="text-slateGray hover:text-moss transition">Über das Projekt</a>
                 <a href="#" class="text-slateGray hover:text-moss transition">Logistik & Partner</a>
@@ -66,7 +69,7 @@
 
             <!-- Action Button -->
             <div class="flex items-center space-x-3">
-                <button class="bg-moss hover:bg-mossDark text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition duration-200 flex items-center space-x-2">
+                <button class="bg-moss hover:bg-mossDark text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2 transform hover:-translate-y-0.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                     <span>Inserat erstellen</span>
                 </button>
@@ -74,59 +77,76 @@
         </div>
     </header>
 
-    <!-- Hero / Headline Section -->
-    <section class="bg-warmSand py-10 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- High-End Hero / Headline Section -->
+    <section class="relative bg-gradient-to-b from-warmSand to-creamBg py-16 lg:py-24 border-b border-gray-200 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-3xl">
-                <span class="inline-block bg-moss/10 text-moss text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
-                    Nachhaltig • Regional • Kostensparend
-                </span>
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-slateDark tracking-tight leading-tight">
-                    Baustoffe & Aushub im Kreislauf halten.
+                <div class="inline-flex items-center space-x-2 bg-moss/10 text-moss text-xs font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-6 border border-moss/20">
+                    <span class="w-2 h-2 rounded-full bg-moss animate-pulse"></span>
+                    <span>Revolution im Tief- & Gartenbau</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slateDark tracking-tight leading-[1.15]">
+                    Baustoffe & Aushub direkt vor Ort tauschen.
                 </h1>
-                <p class="text-slateGray text-base sm:text-lg mt-2">
-                    Finde verfügbare Materialien direkt in deiner Umgebung oder biete überschüssigen Aushub, Kies und Steine unkompliziert an.
+                <p class="text-slateGray text-lg sm:text-xl mt-6 font-normal leading-relaxed">
+                    Vermeide teure Deponiegebühren und lange Transportwege. Finde wiederverwertbare Erden, Schotter und Baustoffe in deiner unmittelbaren Nachbarschaft.
                 </p>
+                
+                <!-- Quick-Stats unter Hero -->
+                <div class="grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-gray-300/60 max-w-2xl">
+                    <div>
+                        <span class="block text-2xl lg:text-3xl font-black text-slateDark">0 €</span>
+                        <span class="text-xs text-slateGray font-medium">Gebühren für Inserenten</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl lg:text-3xl font-black text-moss">100%</span>
+                        <span class="text-xs text-slateGray font-medium">Regionaler Kreislauf</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl lg:text-3xl font-black text-terra">CO₂</span>
+                        <span class="text-xs text-slateGray font-medium">Einsparung pro Transport</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Calculator Section (Schieberegler) -->
-    <section id="rechner" class="bg-white py-10 border-b border-gray-200">
+    <!-- Interactive Calculator Section (Schieberegler) -->
+    <section id="rechner" class="py-16 bg-white border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-creamBg p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="bg-gradient-to-br from-warmSand/60 to-creamBg p-8 lg:p-12 rounded-3xl border border-gray-200 shadow-soft grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-5">
-                    <span class="text-xs font-bold text-terra uppercase tracking-wider block mb-1">Interaktiver Rechner</span>
-                    <h2 class="text-2xl font-extrabold text-slateDark mb-2">Wie viel sparst du mit BauStoffWechsel?</h2>
-                    <p class="text-sm text-slateGray">
-                        Bewege den Regler für deine Menge an Mutterboden oder Aushub. Sieh direkt, wie viel Geld du gegenüber Deponiegebühren sparst und wie viel CO₂ durch regionale Wege eingespart wird.
+                    <span class="text-xs font-extrabold text-terra uppercase tracking-wider block mb-2">Live-Kalkulator</span>
+                    <h2 class="text-3xl font-black text-slateDark mb-3">Wie viel sparst du gegenüber der Deponie?</h2>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Berechne sofort deine finanzielle Ersparnis und den ökologischen Mehrwert für dein Bau- oder Gartenprojekt.
                     </p>
                 </div>
 
-                <div class="lg:col-span-7 bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
+                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
                     <div>
-                        <div class="flex justify-between items-center mb-2">
+                        <div class="flex justify-between items-center mb-3">
                             <label for="volumeSlider" class="text-sm font-bold text-slateDark">Menge Aushub / Mutterboden:</label>
-                            <span class="text-lg font-extrabold text-moss"><span id="volumeValue">25</span> m³</span>
+                            <span class="text-xl font-black text-moss bg-moss/10 px-3 py-1 rounded-xl"><span id="volumeValue">25</span> m³</span>
                         </div>
-                        <input id="volumeSlider" type="range" min="5" max="250" step="5" value="25" class="w-full h-2.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-moss">
-                        <div class="flex justify-between text-[11px] text-gray-400 mt-1 font-medium">
-                            <span>5 m³ (Kleingarten)</span>
-                            <span>100 m³ (Einfamilienhaus)</span>
-                            <span>250 m³ (Großprojekt)</span>
+                        <input id="volumeSlider" type="range" min="5" max="250" step="5" value="25" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-moss">
+                        <div class="flex justify-between text-xs text-slateGray mt-2 font-medium">
+                            <span>5 m³ (Garten)</span>
+                            <span>100 m³ (Hausbau)</span>
+                            <span>250 m³ (Gewerbe)</span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-gray-100">
-                        <div class="bg-warmSand/50 p-4 rounded-xl border border-warmSand">
-                            <span class="text-xs text-slateGray font-semibold block">Geschätzte Ersparnis Deponie:</span>
-                            <span id="moneySavings" class="text-2xl font-black text-moss">450 €</span>
-                            <span class="text-[10px] text-gray-500 block mt-0.5">*Basierend auf ca. 18 €/m³ Deponiegebühr</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+                        <div class="bg-creamBg p-5 rounded-2xl border border-gray-200">
+                            <span class="text-xs text-slateGray font-bold uppercase tracking-wider block">Geldersparnis Deponie</span>
+                            <span id="moneySavings" class="text-3xl font-black text-moss mt-1 block">450 €</span>
+                            <span class="text-[11px] text-slateGray block mt-1">~18 €/m³ Deponiegebühr gespart</span>
                         </div>
-                        <div class="bg-warmSand/50 p-4 rounded-xl border border-warmSand">
-                            <span class="text-xs text-slateGray font-semibold block">CO₂-Einsparung (LKW-Wege):</span>
-                            <span id="co2Savings" class="text-2xl font-black text-terra">225 kg CO₂</span>
-                            <span class="text-[10px] text-gray-500 block mt-0.5">*Durch kurze regionale Transportwege</span>
+                        <div class="bg-creamBg p-5 rounded-2xl border border-gray-200">
+                            <span class="text-xs text-slateGray font-bold uppercase tracking-wider block">CO₂-Reduktion</span>
+                            <span id="co2Savings" class="text-3xl font-black text-terra mt-1 block">225 kg CO₂</span>
+                            <span class="text-[11px] text-slateGray block mt-1">Durch kurze Transportwege</span>
                         </div>
                     </div>
                 </div>
@@ -134,14 +154,14 @@
         </div>
     </section>
 
-    <!-- Main Content Area / Marketplace -->
-    <main id="marktplatz" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Marketplace Section -->
+    <main id="marktplatz" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
-        <!-- Search & Filter Bar -->
-        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Modern Filter Bar -->
+        <div class="bg-white p-6 rounded-3xl shadow-soft border border-gray-200 mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Kategorie</label>
-                <select class="w-full border border-gray-300 rounded-xl p-3 text-sm font-medium focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Kategorie</label>
+                <select class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark cursor-pointer">
                     <option>Alle Kategorien</option>
                     <option>Aushub & Mutterboden</option>
                     <option>Kies, Sand & Schotter</option>
@@ -150,93 +170,93 @@
                 </select>
             </div>
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Standort / PLZ</label>
-                <input type="text" placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-xl p-3 text-sm font-medium focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Standort / PLZ</label>
+                <input type="text" placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
             </div>
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Umkreis</label>
-                <select class="w-full border border-gray-300 rounded-xl p-3 text-sm font-medium focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Umkreis</label>
+                <select class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark cursor-pointer">
                     <option>Bis 10 km</option>
                     <option selected>Bis 25 km</option>
                     <option>Bis 50 km</option>
                 </select>
             </div>
             <div class="flex items-end">
-                <button class="w-full bg-terra hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-xl text-sm shadow-md transition duration-200 flex items-center justify-center space-x-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <span>Materialien suchen</span>
+                <button class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <span>Suchen & Filtern</span>
                 </button>
             </div>
         </div>
 
-        <!-- Content Grid: Cards + Map -->
+        <!-- Grid: Listings & Map -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <!-- Cards Column (2 Cols wide) -->
-            <div class="lg:col-span-2 space-y-4">
+            <!-- Cards Column -->
+            <div class="lg:col-span-2 space-y-5">
                 <div class="flex justify-between items-center mb-2">
-                    <h2 class="font-extrabold text-xl text-slateDark">Verfügbare Angebote in der Nähe</h2>
-                    <span class="text-xs text-slateGray font-medium">2 Treffer gefunden</span>
+                    <h2 class="font-black text-2xl text-slateDark">Aktuelle Angebote in der Nähe</h2>
+                    <span class="text-xs font-bold text-slateGray bg-white px-3 py-1 rounded-full border border-gray-200">2 Treffer aktiv</span>
                 </div>
 
-                <!-- Listing Card 1 -->
-                <div class="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col sm:flex-row gap-5">
-                    <div class="w-full sm:w-44 h-36 bg-gray-100 rounded-xl flex flex-col items-center justify-center text-gray-400 font-medium text-xs relative overflow-hidden">
-                        <svg class="w-10 h-10 mb-1 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <!-- Card 1 -->
+                <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
+                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden">
+                        <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <span>Foto folgt</span>
-                        <span class="absolute top-2 left-2 bg-moss text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Privat</span>
+                        <span class="absolute top-3 left-3 bg-moss text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Privat</span>
                     </div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-start">
-                                <span class="text-xs font-semibold text-terra uppercase tracking-wider">Aushub & Mutterboden</span>
-                                <span class="text-xs text-slateGray font-medium">vor 2 Std. • 4.2 km</span>
+                                <span class="text-xs font-bold text-terra uppercase tracking-wider">Aushub & Mutterboden</span>
+                                <span class="text-xs text-slateGray font-semibold">vor 2 Std. • 4.2 km</span>
                             </div>
-                            <h3 class="font-bold text-lg text-slateDark mt-1 hover:text-moss transition cursor-pointer">
+                            <h3 class="font-extrabold text-xl text-slateDark mt-1.5 group-hover:text-moss transition cursor-pointer">
                                 ca. 12 m³ gesiebter Mutterboden abzugeben
                             </h3>
-                            <p class="text-sm text-slateGray mt-1">
-                                Sehr gute Qualität, ideal für Garten- und Landschaftsbau. Ebenerdig erreichbar für LKW/Anhänger.
+                            <p class="text-sm text-slateGray mt-2 leading-relaxed">
+                                Sehr gute Qualität, ideal für Garten- und Landschaftsbau. Ebenerdig erreichbar für LKW und Anhänger.
                             </p>
                         </div>
-                        <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+                        <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
                             <div>
-                                <span class="text-xs text-slateGray block">Preisvorstellung</span>
-                                <span class="font-extrabold text-moss text-base">Zu verschenken</span>
+                                <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
+                                <span class="font-black text-moss text-lg">Zu verschenken</span>
                             </div>
-                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-4 py-2.5 rounded-xl transition duration-200">
+                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 shadow-sm">
                                 Details & Kontakt
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Listing Card 2 -->
-                <div class="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col sm:flex-row gap-5">
-                    <div class="w-full sm:w-44 h-36 bg-gray-100 rounded-xl flex flex-col items-center justify-center text-gray-400 font-medium text-xs relative overflow-hidden">
-                        <svg class="w-10 h-10 mb-1 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <!-- Card 2 -->
+                <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
+                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden">
+                        <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         <span>Foto folgt</span>
-                        <span class="absolute top-2 left-2 bg-slateDark text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Gewerbe</span>
+                        <span class="absolute top-3 left-3 bg-slateDark text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Gewerbe</span>
                     </div>
                     <div class="flex-grow flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-start">
-                                <span class="text-xs font-semibold text-terra uppercase tracking-wider">Pflastersteine</span>
-                                <span class="text-xs text-slateGray font-medium">Gestern • 11.8 km</span>
+                                <span class="text-xs font-bold text-terra uppercase tracking-wider">Pflastersteine</span>
+                                <span class="text-xs text-slateGray font-semibold">Gestern • 11.8 km</span>
                             </div>
-                            <h3 class="font-bold text-lg text-slateDark mt-1 hover:text-moss transition cursor-pointer">
+                            <h3 class="font-extrabold text-xl text-slateDark mt-1.5 group-hover:text-moss transition cursor-pointer">
                                 4 Paletten Betonpflastersteine (grau, unbenutzt)
                             </h3>
-                            <p class="text-sm text-slateGray mt-1">
-                                Restbestand von Gewerbeprojekt. Verladung vor Ort mit Gabelstapler möglich.
+                            <p class="text-sm text-slateGray mt-2 leading-relaxed">
+                                Restbestand von Gewerbeprojekt. Verladung vor Ort mit Gabelstapler problemlos möglich.
                             </p>
                         </div>
-                        <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+                        <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
                             <div>
-                                <span class="text-xs text-slateGray block">Preisvorstellung</span>
-                                <span class="font-extrabold text-slateDark text-base">80,00 € / Palette</span>
+                                <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
+                                <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
                             </div>
-                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-4 py-2.5 rounded-xl transition duration-200">
+                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 shadow-sm">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -245,12 +265,12 @@
 
             </div>
 
-            <!-- Map Column (1 Col wide) -->
+            <!-- Map Column -->
             <div class="lg:col-span-1">
-                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm sticky top-28">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="font-bold text-sm text-slateDark">Interaktive Karte</h3>
-                        <span class="text-xs text-moss font-semibold cursor-pointer hover:underline">Vollbild</span>
+                <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-soft sticky top-28">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-extrabold text-base text-slateDark">Standort-Übersicht</h3>
+                        <span class="text-xs text-moss font-bold cursor-pointer hover:underline">Vollbild</span>
                     </div>
                     <div id="map"></div>
                 </div>
@@ -260,37 +280,37 @@
     </main>
 
     <!-- About Section ("Über das Projekt") -->
-    <section id="ueber-uns" class="bg-white py-16 border-t border-gray-200">
+    <section id="ueber-uns" class="bg-white py-20 border-t border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mb-12">
-                <span class="text-xs font-bold text-moss uppercase tracking-wider block mb-1">Philosophie & Vision</span>
-                <h2 class="text-3xl font-extrabold text-slateDark">Über das Projekt BauStoffWechsel</h2>
-                <p class="text-slateGray text-base mt-2">
+            <div class="max-w-3xl mb-14">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">Philosophie & Vision</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Über das Projekt BauStoffWechsel</h2>
+                <p class="text-slateGray text-lg mt-4 leading-relaxed">
                     Jedes Jahr entstehen auf Baustellen Tonnen von wertvollem Aushub, Mutterboden und Restbaustoffen. Oft landete intaktes Material teuer auf der Deponie – während Nachbarn wenige Kilometer weiter dasselbe Material neu kaufen mussten.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-creamBg p-6 rounded-2xl border border-gray-200">
-                    <div class="w-10 h-10 bg-moss text-white rounded-xl flex items-center justify-center font-bold mb-4">1</div>
-                    <h3 class="font-bold text-lg text-slateDark mb-2">Die Idee</h3>
-                    <p class="text-sm text-slateGray">
+                <div class="bg-creamBg p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-moss text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">1</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Die Idee</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
                         Eine direkte digitale Brücke zwischen Angebot und Nachfrage vor Ort schaffen. Egal ob Häuslebauer, Gala-Bauer oder Bauunternehmen – Baustoffe werden lokal weitergegeben statt entsorgt.
                     </p>
                 </div>
 
-                <div class="bg-creamBg p-6 rounded-2xl border border-gray-200">
-                    <div class="w-10 h-10 bg-terra text-white rounded-xl flex items-center justify-center font-bold mb-4">2</div>
-                    <h3 class="font-bold text-lg text-slateDark mb-2">Ökologischer Vorteil</h3>
-                    <p class="text-sm text-slateGray">
+                <div class="bg-creamBg p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-terra text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">2</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Ökologischer Vorteil</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
                         Schonung natürlicher Ressourcen, Entlastung überfüllter Deponien und massive Reduktion von CO₂-Emissionen durch den Wegfall langer LKW-Transportwege.
                     </p>
                 </div>
 
-                <div class="bg-creamBg p-6 rounded-2xl border border-gray-200">
-                    <div class="w-10 h-10 bg-slateDark text-white rounded-xl flex items-center justify-center font-bold mb-4">3</div>
-                    <h3 class="font-bold text-lg text-slateDark mb-2">Abgrenzung zu Mitbewerbern</h3>
-                    <p class="text-sm text-slateGray">
+                <div class="bg-creamBg p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-slateDark text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">3</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Abgrenzung zu Mitbewerbern</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
                         Keine unübersichtliche Flut an Kleinanzeigen und keine teure, komplexe B2B-Software. BauStoffWechsel fokussiert sich rein auf Baustoffe mit präziser Umkreissuche und Mengeneinheiten.
                     </p>
                 </div>
@@ -299,13 +319,13 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slateGray">
+    <footer class="bg-white border-t border-gray-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slateGray font-medium">
             <div class="flex items-center space-x-2">
-                <span class="font-bold text-slateDark">BauStoffWechsel</span>
+                <span class="font-bold text-slateDark text-sm">BauStoffWechsel</span>
                 <span>&copy; 2026. Alle Rechte vorbehalten.</span>
             </div>
-            <div class="flex space-x-6">
+            <div class="flex space-x-8">
                 <a href="#" class="hover:text-moss transition">Impressum</a>
                 <a href="#" class="hover:text-moss transition">Datenschutz</a>
                 <a href="#" class="hover:text-moss transition">AGB</a>
@@ -313,10 +333,9 @@
         </div>
     </footer>
 
-    <!-- Leaflet JS & Interactive Calculator Logic -->
+    <!-- Leaflet JS & Calculator Logic -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Map Initialization
         const map = L.map('map').setView([51.15, 8.28], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
@@ -335,7 +354,6 @@
             const m3 = parseInt(this.value);
             volumeVal.innerText = m3;
             
-            // Calc logic: 18€ per m³ saved, ~9kg CO2 per m³ saved from transport
             const money = m3 * 18;
             const co2 = m3 * 9;
 
