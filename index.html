@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="de"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;BauStoffWechsel - Kreislaufwirtschaft für Baustoffe&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>tailwind.config = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>theme: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>extend: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>colors: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>moss: '#2E5A44',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>terra: '#8B5A36',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>slateDark: '#343A40',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>creamBg: '#F8F9FA'</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Leaflet CSS für die Karte --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#map { height: 400px; width: 100%; border-radius: 0.75rem; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-creamBg text-slateDark font-sans antialiased min-h-screen flex flex-col"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Header --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="bg-white border-b border-gray-200 sticky top-0 z-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-center space-x-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-10 h-10 bg-moss rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>BSW</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h1 class="text-lg font-bold tracking-tight text-slateDark leading-tight"&gt;BauStoffWechsel&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-xs text-terra font-medium"&gt;Kreislaufwirtschaft für Aushub &amp; Baustoffe&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;nav class="hidden md:flex items-center space-x-6 text-sm font-medium"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="text-moss font-semibold hover:text-terra transition"&gt;Marktplatz&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="text-gray-600 hover:text-moss transition"&gt;Material anbieten&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="text-gray-600 hover:text-moss transition"&gt;Logistik-Partner&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#" class="text-gray-600 hover:text-moss transition"&gt;Über uns&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="bg-moss hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>+ Inserat erstellen</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Main Content --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Hero &amp; Filter Bar --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-2xl sm:text-3xl font-extrabold text-slateDark mb-2"&gt;Überschüssige Baustoffe &amp; Aushub in deiner Nähe&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-gray-600 text-sm sm:text-base"&gt;Vermeide Entsorgungskosten. Finde direkt vor Ort wiederverwertbare Materialien oder biete deine an.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Filter &amp; Search Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200 mb-8 grid grid-cols-1 sm:grid-cols-4 gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="block text-xs font-semibold uppercase text-gray-500 mb-1"&gt;Kategorie&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-moss focus:outline-none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;Alle Kategorien&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;Aushub &amp; Mutterboden&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;Kies, Sand &amp; Schotter&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;Steine &amp; Pflaster&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;Holz &amp; Baustoffe&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="block text-xs font-semibold uppercase text-gray-500 mb-1"&gt;Standort / PLZ&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-moss focus:outline-none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label class="block text-xs font-semibold uppercase text-gray-500 mb-1"&gt;Umkreis&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-moss focus:outline-none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;Bis 10 km&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option selected&gt;Bis 25 km&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option&gt;Bis 50 km&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-end"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="w-full bg-terra hover:bg-opacity-90 text-white font-medium py-2.5 px-4 rounded-lg text-sm shadow-sm transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Suchen &amp; Filtern</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Layout Grid: Map &amp; Listings --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-cols-1 lg:grid-cols-3 gap-8"&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Left 2 Columns: Listings --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="lg:col-span-2 space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-between items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold text-lg text-slateDark"&gt;Aktuelle Angebote (3)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-xs text-gray-500"&gt;Sortiert nach Entfernung&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Inserat 1 --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col sm:flex-row gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-full sm:w-40 h-32 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 font-medium text-xs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>[ Foto: Mutterboden ]</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex-grow flex flex-col justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex justify-items-start justify-between items-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="bg-moss text-white text-xs px-2 py-0.5 rounded font-medium mb-1 inline-block"&gt;Privat (C2C)&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-gray-500"&gt;vor 2 Std. • 4.2 km entfernt&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-base text-slateDark mt-1"&gt;ca. 12 m³ gesiebter Mutterboden abzugeben&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm text-gray-600 mt-1"&gt;Perfekt zum Auffüllen des Gartens. Selbstabholung bevorzugt, LKW-Zufahrt problemlos möglich.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-gray-500"&gt;Preis:&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="font-bold text-moss text-sm ml-1"&gt;Zu verschenken&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button onclick="openModal()" class="bg-gray-100 hover:bg-moss hover:text-white text-slateDark text-xs font-semibold px-3 py-2 rounded-lg transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>Details &amp; Transport anfragen</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Inserat 2 --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition flex flex-col sm:flex-row gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-full sm:w-40 h-32 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 font-medium text-xs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>[ Foto: Schotter ]</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex-grow flex flex-col justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex justify-between items-start"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="bg-slateDark text-white text-xs px-2 py-0.5 rounded font-medium mb-1 inline-block"&gt;Gewerbe (B2C)&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-gray-500"&gt;gestern • 8.5 km entfernt&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-base text-slateDark mt-1"&gt;Schottertragschicht 0/32 (Restposten)&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm text-gray-600 mt-1"&gt;Übrig geblieben von Baustelle. Ca. 8 Tonnen. Verladung mit Radlader vor Ort.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-xs text-gray-500"&gt;Preis:&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="font-bold text-slateDark text-sm ml-1"&gt;45,00 € / Tonne&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button onclick="openModal()" class="bg-gray-100 hover:bg-moss hover:text-white text-slateDark text-xs font-semibold px-3 py-2 rounded-lg transition"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>Details &amp; Transport anfragen</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Right Column: Interactive Map --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="lg:col-span-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm sticky top-24"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold text-sm text-slateDark mb-3"&gt;Standort-Übersicht&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div id="map"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="mt-3 flex items-center justify-between text-xs text-gray-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="flex items-center"&gt;&lt;span class="w-3 h-3 bg-moss rounded-full inline-block mr-1"&gt;&lt;/span&gt; Privat&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="flex items-center"&gt;&lt;span class="w-3 h-3 bg-slateDark rounded-full inline-block mr-1"&gt;&lt;/span&gt; Gewerbe&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Transport &amp; Detail Modal (Hidden by Default) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="transportModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white rounded-xl max-w-lg w-full p-6 shadow-xl relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 font-bold"&gt;✕&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3 class="text-xl font-bold text-slateDark mb-1"&gt;Inserats-Details &amp; Logistik&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-xs text-terra font-medium mb-4"&gt;Inklusive integrierter Transportvermittlung durch Drittanbieter&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-creamBg p-4 rounded-lg mb-4 text-sm space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-between"&gt;&lt;span class="text-gray-600"&gt;Material:&lt;/span&gt; &lt;span class="font-semibold text-slateDark"&gt;Mutterboden (12 m³)&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-between"&gt;&lt;span class="text-gray-600"&gt;Standort:&lt;/span&gt; &lt;span class="font-semibold text-slateDark"&gt;Schmallenberg (ca. 4.2 km)&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="flex justify-between"&gt;&lt;span class="text-gray-600"&gt;Anbieter:&lt;/span&gt; &lt;span class="font-semibold text-slateDark"&gt;Privatperson (Verifiziert)&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="border-t border-gray-200 pt-4 mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h4 class="font-bold text-sm text-slateDark mb-2"&gt;🚚 Transport-Option buchen (USP)&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-xs text-gray-600 mb-3"&gt;Du hast keinen eigenen Anhänger? Lass dir das Material direkt von unserem regionalen Logistikpartner liefern.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="border border-moss bg-moss bg-opacity-5 p-3 rounded-lg flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-xs font-bold text-moss"&gt;Regionales Transport-Paket&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-xs text-gray-600"&gt;Inkl. LKW mit Liederkran / Kippmulde (ca. 25 km Radius)&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-sm font-bold text-slateDark"&gt;ca. 120,00 €&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-[10px] text-gray-500"&gt;pauschal&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex space-x-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button onclick="closeModal()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-slateDark font-medium py-2 rounded-lg text-sm transition"&gt;Schließen&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button onclick="alert('Anfrage erfolgreich an Anbieter und Transporteur übermittelt!'); closeModal();" class="flex-1 bg-moss hover:bg-opacity-90 text-white font-medium py-2 rounded-lg text-sm shadow-sm transition"&gt;Verbindlich anfragen&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Footer --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-white border-t border-gray-200 mt-12 py-6 text-center text-xs text-gray-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&amp;copy; 2026 BauStoffWechsel. Alle Rechte vorbehalten. | &lt;a href="#" class="hover:underline"&gt;Impressum&lt;/a&gt; | &lt;a href="#" class="hover:underline"&gt;Datenschutz&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Leaflet JS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Initialize Map</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const map = L.map('map').setView([51.15, 8.28], 11);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x://{y}.png', {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>attribution: '&amp;copy; OpenStreetMap contributors'</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}).addTo(map);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Simple Markers</p>
+<p class="p1"><span class="Apple-converted-space">        </span>L.marker([51.16, 8.27]).addTo(map).bindPopup('&lt;b&gt;Mutterboden (Privat)&lt;/b&gt;&lt;br&gt;4.2 km entfernt');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>L.marker([51.13, 8.30]).addTo(map).bindPopup('&lt;b&gt;Schotter (Gewerbe)&lt;/b&gt;&lt;br&gt;8.5 km entfernt');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Modal Functions</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function openModal() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('transportModal').classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('transportModal').classList.add('flex');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function closeModal() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('transportModal').classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('transportModal').classList.remove('flex');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
