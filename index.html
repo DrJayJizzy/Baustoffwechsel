@@ -360,17 +360,67 @@
             <div>
                 <h4 class="font-bold text-slateDark text-base">Datenschutz & Cookies</h4>
                 <p class="text-xs text-slateGray mt-1 leading-relaxed">
-                    Wir nutzen Cookies, um die Nutzung auf BauStoffWechsel optimal zu gestalten.
+                    Wir nutzen Cookies, um die Nutzung auf BauStoffWechsel optimal zu gestalten und Kartenfunktionen bereitzustellen.
                 </p>
             </div>
         </div>
-        <div class="flex flex-col sm:flex-row gap-2 mt-4">
+        <div class="flex flex-wrap gap-2 mt-4">
             <button onclick="acceptCookies('all')" class="bg-moss hover:bg-mossDark text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
                 Alle akzeptieren
             </button>
             <button onclick="acceptCookies('essential')" class="bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
                 Nur essenzielle
             </button>
+        </div>
+        <div class="mt-2 text-center">
+            <button onclick="toggleCookieModal(true)" class="text-[11px] text-slateGray underline hover:text-moss cursor-pointer">
+                Cookie-Details / Einstellungen anpassen
+            </button>
+        </div>
+    </div>
+
+    <!-- Cookie Details Modal -->
+    <div id="cookieModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleCookieModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            
+            <div class="mb-6">
+                <h3 class="text-2xl font-black text-slateDark">Cookie-Einstellungen</h3>
+                <p class="text-sm text-slateGray mt-1">Hier kannst du auswählen, welche Cookies du zulässt. Weitere Informationen findest du in unserer Datenschutzerklärung.</p>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <!-- Essenzielle Cookies -->
+                <div class="bg-creamBg p-4 rounded-2xl border border-gray-200">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-slateDark text-sm">Essenzielle Cookies</span>
+                        <input type="checkbox" checked disabled class="rounded border-gray-300 text-moss cursor-not-allowed">
+                    </div>
+                    <p class="text-slateGray leading-relaxed">
+                        Diese Cookies sind für die Grundfunktionen der Website zwingend erforderlich (z. B. Speicherung deiner Cookie-Auswahl).
+                    </p>
+                </div>
+
+                <!-- Funktionale / Statistik Cookies -->
+                <div class="bg-creamBg p-4 rounded-2xl border border-gray-200">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-slateDark text-sm">Statistik & Karten (Leaflet)</span>
+                        <input type="checkbox" id="optionalCookies" class="rounded border-gray-300 text-moss focus:ring-moss cursor-pointer" checked>
+                    </div>
+                    <p class="text-slateGray leading-relaxed">
+                        Ermöglichen die reibungslose Darstellung der interaktiven Landkarten und helfen uns, die Website-Performance zu verbessern.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100">
+                <button onclick="saveCookiePreferences()" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3 rounded-xl text-xs transition duration-200 cursor-pointer">
+                    Auswahl speichern
+                </button>
+                <button onclick="acceptCookies('all')" class="w-full bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-3 rounded-xl text-xs transition duration-200 cursor-pointer">
+                    Alle akzeptieren
+                </button>
+            </div>
         </div>
     </div>
 
@@ -410,6 +460,15 @@
             }
         }
 
+        // Cookie Modal Trigger
+        function toggleCookieModal(show) {
+            const modal = document.getElementById('cookieModal');
+            if (modal) {
+                if (show) modal.classList.remove('hidden');
+                else modal.classList.add('hidden');
+            }
+        }
+
         // Scroll-Spy & Active Nav Highlighting
         const sections = document.querySelectorAll('section[id], main[id]');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -443,7 +502,16 @@
         function acceptCookies(type) {
             localStorage.setItem('bsw_cookie_consent', type);
             const banner = document.getElementById('cookieBanner');
+            const modal = document.getElementById('cookieModal');
             if (banner) banner.classList.add('hidden');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function saveCookiePreferences() {
+            const optional = document.getElementById('optionalCookies').checked;
+            localStorage.setItem('bsw_cookie_consent', optional ? 'custom_all' : 'essential_only');
+            document.getElementById('cookieBanner').classList.add('hidden');
+            document.getElementById('cookieModal').classList.add('hidden');
         }
 
         function resetCookieConsent() {
