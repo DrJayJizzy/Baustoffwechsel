@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BauStoffWechsel - Regionale Kreislaufwirtschaft für Baustoffe</title>
+    <title>BaustoffWechsel - Regionale Kreislaufwirtschaft für Baustoffe</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -55,7 +55,7 @@
                 </div>
                 <div>
                     <div class="flex items-center text-2xl font-black tracking-tight">
-                        <span class="text-slateDark">Baustoff</span>
+                        <span class="text-slateDark">BauStoff</span>
                         <span class="text-moss">Wechsel</span>
                     </div>
                     <span class="text-[11px] text-slateGray font-semibold tracking-wider uppercase block -mt-1">Regionale Kreislaufwirtschaft</span>
@@ -97,3 +97,105 @@
                 </h1>
                 <p class="text-slateGray text-lg sm:text-xl mt-6 font-normal leading-relaxed">
                     Vermeide teure Deponiegebühren und lange Transportwege. Finde Mutterboden, Schotter und Baustoffe in deiner unmittelbaren Nachbarschaft.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketplace Section -->
+    <main id="marktplatz" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="bg-white p-6 rounded-3xl shadow-soft border border-gray-200 mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Kategorie</label>
+                <select class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+                    <option>Alle Kategorien</option>
+                    <option>Aushub & Mutterboden</option>
+                    <option>Kies, Sand & Schotter</option>
+                    <option>Pflastersteine & Ziegel</option>
+                    <option>Holz & Baustoffe</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Standort / PLZ</label>
+                <input type="text" placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Umkreis</label>
+                <select class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+                    <option>Bis 10 km</option>
+                    <option selected>Bis 25 km</option>
+                    <option>Bis 50 km</option>
+                </select>
+            </div>
+            <div class="flex items-end">
+                <button class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <span>Suchen & Filtern</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-5">
+                <div class="flex justify-between items-center mb-2">
+                    <h2 class="font-black text-2xl text-slateDark">Aktuelle Angebote in der Nähe</h2>
+                    <span class="text-xs font-bold text-slateGray bg-white px-3 py-1 rounded-full border border-gray-200">2 Treffer aktiv</span>
+                </div>
+
+                <!-- Card 1 -->
+                <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
+                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden">
+                        <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span>Foto folgt</span>
+                        <span class="absolute top-3 left-3 bg-moss text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Privat</span>
+                    </div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-bold text-terra uppercase tracking-wider">Aushub & Mutterboden</span>
+                                <span class="text-xs text-slateGray font-semibold">vor 2 Std. • 4.2 km</span>
+                            </div>
+                            <h3 class="font-extrabold text-xl text-slateDark mt-1.5 group-hover:text-moss transition cursor-pointer">
+                                ca. 12 m³ gesiebter Mutterboden abzugeben
+                            </h3>
+                            <p class="text-sm text-slateGray mt-2 leading-relaxed">
+                                Sehr gute Qualität, ideal für Garten- und Landschaftsbau. Ebenerdig erreichbar für LKW und Anhänger.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
+                            <div>
+                                <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
+                                <span class="font-black text-moss text-lg">Zu verschenken</span>
+                            </div>
+                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                                Details & Kontakt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
+                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden">
+                        <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span>Foto folgt</span>
+                        <span class="absolute top-3 left-3 bg-slateDark text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Gewerbe</span>
+                    </div>
+                    <div class="flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs font-bold text-terra uppercase tracking-wider">Pflastersteine</span>
+                                <span class="text-xs text-slateGray font-semibold">Gestern • 11.8 km</span>
+                            </div>
+                            <h3 class="font-extrabold text-xl text-slateDark mt-1.5 group-hover:text-moss transition cursor-pointer">
+                                4 Paletten Betonpflastersteine (grau, unbenutzt)
+                            </h3>
+                            <p class="text-sm text-slateGray mt-2 leading-relaxed">
+                                Restbestand von Gewerbeprojekt. Verladung vor Ort mit Gabelstapler problemlos möglich.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
+                            <div>
+                                <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
+                                <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
+                            </div>
