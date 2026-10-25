@@ -55,7 +55,7 @@
                 </div>
                 <div>
                     <div class="flex items-center text-2xl font-black tracking-tight">
-                        <span class="text-slateDark">BauStoff</span>
+                        <span class="text-slateDark">Baustoff</span>
                         <span class="text-moss">Wechsel</span>
                     </div>
                     <span class="text-[11px] text-slateGray font-semibold tracking-wider uppercase block -mt-1">Regionale Kreislaufwirtschaft</span>
@@ -199,3 +199,196 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
                             </div>
+                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                                Details & Kontakt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Column -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-soft sticky top-28">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-extrabold text-base text-slateDark">Standort-Übersicht</h3>
+                        <span class="text-xs text-moss font-bold cursor-pointer hover:underline">Vollbild</span>
+                    </div>
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Calculator Section -->
+    <section id="rechner" class="py-20 bg-white border-t border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-warmSand/60 to-creamBg p-8 lg:p-12 rounded-3xl border border-gray-200 shadow-soft grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-5">
+                    <span class="text-xs font-extrabold text-terra uppercase tracking-wider block mb-2">Live-Kalkulator</span>
+                    <h2 class="text-3xl font-black text-slateDark mb-3">Wie viel sparst du gegenüber der Deponie?</h2>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Berechne sofort deine finanzielle Ersparnis und den ökologischen Mehrwert für dein Bau- oder Gartenprojekt.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-gray-200 shadow-sm space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <label for="volumeSlider" class="text-sm font-bold text-slateDark">Menge Aushub / Mutterboden:</label>
+                            <span class="text-xl font-black text-moss bg-moss/10 px-3 py-1 rounded-xl"><span id="volumeValue">25</span> m³</span>
+                        </div>
+                        <input id="volumeSlider" type="range" min="5" max="250" step="5" value="25" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-moss">
+                        <div class="flex justify-between text-xs text-slateGray mt-2 font-medium">
+                            <span>5 m³ (Garten)</span>
+                            <span>100 m³ (Hausbau)</span>
+                            <span>250 m³ (Gewerbe)</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+                        <div class="bg-creamBg p-5 rounded-2xl border border-gray-200">
+                            <span class="text-xs text-slateGray font-bold uppercase tracking-wider block">Geldersparnis Deponie</span>
+                            <span id="moneySavings" class="text-3xl font-black text-moss mt-1 block">450 €</span>
+                            <span class="text-[11px] text-slateGray block mt-1">~18 €/m³ Deponiegebühr gespart</span>
+                        </div>
+                        <div class="bg-creamBg p-5 rounded-2xl border border-gray-200">
+                            <span class="text-xs text-slateGray font-bold uppercase tracking-wider block">CO₂-Reduktion</span>
+                            <span id="co2Savings" class="text-3xl font-black text-terra mt-1 block">225 kg CO₂</span>
+                            <span class="text-[11px] text-slateGray block mt-1">Durch kurze Transportwege</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="ueber-uns" class="bg-creamBg py-20 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mb-14">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">Philosophie & Vision</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Über das Projekt BauStoffWechsel</h2>
+                <p class="text-slateGray text-lg mt-4 leading-relaxed">
+                    Jedes Jahr entstehen auf Baustellen Tonnen von wertvollem Aushub, Mutterboden und Restbaustoffen. Oft landete intaktes Material teuer auf der Deponie – während Nachbarn wenige Kilometer weiter dasselbe Material neu kaufen mussten.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-moss text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">1</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Die Idee</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Eine direkte digitale Brücke zwischen Angebot und Nachfrage vor Ort schaffen. Egal ob Häuslebauer, Gala-Bauer oder Bauunternehmen – Baustoffe werden lokal weitergegeben statt entsorgt.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-terra text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">2</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Ökologischer Vorteil</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Schonung natürlicher Ressourcen, Entlastung überfüllter Deponien und massive Reduktion von CO₂-Emissionen durch den Wegfall langer LKW-Transportwege.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-slateDark text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">3</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Abgrenzung zu Mitbewerbern</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Keine unübersichtliche Flut an Kleinanzeigen und keine teure, komplexe B2B-Software. BauStoffWechsel fokussiert sich rein auf Baustoffe mit präziser Umkreissuche und Mengeneinheiten.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slateGray font-medium">
+            <div class="flex items-center space-x-2">
+                <span class="font-bold text-slateDark text-sm">BaustoffWechsel</span>
+                <span>&copy; 2026. Alle Rechte vorbehalten.</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-moss transition">Impressum</a>
+                <a href="#" class="hover:text-moss transition">Datenschutz</a>
+                <a href="#" class="hover:text-moss transition">AGB</a>
+                <button onclick="resetCookieConsent()" class="hover:text-moss transition text-slateGray underline cursor-pointer">Cookie-Einstellungen</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 border border-gray-200 shadow-2xl relative">
+            <button onclick="toggleLoginModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <div class="mb-6">
+                <h3 class="text-2xl font-black text-slateDark">Willkommen zurück!</h3>
+                <p class="text-sm text-slateGray mt-1">Melde dich an, um Inserate zu verwalten oder Anfragen zu senden.</p>
+            </div>
+            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Login-Funktion wird vorbereitet!');">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">E-Mail Adresse</label>
+                    <input type="email" placeholder="name@beispiel.de" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Passwort</label>
+                    <input type="password" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <label class="flex items-center text-slateGray cursor-pointer">
+                        <input type="checkbox" class="rounded border-gray-300 text-moss focus:ring-moss mr-2"> Angemeldet bleiben
+                    </label>
+                    <a href="#" class="text-moss font-bold hover:underline">Passwort vergessen?</a>
+                </div>
+                <button type="submit" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3.5 rounded-xl text-sm shadow-md transition duration-200 cursor-pointer">
+                    Anmelden
+                </button>
+            </form>
+            <div class="mt-6 pt-6 border-t border-gray-100 text-center text-xs text-slateGray">
+                Noch kein Konto? <a href="#" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieBanner" class="fixed bottom-4 right-4 left-4 md:left-auto md:max-w-md bg-white border border-gray-200 rounded-3xl p-6 shadow-2xl z-50">
+        <div class="flex items-start space-x-3 mb-3">
+            <div class="w-9 h-9 bg-warmSand text-moss rounded-xl flex items-center justify-center font-bold text-lg shrink-0">
+                🍪
+            </div>
+            <div>
+                <h4 class="font-bold text-slateDark text-base">Datenschutz & Cookies</h4>
+                <p class="text-xs text-slateGray mt-1 leading-relaxed">
+                    Wir nutzen Cookies, um die Nutzung auf BauStoffWechsel optimal zu gestalten und Kartenfunktionen bereitzustellen.
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-2 mt-4">
+            <button onclick="acceptCookies('all')" class="bg-moss hover:bg-mossDark text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
+                Alle akzeptieren
+            </button>
+            <button onclick="acceptCookies('essential')" class="bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
+                Nur essenzielle
+            </button>
+        </div>
+        <div class="mt-2 text-center">
+            <button onclick="toggleCookieModal(true)" class="text-[11px] text-slateGray underline hover:text-moss cursor-pointer">
+                Cookie-Details / Einstellungen anpassen
+            </button>
+        </div>
+    </div>
+
+    <!-- Cookie Details Modal -->
+    <div id="cookieModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleCookieModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            
+            <div class="mb-6">
+                <h3 class="text-2xl font-black text-slateDark">Cookie-Einstellungen</h3>
+                <p class="text-sm text-slateGray mt-1">Hier kannst du auswählen, welche Cookies du zulässt. Weitere Informationen findest du in unserer Datenschutzerklärung.</p>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <!-- Essenzielle Cookies -->
+                <div class="bg-
