@@ -93,7 +93,7 @@
         </div>
     </header>
 
-    <!-- Hero Section mit neuem Bagger-Bild -->
+    <!-- Hero Section mit generiertem Bild -->
     <section id="hero" class="relative bg-gradient-to-b from-warmSand to-creamBg py-16 lg:py-20 border-b border-gray-200 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -117,7 +117,7 @@
                 <!-- Bild Spalte -->
                 <div class="lg:col-span-5 relative">
                     <div class="relative mx-auto max-w-md lg:max-w-none rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white">
-                        <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=1200&q=80" alt="Bagger bei der Erdarbeit mit Mutterboden" class="w-full h-80 sm:h-96 lg:h-[420px] object-cover">
+                        <img src="watermarked_img_13816361795864877896.jpg" alt="Bagger bei Erdarbeiten und Mutterboden auf der Baustelle" class="w-full h-80 sm:h-96 lg:h-[420px] object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slateDark/40 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-white/50 shadow-lg">
                             <div class="flex items-center space-x-3">
@@ -344,10 +344,10 @@
                 <span>&copy; 2026. Alle Rechte vorbehalten.</span>
             </div>
             <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
-                <button type="button" onclick="toggleLegalModal('impressumModal')" class="hover:text-moss transition cursor-pointer">Impressum</button>
-                <button type="button" onclick="toggleLegalModal('datenschutzModal')" class="hover:text-moss transition cursor-pointer">Datenschutz</button>
-                <button type="button" onclick="toggleLegalModal('agbModal')" class="hover:text-moss transition cursor-pointer">AGB</button>
-                <button id="btnFooterCookies" type="button" class="hover:text-moss transition text-slateGray underline cursor-pointer">Cookie-Einstellungen</button>
+                <button id="btnFooterImpressum" type="button" class="hover:text-moss transition cursor-pointer border-0 bg-transparent">Impressum</button>
+                <button id="btnFooterDatenschutz" type="button" class="hover:text-moss transition cursor-pointer border-0 bg-transparent">Datenschutz</button>
+                <button id="btnFooterAGB" type="button" class="hover:text-moss transition cursor-pointer border-0 bg-transparent">AGB</button>
+                <button id="btnFooterCookies" type="button" class="hover:text-moss transition text-slateGray underline cursor-pointer border-0 bg-transparent">Cookie-Einstellungen</button>
             </div>
         </div>
     </footer>
@@ -355,7 +355,7 @@
     <!-- MODAL 1: Login Modal -->
     <div id="loginModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-8 border border-gray-200 shadow-2xl relative">
-            <button id="btnCloseLogin" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button id="btnCloseLogin" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer border-0 bg-transparent">✕</button>
             <div class="mb-6">
                 <h3 class="text-2xl font-black text-slateDark">Willkommen zurück!</h3>
                 <p class="text-sm text-slateGray mt-1">Melde dich an, um Inserate zu verwalten oder Anfragen bei <strong>baustoffwechsel</strong> zu senden.</p>
@@ -373,14 +373,14 @@
                     <label class="flex items-center text-slateGray cursor-pointer">
                         <input type="checkbox" class="rounded border-gray-300 text-moss focus:ring-moss mr-2"> Angemeldet bleiben
                     </label>
-                    <a href="#" onclick="showToast('Passwort-Rücksetzung angefordert.'); return false;" class="text-moss font-bold hover:underline">Passwort vergessen?</a>
+                    <a href="#" id="btnForgotPassword" class="text-moss font-bold hover:underline">Passwort vergessen?</a>
                 </div>
                 <button type="submit" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3.5 rounded-xl text-sm shadow-md transition duration-200 cursor-pointer">
                     Anmelden
                 </button>
             </form>
             <div class="mt-6 pt-6 border-t border-gray-100 text-center text-xs text-slateGray">
-                Noch kein Konto? <a href="#" onclick="showToast('Registrierung derzeit im Betatest.'); return false;" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
+                Noch kein Konto? <a href="#" id="btnRegister" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
             </div>
         </div>
     </div>
@@ -388,7 +388,7 @@
     <!-- MODAL 2: Inserat erstellen Modal -->
     <div id="inseratModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button id="btnCloseInserat" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button id="btnCloseInserat" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer border-0 bg-transparent">✕</button>
             <div class="mb-6">
                 <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Kostenlos auf baustoffwechsel</span>
                 <h3 class="text-2xl font-black text-slateDark">Neues Inserat aufgeben</h3>
@@ -459,10 +459,10 @@
             </div>
         </div>
         <div class="flex items-center space-x-2 pt-2 border-t border-gray-100">
-            <button id="btnAcceptCookies" type="button" class="flex-1 bg-moss hover:bg-mossDark text-white text-xs font-bold py-2.5 rounded-xl shadow-xs transition cursor-pointer">
+            <button id="btnAcceptCookies" type="button" class="flex-1 bg-moss hover:bg-mossDark text-white text-xs font-bold py-2.5 rounded-xl shadow-xs transition cursor-pointer border-0">
                 Alle akzeptieren
             </button>
-            <button id="btnDeclineCookies" type="button" class="flex-1 bg-warmSand hover:bg-gray-200 text-slateDark text-xs font-bold py-2.5 rounded-xl transition cursor-pointer">
+            <button id="btnDeclineCookies" type="button" class="flex-1 bg-warmSand hover:bg-gray-200 text-slateDark text-xs font-bold py-2.5 rounded-xl transition cursor-pointer border-0">
                 Nur essenzielle
             </button>
         </div>
@@ -471,7 +471,7 @@
     <!-- Legal Modal: Impressum -->
     <div id="impressumModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
-            <button type="button" onclick="toggleLegalModal('impressumModal')" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button id="btnCloseImpressum" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer border-0 bg-transparent">✕</button>
             <h3 class="text-2xl font-black text-slateDark mb-4">Impressum</h3>
             <div class="overflow-y-auto modal-scroll pr-3 space-y-4 text-sm text-slateGray leading-relaxed">
                 <p><strong>Angaben gemäß § 5 TMG:</strong></p>
@@ -486,7 +486,7 @@
     <!-- Legal Modal: Datenschutz -->
     <div id="datenschutzModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
-            <button type="button" onclick="toggleLegalModal('datenschutzModal')" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button id="btnCloseDatenschutz" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer border-0 bg-transparent">✕</button>
             <h3 class="text-2xl font-black text-slateDark mb-4">Datenschutzerklärung</h3>
             <div class="overflow-y-auto modal-scroll pr-3 space-y-4 text-sm text-slateGray leading-relaxed">
                 <p><strong>1. Datenschutz auf einen Blick</strong><br>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
@@ -499,7 +499,7 @@
     <!-- Legal Modal: AGB -->
     <div id="agbModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
-            <button type="button" onclick="toggleLegalModal('agbModal')" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button id="btnCloseAGB" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer border-0 bg-transparent">✕</button>
             <h3 class="text-2xl font-black text-slateDark mb-4">Allgemeine Geschäftsbedingungen</h3>
             <div class="overflow-y-auto modal-scroll pr-3 space-y-4 text-sm text-slateGray leading-relaxed">
                 <p><strong>1. Geltungsbereich</strong><br>Für die Nutzung der Plattform baustoffwechsel gelten die nachfolgenden Bedingungen.</p>
@@ -555,7 +555,6 @@
 
         // Initialize Leaflet Map
         function initMap() {
-            // Center around Schmallenberg / Sauerland region
             map = L.map('map').setView([51.15, 8.18], 11);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -601,17 +600,42 @@
             });
         }
 
-        // Modals & Navigation Handling
+        // Modals & Event Handling
         function setupModals() {
             const loginModal = document.getElementById('loginModal');
             const inseratModal = document.getElementById('inseratModal');
             const cookieBanner = document.getElementById('cookieBanner');
+            const impressumModal = document.getElementById('impressumModal');
+            const datenschutzModal = document.getElementById('datenschutzModal');
+            const agbModal = document.getElementById('agbModal');
 
+            // Login Modal
             document.getElementById('btnOpenLogin').onclick = () => loginModal.classList.remove('hidden');
             document.getElementById('btnCloseLogin').onclick = () => loginModal.classList.add('hidden');
 
+            // Inserat Modal
             document.getElementById('btnOpenInserat').onclick = () => inseratModal.classList.remove('hidden');
             document.getElementById('btnCloseInserat').onclick = () => inseratModal.classList.add('hidden');
+
+            // Footer Legal Modals
+            document.getElementById('btnFooterImpressum').onclick = () => impressumModal.classList.remove('hidden');
+            document.getElementById('btnCloseImpressum').onclick = () => impressumModal.classList.add('hidden');
+
+            document.getElementById('btnFooterDatenschutz').onclick = () => datenschutzModal.classList.remove('hidden');
+            document.getElementById('btnCloseDatenschutz').onclick = () => datenschutzModal.classList.add('hidden');
+
+            document.getElementById('btnFooterAGB').onclick = () => agbModal.classList.remove('hidden');
+            document.getElementById('btnCloseAGB').onclick = () => agbModal.classList.add('hidden');
+
+            // Helper Links inside Login Modal
+            document.getElementById('btnForgotPassword').onclick = (e) => {
+                e.preventDefault();
+                showToast('Passwort-Rücksetzung angefordert.');
+            };
+            document.getElementById('btnRegister').onclick = (e) => {
+                e.preventDefault();
+                showToast('Registrierung derzeit im Betatest.');
+            };
 
             // Form Submit Events
             document.getElementById('formLogin').onsubmit = (e) => {
@@ -644,13 +668,6 @@
             document.getElementById('btnFilterSearch').onclick = () => {
                 showToast('Suchergebnisse aktualisiert.');
             };
-        }
-
-        function toggleLegalModal(modalId) {
-            const el = document.getElementById(modalId);
-            if (el) {
-                el.classList.toggle('hidden');
-            }
         }
 
         function showContactNotice() {
