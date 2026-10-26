@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BauStoffWechsel - Regionale Kreislaufwirtschaft für Baustoffe & Aushub</title>
+    <title>baustoffwechsel - Regionale Kreislaufwirtschaft für Baustoffe & Aushub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -54,9 +54,8 @@
                     </svg>
                 </div>
                 <div>
-                    <div class="flex items-center text-2xl font-black tracking-tight">
-                        <span class="text-slateDark">BauStoff</span>
-                        <span class="text-moss">Wechsel</span>
+                    <div class="flex items-center text-2xl font-black tracking-tight text-slateDark">
+                        <span>baustoffwechsel</span>
                     </div>
                     <span class="text-[11px] text-slateGray font-semibold tracking-wider uppercase block -mt-1">Regionale Kreislaufwirtschaft</span>
                 </div>
@@ -96,7 +95,7 @@
                     Baustoffe & Aushub direkt vor Ort tauschen.
                 </h1>
                 <p class="text-slateGray text-lg sm:text-xl mt-6 font-normal leading-relaxed">
-                    Vermeide teure Deponiegebühren und lange Transportwege. Finde wiederverwertbare Erden, Schotter und Baustoffe in deiner unmittelbaren Nachbarschaft.
+                    Vermeide teure Deponiegebühren und lange Transportwege. Finde Mutterboden, Schotter und Baustoffe in deiner unmittelbaren Nachbarschaft.
                 </p>
             </div>
         </div>
@@ -268,7 +267,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mb-14">
                 <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">Philosophie & Vision</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Über das Projekt BauStoffWechsel</h2>
+                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Über das Projekt baustoffwechsel</h2>
                 <p class="text-slateGray text-lg mt-4 leading-relaxed">
                     Jedes Jahr entstehen auf Baustellen Tonnen von wertvollem Aushub, Mutterboden und Restbaustoffen. Oft landete intaktes Material teuer auf der Deponie – während Nachbarn wenige Kilometer weiter dasselbe Material neu kaufen mussten.
                 </p>
@@ -295,7 +294,7 @@
                     <div class="w-12 h-12 bg-slateDark text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">3</div>
                     <h3 class="font-extrabold text-xl text-slateDark mb-3">Abgrenzung zu Mitbewerbern</h3>
                     <p class="text-sm text-slateGray leading-relaxed">
-                        Keine unübersichtliche Flut an Kleinanzeigen und keine teure, komplexe B2B-Software. BauStoffWechsel fokussiert sich rein auf Baustoffe mit präziser Umkreissuche und Mengeneinheiten.
+                        Keine unübersichtliche Flut an Kleinanzeigen und keine teure, komplexe B2B-Software. baustoffwechsel fokussiert sich rein auf Baustoffe mit präziser Umkreissuche und Mengeneinheiten.
                     </p>
                 </div>
             </div>
@@ -306,7 +305,7 @@
     <footer class="bg-white border-t border-gray-200 py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slateGray font-medium">
             <div class="flex items-center space-x-2">
-                <span class="font-bold text-slateDark text-sm">BauStoffWechsel</span>
+                <span class="font-bold text-slateDark text-sm">baustoffwechsel</span>
                 <span>&copy; 2026. Alle Rechte vorbehalten.</span>
             </div>
             <div class="flex space-x-6">
@@ -360,7 +359,7 @@
             <div>
                 <h4 class="font-bold text-slateDark text-base">Datenschutz & Cookies</h4>
                 <p class="text-xs text-slateGray mt-1 leading-relaxed">
-                    Wir nutzen Cookies, um die Nutzung auf BauStoffWechsel optimal zu gestalten und Kartenfunktionen bereitzustellen.
+                    Wir nutzen Cookies, um die Nutzung auf baustoffwechsel optimal zu gestalten und Kartenfunktionen bereitzustellen.
                 </p>
             </div>
         </div>
@@ -381,144 +380,4 @@
 
     <!-- Cookie Details Modal -->
     <div id="cookieModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleCookieModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
-            
-            <div class="mb-6">
-                <h3 class="text-2xl font-black text-slateDark">Cookie-Einstellungen</h3>
-                <p class="text-sm text-slateGray mt-1">Hier kannst du auswählen, welche Cookies du zulässt. Weitere Informationen findest du in unserer Datenschutzerklärung.</p>
-            </div>
-
-            <div class="space-y-4 text-xs">
-                <!-- Essenzielle Cookies -->
-                <div class="bg-creamBg p-4 rounded-2xl border border-gray-200">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="font-bold text-slateDark text-sm">Essenzielle Cookies</span>
-                        <input type="checkbox" checked disabled class="rounded border-gray-300 text-moss cursor-not-allowed">
-                    </div>
-                    <p class="text-slateGray leading-relaxed">
-                        Diese Cookies sind für die Grundfunktionen der Website zwingend erforderlich (z. B. Speicherung deiner Cookie-Auswahl).
-                    </p>
-                </div>
-
-                <!-- Funktionale / Statistik Cookies -->
-                <div class="bg-creamBg p-4 rounded-2xl border border-gray-200">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="font-bold text-slateDark text-sm">Statistik & Karten (Leaflet)</span>
-                        <input type="checkbox" id="optionalCookies" class="rounded border-gray-300 text-moss focus:ring-moss cursor-pointer" checked>
-                    </div>
-                    <p class="text-slateGray leading-relaxed">
-                        Ermöglichen die reibungslose Darstellung der interaktiven Landkarten und helfen uns, die Website-Performance zu verbessern.
-                    </p>
-                </div>
-            </div>
-
-            <div class="mt-8 flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100">
-                <button onclick="saveCookiePreferences()" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3 rounded-xl text-xs transition duration-200 cursor-pointer">
-                    Auswahl speichern
-                </button>
-                <button onclick="acceptCookies('all')" class="w-full bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-3 rounded-xl text-xs transition duration-200 cursor-pointer">
-                    Alle akzeptieren
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Leaflet JS & Scripts -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // Leaflet Map Init
-        const map = L.map('map').setView([51.15, 8.28], 11);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap'
-        }).addTo(map);
-
-        L.marker([51.16, 8.27]).addTo(map).bindPopup('<b>Mutterboden</b><br>Zu verschenken');
-        L.marker([51.12, 8.32]).addTo(map).bindPopup('<b>Betonpflaster</b><br>80 € / Palette');
-
-        // Calculator Logic
-        const slider = document.getElementById('volumeSlider');
-        const volumeVal = document.getElementById('volumeValue');
-        const moneySavings = document.getElementById('moneySavings');
-        const co2Savings = document.getElementById('co2Savings');
-
-        if (slider) {
-            slider.addEventListener('input', function() {
-                const m3 = parseInt(this.value);
-                volumeVal.innerText = m3;
-                moneySavings.innerText = (m3 * 18).toLocaleString('de-DE') + ' €';
-                co2Savings.innerText = (m3 * 9).toLocaleString('de-DE') + ' kg CO₂';
-            });
-        }
-
-        // Login Modal Trigger
-        function toggleLoginModal(show) {
-            const modal = document.getElementById('loginModal');
-            if (modal) {
-                if (show) modal.classList.remove('hidden');
-                else modal.classList.add('hidden');
-            }
-        }
-
-        // Cookie Modal Trigger
-        function toggleCookieModal(show) {
-            const modal = document.getElementById('cookieModal');
-            if (modal) {
-                if (show) modal.classList.remove('hidden');
-                else modal.classList.add('hidden');
-            }
-        }
-
-        // Scroll-Spy & Active Nav Highlighting
-        const sections = document.querySelectorAll('section[id], main[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 130;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-section') === current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // Cookie Banner Visibility Logic
-        window.addEventListener('DOMContentLoaded', () => {
-            const consent = localStorage.getItem('bsw_cookie_consent');
-            const banner = document.getElementById('cookieBanner');
-            if (consent && banner) {
-                banner.classList.add('hidden');
-            }
-        });
-
-        function acceptCookies(type) {
-            localStorage.setItem('bsw_cookie_consent', type);
-            const banner = document.getElementById('cookieBanner');
-            const modal = document.getElementById('cookieModal');
-            if (banner) banner.classList.add('hidden');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function saveCookiePreferences() {
-            const optional = document.getElementById('optionalCookies').checked;
-            localStorage.setItem('bsw_cookie_consent', optional ? 'custom_all' : 'essential_only');
-            document.getElementById('cookieBanner').classList.add('hidden');
-            document.getElementById('cookieModal').classList.add('hidden');
-        }
-
-        function resetCookieConsent() {
-            localStorage.removeItem('bsw_cookie_consent');
-            const banner = document.getElementById('cookieBanner');
-            if (banner) banner.classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+        <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-2
