@@ -61,14 +61,14 @@
                 </div>
             </a>
 
-            <!-- One-Page Navigation Links -->
+            <!-- Navigation Links -->
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
                 <a href="#marktplatz" data-section="marktplatz" class="nav-link active text-slateGray hover:text-moss">Marktplatz</a>
                 <a href="#rechner" data-section="rechner" class="nav-link text-slateGray hover:text-moss">Ersparnis-Rechner</a>
                 <a href="#ueber-uns" data-section="ueber-uns" class="nav-link text-slateGray hover:text-moss">Über das Projekt</a>
             </nav>
 
-            <!-- Login & Action Button Area -->
+            <!-- Action Buttons -->
             <div class="flex items-center space-x-3 sm:space-x-4">
                 <button onclick="toggleLoginModal(true)" class="text-slateDark hover:text-moss font-bold text-sm px-3 py-2 flex items-center space-x-1.5 transition duration-200 cursor-pointer">
                     <svg class="w-5 h-5 text-slateGray" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -166,7 +166,7 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-moss text-lg">Zu verschenken</span>
                             </div>
-                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                            <button onclick="showToast('Kontaktanfrage gesendet!')" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -198,7 +198,7 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
                             </div>
-                            <button class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                            <button onclick="showToast('Kontaktanfrage gesendet!')" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -266,7 +266,6 @@
     <section id="ueber-uns" class="bg-creamBg py-20 border-b border-gray-200 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- Header mit Logo-Fokus & Mission -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
                 <div class="lg:col-span-8 space-y-4">
                     <span class="text-xs font-extrabold text-moss uppercase tracking-wider block">Vision & Kreislaufwirtschaft</span>
@@ -278,7 +277,6 @@
                     </p>
                 </div>
 
-                <!-- Großes integriertes Marken-Icon -->
                 <div class="lg:col-span-4 flex justify-center">
                     <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-soft flex flex-col items-center text-center relative">
                         <div class="w-28 h-28 mb-4 flex items-center justify-center">
@@ -298,7 +296,7 @@
                 </div>
             </div>
 
-            <!-- Interaktive Schnittstellen-Grafik (Network Grid) -->
+            <!-- Network Grid -->
             <div class="mb-16">
                 <div class="text-center max-w-2xl mx-auto mb-10">
                     <h3 class="font-extrabold text-2xl text-slateDark">Nahtlose Schnittstelle für alle Akteure</h3>
@@ -306,7 +304,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-                    <!-- Schnittstelle 1: Privat & Privat -->
                     <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm relative flex flex-col justify-between">
                         <div class="flex items-center justify-between mb-4">
                             <span class="bg-moss/10 text-moss text-xs font-black px-3 py-1 rounded-full uppercase">Privat ⇄ Privat</span>
@@ -314,11 +311,10 @@
                         </div>
                         <h4 class="font-extrabold text-lg text-slateDark mb-2">Vom Nachbarn für den Nachbarn</h4>
                         <p class="text-xs text-slateGray leading-relaxed">
-                            Der eine baut den Pool und braucht wohin mit dem Mutterboden – der andere legt ein neues Hochbeet an. Direkter Tausch ohne Zwischenhändler.
+                            Der eine baut den Pool und sucht Abnehmer für Mutterboden – der andere legt ein Hochbeet an. Direkter Tausch ohne Zwischenhändler.
                         </p>
                     </div>
 
-                    <!-- Schnittstelle 2: Privat & Gewerbe -->
                     <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm relative flex flex-col justify-between border-moss/30 ring-2 ring-moss/10">
                         <div class="flex items-center justify-between mb-4">
                             <span class="bg-terra/10 text-terra text-xs font-black px-3 py-1 rounded-full uppercase">Privat ⇄ Gewerbe</span>
@@ -326,11 +322,10 @@
                         </div>
                         <h4 class="font-extrabold text-lg text-slateDark mb-2">Restmengen & Nahversorgung</h4>
                         <p class="text-xs text-slateGray leading-relaxed">
-                            Gewerbliche Galabauer geben übrig gebliebene Steine oder Paletten günstig an Privatleute ab oder sichern sich sauberen Aushub für Bauprojekte.
+                            Gewerbliche Galabauer geben übrig gebliebene Pflastersteine günstig an Privatleute ab oder sichern sich sauberen Aushub für Bauprojekte.
                         </p>
                     </div>
 
-                    <!-- Schnittstelle 3: Gewerbe & Gewerbe -->
                     <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm relative flex flex-col justify-between">
                         <div class="flex items-center justify-between mb-4">
                             <span class="bg-slateDark/10 text-slateDark text-xs font-black px-3 py-1 rounded-full uppercase">Gewerbe ⇄ Gewerbe</span>
@@ -344,7 +339,7 @@
                 </div>
             </div>
 
-            <!-- Kennzahlenblock (Makro-Nutzen, unterscheidet sich vom Rechner) -->
+            <!-- Kennzahlenblock -->
             <div class="bg-gradient-to-r from-slateDark to-slateDark/95 text-white p-8 lg:p-10 rounded-3xl shadow-xl">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slateGray/30">
                     <div class="pt-4 md:pt-0">
@@ -384,6 +379,12 @@
         </div>
     </footer>
 
+    <!-- Toast Notification Banner -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 bg-slateDark text-white px-5 py-3.5 rounded-2xl shadow-2xl z-50 flex items-center space-x-3 hidden transition-all duration-300 transform translate-y-2">
+        <span class="text-lg">✨</span>
+        <span id="toastText" class="text-xs font-semibold"></span>
+    </div>
+
     <!-- Login Modal -->
     <div id="loginModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-8 border border-gray-200 shadow-2xl relative">
@@ -392,7 +393,7 @@
                 <h3 class="text-2xl font-black text-slateDark">Willkommen zurück!</h3>
                 <p class="text-sm text-slateGray mt-1">Melde dich an, um Inserate zu verwalten oder Anfragen zu senden.</p>
             </div>
-            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Login-Funktion wird vorbereitet!'); toggleLoginModal(false);">
+            <form class="space-y-4" onsubmit="event.preventDefault(); showToast('Login erfolgreich!'); toggleLoginModal(false);">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">E-Mail Adresse</label>
                     <input type="email" placeholder="name@beispiel.de" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
@@ -424,10 +425,10 @@
             
             <div class="mb-6">
                 <h3 class="text-2xl font-black text-slateDark">Neues Inserat erstellen</h3>
-                <p class="text-sm text-slateGray mt-1">Gib Baustoffe oder Aushub einfach weiter.</p>
+                <p class="text-sm text-slateGray mt-1">Gib Baustoffe oder Aushub einfach in deiner Region weiter.</p>
             </div>
 
-            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Inserat wurde eingereicht!'); toggleInseratModal(false);">
+            <form class="space-y-4" onsubmit="event.preventDefault(); showToast('Inserat erfolgreich veröffentlicht!'); toggleInseratModal(false);">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Titel des Inserats</label>
                     <input type="text" placeholder="z. B. 10 m³ gesiebter Mutterboden" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg" required>
@@ -470,7 +471,7 @@
             <div>
                 <h4 class="font-bold text-slateDark text-base">Datenschutz & Cookies</h4>
                 <p class="text-xs text-slateGray mt-1 leading-relaxed">
-                    Wir nutzen Cookies, um die Nutzung auf baustoffwechsel optimal zu gestalten und Kartenfunktionen bereitzustellen.
+                    Wir nutzen Cookies, um die Nutzung auf baustoffwechsel optimal zu gestalten und Kartenfunktionen bereit zustellen.
                 </p>
             </div>
         </div>
@@ -536,7 +537,7 @@
         <div class="bg-white rounded-3xl max-w-2xl w-full p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] overflow-y-auto">
             <button onclick="toggleLegalModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
             <div id="legalContent" class="prose prose-sm max-w-none">
-                <!-- Dynamischer Inhalt über JavaScript -->
+                <!-- Dynamischer Inhalt -->
             </div>
         </div>
     </div>
@@ -553,7 +554,7 @@
         L.marker([51.16, 8.27]).addTo(map).bindPopup('<b>Mutterboden</b><br>Zu verschenken');
         L.marker([51.12, 8.32]).addTo(map).bindPopup('<b>Betonpflaster</b><br>80 € / Palette');
 
-        // Calculator Logic
+        // Live Rechner Logic
         const slider = document.getElementById('volumeSlider');
         const volumeVal = document.getElementById('volumeValue');
         const moneySavings = document.getElementById('moneySavings');
@@ -568,7 +569,20 @@
             });
         }
 
-        // Modal Functions
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const text = document.getElementById('toastText');
+            if (toast && text) {
+                text.innerText = message;
+                toast.classList.remove('hidden', 'translate-y-2');
+                setTimeout(() => {
+                    toast.classList.add('hidden', 'translate-y-2');
+                }, 3000);
+            }
+        }
+
+        // Modal Controls
         function toggleLoginModal(show) {
             const modal = document.getElementById('loginModal');
             if (modal) modal.classList.toggle('hidden', !show);
@@ -604,40 +618,43 @@
                         57392 Schmallenberg / Lennestadt<br>
                         Deutschland
                     </p>
+                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">Vertreten durch</h4>
+                    <p class="text-sm text-slateGray leading-relaxed">Die Gründer der Plattform baustoffwechsel.</p>
                     <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">Kontakt</h4>
                     <p class="text-sm text-slateGray">E-Mail: kontakt@baustoffwechsel.de</p>
-                    <p class="text-xs text-slateGray mt-4 pt-4 border-t border-gray-100">
-                        Hinweis: Die Plattform befindet sich derzeit im Aufbau. Alle Inserate dienen Demonstrationszwecken.
+                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">Verbraucherstreitbeilegung</h4>
+                    <p class="text-xs text-slateGray leading-relaxed">
+                        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
                     </p>
                 `;
             } else if (type === 'datenschutz') {
                 html = `
                     <h3 class="text-2xl font-black text-slateDark mb-4">Datenschutzerklärung</h3>
                     <p class="text-sm text-slateGray leading-relaxed">
-                        Der Schutz deiner persönlichen Daten ist uns ein wichtiges Anliegen. Nachfolgend informieren wir über die Verarbeitung personenbezogener Daten auf baustoffwechsel.
+                        Der Schutz deiner persönlichen Daten ist uns ein wichtiges Anliegen. Nachfolgend informieren wir ausführlich über die Verarbeitung personenbezogener Daten auf baustoffwechsel.
                     </p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">1. Lokale Speicherung (Cookies & LocalStorage)</h4>
+                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">1. Speicherung von Präferenzen (LocalStorage / Cookies)</h4>
                     <p class="text-xs text-slateGray leading-relaxed">
-                        Wir verwenden technisch notwendige Browserspeicherungen (LocalStorage), um deine Cookie-Präferenzen zu sichern.
+                        Wir verwenden lokales Browserspeichern (LocalStorage), um deine Cookie-Einwilligung dauerhaft auf deinem Endgerät zu sichern. Dies geschieht auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
                     </p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">2. Kartenanzeige (OpenStreetMap / Leaflet)</h4>
+                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">2. Einbindung interaktiver Karten (Leaflet / OpenStreetMap)</h4>
                     <p class="text-xs text-slateGray leading-relaxed">
-                        Für die regionale Umkreissuche binden wir Kacheln von OpenStreetMap ein. Dabei kann deine IP-Adresse an deren Server übertragen werden.
+                        Zur Darstellung regionaler Angebote nutzen wir OpenStreetMap. Beim Aufruf der Karte wird deine IP-Adresse an Server der OpenStreetMap Foundation übertragen.
                     </p>
                 `;
             } else if (type === 'agb') {
                 html = `
-                    <h3 class="text-2xl font-black text-slateDark mb-4">Allgemeine Geschäftsbedingungen</h3>
+                    <h3 class="text-2xl font-black text-slateDark mb-4">Allgemeine Geschäftsbedingungen (AGB)</h3>
                     <p class="text-sm text-slateGray leading-relaxed">
-                        baustoffwechsel stellt einen Vermittlungsmarktplatz für den Austausch von Baustoffen, Mutterboden und Aushub bereit.
+                        baustoffwechsel ist ein regionaler Vermittlungsmarktplatz für die Kreislaufwirtschaft von Baustoffen, Mutterboden und Aushub zwischen Privatpersonen und Unternehmen.
                     </p>
                     <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">1. Geltungsbereich</h4>
                     <p class="text-xs text-slateGray leading-relaxed">
                         Diese Nutzungshinweise gelten für die Nutzung der Plattform durch Privatpersonen und Gewerbetreibende.
                     </p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">2. Haftung für Inserate</h4>
+                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">2. Verantwortlichkeit für Inserate</h4>
                     <p class="text-xs text-slateGray leading-relaxed">
-                        Nutzer sind für die Richtigkeit der Mengenangaben und Materialqualitäten selbst verantwortlich. baustoffwechsel übernimmt keine Gewähr für die Güte der angebotenen Stoffe.
+                        Inserenten sind für die Richtigkeit der Angaben zu Menge, Beschaffenheit und Belastung des Materials selbst verantwortlich. baustoffwechsel übernimmt keine Gewähr für die Güte der angebotenen Stoffe.
                     </p>
                 `;
             }
@@ -682,6 +699,7 @@
             const modal = document.getElementById('cookieModal');
             if (banner) banner.classList.add('hidden');
             if (modal) modal.classList.add('hidden');
+            showToast('Cookie-Einstellungen gespeichert');
         }
 
         function saveCookiePreferences() {
@@ -689,12 +707,14 @@
             localStorage.setItem('bsw_cookie_consent', optional ? 'custom_all' : 'essential_only');
             document.getElementById('cookieBanner').classList.add('hidden');
             document.getElementById('cookieModal').classList.add('hidden');
+            showToast('Cookie-Präferenzen aktualisiert');
         }
 
         function resetCookieConsent() {
             localStorage.removeItem('bsw_cookie_consent');
             const banner = document.getElementById('cookieBanner');
             if (banner) banner.classList.remove('hidden');
+            showToast('Cookie-Einstellungen zurückgesetzt');
         }
     </script>
 </body>
