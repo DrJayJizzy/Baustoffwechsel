@@ -34,9 +34,17 @@
         html { scroll-padding-top: 5rem; }
         .nav-link { transition: all 0.2s ease-in-out; }
         .nav-link.active { color: #5B7837; font-weight: 700; border-bottom: 2px solid #5B7837; padding-bottom: 2px; }
+        /* Custom scrollbar for legal modals */
+        .modal-scroll::-webkit-scrollbar { width: 6px; }
+        .modal-scroll::-webkit-scrollbar-track { background: #F8F9FA; border-radius: 8px; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: #CBD5E0; border-radius: 8px; }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #A0AEC0; }
     </style>
 </head>
 <body class="bg-creamBg text-slateDark font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Notification Toast Container -->
+    <div id="toastContainer" class="fixed top-24 right-4 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
     <!-- Header / Navigation -->
     <header class="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40 shadow-xs">
@@ -110,11 +118,11 @@
             <div>
                 <label for="filterCategory" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Kategorie</label>
                 <select id="filterCategory" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
-                    <option>Alle Kategorien</option>
-                    <option>Aushub & Mutterboden</option>
-                    <option>Kies, Sand & Schotter</option>
-                    <option>Pflastersteine & Ziegel</option>
-                    <option>Holz & Baustoffe</option>
+                    <option value="">Alle Kategorien</option>
+                    <option value="Aushub & Mutterboden">Aushub & Mutterboden</option>
+                    <option value="Kies, Sand & Schotter">Kies, Sand & Schotter</option>
+                    <option value="Pflastersteine & Ziegel">Pflastersteine & Ziegel</option>
+                    <option value="Holz & Baustoffe">Holz & Baustoffe</option>
                 </select>
             </div>
             <div>
@@ -124,13 +132,13 @@
             <div>
                 <label for="filterRadius" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Umkreis</label>
                 <select id="filterRadius" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
-                    <option>Bis 10 km</option>
-                    <option selected>Bis 25 km</option>
-                    <option>Bis 50 km</option>
+                    <option value="10">Bis 10 km</option>
+                    <option value="25" selected>Bis 25 km</option>
+                    <option value="50">Bis 50 km</option>
                 </select>
             </div>
             <div class="flex items-end">
-                <button type="button" class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer">
+                <button id="btnFilterSearch" type="button" class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     <span>Suchen & Filtern</span>
                 </button>
@@ -139,10 +147,10 @@
 
         <!-- Content Grid: Listings & Map -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-5">
+            <div class="lg:col-span-2 space-y-5" id="listingsContainer">
                 <div class="flex justify-between items-center mb-2">
                     <h2 class="font-black text-2xl text-slateDark">Aktuelle Angebote in der Nähe</h2>
-                    <span class="text-xs font-bold text-slateGray bg-white px-3 py-1 rounded-full border border-gray-200">2 Treffer aktiv</span>
+                    <span id="activeListingsCount" class="text-xs font-bold text-slateGray bg-white px-3 py-1 rounded-full border border-gray-200">2 Treffer aktiv</span>
                 </div>
 
                 <!-- Card 1 -->
@@ -170,7 +178,7 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-moss text-lg">Zu verschenken</span>
                             </div>
-                            <button type="button" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                            <button type="button" onclick="showContactNotice()" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -202,7 +210,7 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
                             </div>
-                            <button type="button" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                            <button type="button" onclick="showContactNotice()" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -215,7 +223,7 @@
                 <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-soft sticky top-28">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-extrabold text-base text-slateDark">Standort-Übersicht</h3>
-                        <span class="text-xs text-moss font-bold cursor-pointer hover:underline">Vollbild</span>
+                        <span id="btnResetMap" class="text-xs text-moss font-bold cursor-pointer hover:underline">Zentrieren</span>
                     </div>
                     <div id="map"></div>
                 </div>
@@ -312,10 +320,10 @@
                 <span class="font-bold text-slateDark text-sm">baustoffwechsel</span>
                 <span>&copy; 2026. Alle Rechte vorbehalten.</span>
             </div>
-            <div class="flex space-x-6">
-                <a href="#" class="hover:text-moss transition">Impressum</a>
-                <a href="#" class="hover:text-moss transition">Datenschutz</a>
-                <a href="#" class="hover:text-moss transition">AGB</a>
+            <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+                <button type="button" onclick="toggleLegalModal('impressumModal')" class="hover:text-moss transition cursor-pointer">Impressum</button>
+                <button type="button" onclick="toggleLegalModal('datenschutzModal')" class="hover:text-moss transition cursor-pointer">Datenschutz</button>
+                <button type="button" onclick="toggleLegalModal('agbModal')" class="hover:text-moss transition cursor-pointer">AGB</button>
                 <button id="btnFooterCookies" type="button" class="hover:text-moss transition text-slateGray underline cursor-pointer">Cookie-Einstellungen</button>
             </div>
         </div>
@@ -342,14 +350,14 @@
                     <label class="flex items-center text-slateGray cursor-pointer">
                         <input type="checkbox" class="rounded border-gray-300 text-moss focus:ring-moss mr-2"> Angemeldet bleiben
                     </label>
-                    <a href="#" class="text-moss font-bold hover:underline">Passwort vergessen?</a>
+                    <a href="#" onclick="showToast('Passwort-Rücksetzung angefordert.'); return false;" class="text-moss font-bold hover:underline">Passwort vergessen?</a>
                 </div>
                 <button type="submit" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3.5 rounded-xl text-sm shadow-md transition duration-200 cursor-pointer">
                     Anmelden
                 </button>
             </form>
             <div class="mt-6 pt-6 border-t border-gray-100 text-center text-xs text-slateGray">
-                Noch kein Konto? <a href="#" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
+                Noch kein Konto? <a href="#" onclick="showToast('Registrierung derzeit im Betatest.'); return false;" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
             </div>
         </div>
     </div>
@@ -484,24 +492,239 @@
                     Alle akzeptieren
                 </button>
             </div>
+            <div class="mt-4 text-center">
+                <button id="btnResetConsent" type="button" class="text-[11px] text-terra underline hover:text-slateDark cursor-pointer">
+                    Einwilligung zurücksetzen & Banner anzeigen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: Impressum Modal -->
+    <div id="impressumModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <button onclick="toggleLegalModal('impressumModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            
+            <div class="mb-4 pb-4 border-b border-gray-100">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Rechtliche Hinweise</span>
+                <h3 class="text-2xl font-black text-slateDark">Impressum</h3>
+                <p class="text-xs text-slateGray mt-0.5">Anbieterkennzeichnung gemäß § 5 DDG (Digital-Dienste-Gesetz)</p>
+            </div>
+
+            <div class="overflow-y-auto modal-scroll pr-2 space-y-4 text-xs text-slateGray leading-relaxed flex-grow">
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Diensteanbieter / Betreiber i.Gr.</h4>
+                    <p class="font-semibold text-slateDark">baustoffwechsel i.Gr.</p>
+                    <p>Musterstraße 42</p>
+                    <p>57392 Schmallenberg / Sauerland</p>
+                    <p>Deutschland</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Vertretungsberechtigte Personen</h4>
+                    <p>Max Mustermann (Gründer / Geschäftsführer i.Gr.)</p>
+                    <p>E-Mail: kontakt@baustoffwechsel.de</p>
+                    <p>Telefon: +49 (0) 2972 9999-0 (Platzhalter)</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Registereintrag & Umsatzsteuer</h4>
+                    <p>Registergericht: Amtsgericht Arnsberg (Eintragung in Gründung)</p>
+                    <p>Registernummer: HRB XXXXX (wird nach Gründung ergänzt)</p>
+                    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE3XXXXXX (in Beantragung)</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h4>
+                    <p>Max Mustermann, Musterstraße 42, 57392 Schmallenberg</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Streitbeilegung</h4>
+                    <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener" class="text-moss underline">https://ec.europa.eu/consumers/odr</a>. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="toggleLegalModal('impressumModal')" type="button" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark font-bold py-2.5 px-6 rounded-xl text-xs transition duration-200 cursor-pointer">
+                    Schließen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 6: Datenschutz Modal -->
+    <div id="datenschutzModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <button onclick="toggleLegalModal('datenschutzModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            
+            <div class="mb-4 pb-4 border-b border-gray-100">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Datenschutzerklärung</span>
+                <h3 class="text-2xl font-black text-slateDark">Datenschutzerklärung (DSGVO)</h3>
+                <p class="text-xs text-slateGray mt-0.5">Informationen zur Verarbeitung personenbezogener Daten auf baustoffwechsel</p>
+            </div>
+
+            <div class="overflow-y-auto modal-scroll pr-2 space-y-4 text-xs text-slateGray leading-relaxed flex-grow">
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">1. Datenschutz auf einen Blick</h4>
+                    <p>Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie unsere Website besuchen.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">2. Verantwortliche Stelle</h4>
+                    <p class="font-semibold text-slateDark">baustoffwechsel i.Gr.</p>
+                    <p>Musterstraße 42, 57392 Schmallenberg</p>
+                    <p>E-Mail: datenschutz@baustoffwechsel.de</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">3. Datenerfassung auf unserer Website</h4>
+                    <p><strong>Formulardaten (Anmeldung & Inserate):</strong> Wenn Sie über Formulare Daten übermitteln (Titel, Standort, Kontakt), werden diese zur Abwicklung der Vermittlung auf Basis von Art. 6 Abs. 1 lit. b DSGVO verarbeitet.</p>
+                    <p class="mt-1"><strong>Kartenmaterial (Leaflet & OpenStreetMap):</strong> Für die Standortkarte wird OpenStreetMap genutzt. Hierbei kann Ihre IP-Adresse an den Dienstanbieter übertragen werden.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">4. Cookies & Speicherung</h4>
+                    <p>Wir verwenden lokale Speichertechnologien (localStorage), um Ihre Cookie-Einwilligungen dauerhaft abzuspeichern. Dies erfolgt auf Grundlage unseres berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO) an einer datenschutzkonformen Interaktion.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">5. Ihre Rechte (Art. 15 ff. DSGVO)</h4>
+                    <p>Sie haben jederzeit das Recht auf kostenlose Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger sowie den Zweck der Datenverarbeitung und ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="toggleLegalModal('datenschutzModal')" type="button" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark font-bold py-2.5 px-6 rounded-xl text-xs transition duration-200 cursor-pointer">
+                    Schließen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 7: AGB Modal -->
+    <div id="agbModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <button onclick="toggleLegalModal('agbModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            
+            <div class="mb-4 pb-4 border-b border-gray-100">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Nutzungsbedingungen</span>
+                <h3 class="text-2xl font-black text-slateDark">Allgemeine Geschäftsbedingungen (AGB)</h3>
+                <p class="text-xs text-slateGray mt-0.5">Nutzung des Marktplatzes baustoffwechsel</p>
+            </div>
+
+            <div class="overflow-y-auto modal-scroll pr-2 space-y-4 text-xs text-slateGray leading-relaxed flex-grow">
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">§ 1 Geltungsbereich & Leistungsgegenstand</h4>
+                    <p>Diese AGB gelten für die Nutzung der Vermittlungsplattform <strong>baustoffwechsel</strong>. baustoffwechsel stellt eine digitale Plattform zur Verfügung, auf der Nutzer (m/w/d) Angebote und Gesuche bezüglich Baustoffen, Aushub, Mutterboden und verwandten Materialien einstellen und einsehen können.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">§ 2 Rolle von baustoffwechsel / Vermittlerrolle</h4>
+                    <p>baustoffwechsel ist nicht selbst Vertragspartei der zwischen den Nutzern geschlossenen Abnahme- oder Kaufverträge. Die Abwicklung, Abholung und Qualitätsprüfung obliegt ausschließlich den jeweiligen Nutzern.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">§ 3 Einstellung von Inseraten & Inhaltsverantwortung</h4>
+                    <p>Der Inserent garantiert, dass alle Angaben zu Mengen, Materialqualitäten (z.B. Schadstofffreiheit von Mutterboden/Aushub) wahrheitsgemäß erfolgen. Verbotene oder kontaminierte Abfälle dürfen nicht über die Plattform angeboten werden.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">§ 4 Haftungsbeschränkung</h4>
+                    <p>baustoffwechsel haftet nur für Schäden, die auf vorsätzlichen oder grob fahrlässigen Pflichtverletzungen beruhen. Für die Richtigkeit der Inseratsangaben übernimmt baustoffwechsel keine Gewähr.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="toggleLegalModal('agbModal')" type="button" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark font-bold py-2.5 px-6 rounded-xl text-xs transition duration-200 cursor-pointer">
+                    Schließen
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- Leaflet JS & Application Logic -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Global variables for accessibility & state
+        let leafletMap = null;
+
+        // Helper Toast Notification
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'bg-slateDark text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl border border-gray-700 pointer-events-auto flex items-center space-x-2 transition-all duration-300 transform translate-x-10 opacity-0';
+            toast.innerHTML = `<span class="text-moss font-black">●</span><span>${message}</span>`;
+            container.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-x-10', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-x-10');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function showContactNotice() {
+            showToast('Kontaktfunktion für Betatester freigeschaltet.');
+        }
+
+        // Toggle Generic Modal Helper
+        function toggleModal(modalId, forceState) {
+            const el = document.getElementById(modalId);
+            if (!el) return;
+            if (forceState !== undefined) {
+                if (forceState) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            } else {
+                el.classList.toggle('hidden');
+            }
+        }
+
+        // Specific Named Handlers required by query
+        function toggleLoginModal() { toggleModal('loginModal'); }
+        function toggleInseratModal() { toggleModal('inseratModal'); }
+        function toggleCookieModal() { toggleModal('cookieModal'); }
+        function toggleLegalModal(id) { toggleModal(id); }
+
+        function acceptCookies(type) {
+            localStorage.setItem('bsw_cookie_consent', type);
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.classList.add('hidden');
+            toggleModal('cookieModal', false);
+            showToast(type === 'all' ? 'Alle Cookies akzeptiert.' : 'Essenzielle Cookies gespeichert.');
+        }
+
+        function resetCookieConsent() {
+            localStorage.removeItem('bsw_cookie_consent');
+            toggleModal('cookieModal', false);
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.classList.remove('hidden');
+            showToast('Cookie-Einstellungen zurückgesetzt.');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
 
             // 1. LEAFLET MAP INITIALIZATION
             const mapContainer = document.getElementById('map');
             if (mapContainer) {
-                const map = L.map('map').setView([51.15, 8.28], 11);
+                leafletMap = L.map('map').setView([51.15, 8.28], 11);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; OpenStreetMap'
-                }).addTo(map);
+                }).addTo(leafletMap);
 
-                L.marker([51.16, 8.27]).addTo(map).bindPopup('<b>Mutterboden</b><br>Zu verschenken (Schmallenberg)');
-                L.marker([51.12, 8.32]).addTo(map).bindPopup('<b>Betonpflaster</b><br>80 € / Palette (Lennestadt)');
+                const m1 = L.marker([51.16, 8.27]).addTo(leafletMap).bindPopup('<b>Mutterboden</b><br>Zu verschenken (Schmallenberg)');
+                const m2 = L.marker([51.12, 8.32]).addTo(leafletMap).bindPopup('<b>Betonpflaster</b><br>80 € / Palette (Lennestadt)');
+
+                const btnResetMap = document.getElementById('btnResetMap');
+                if (btnResetMap) {
+                    btnResetMap.addEventListener('click', function() {
+                        leafletMap.setView([51.15, 8.28], 11);
+                    });
+                }
             }
 
             // 2. LIVE CALCULATOR LOGIC
@@ -519,75 +742,55 @@
                 });
             }
 
-            // 3. MODAL MANAGEMENT HELPERS
-            function openModal(modalId) {
-                const target = document.getElementById(modalId);
-                if (target) {
-                    target.classList.remove('hidden');
-                }
-            }
-
-            function closeModal(modalId) {
-                const target = document.getElementById(modalId);
-                if (target) {
-                    target.classList.add('hidden');
-                }
-            }
-
-            // Global Click / Keydown handlers for closing modals
+            // 3. GLOBAL ESCAPE & BACKDROP CLOSING
             window.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
-                    closeModal('loginModal');
-                    closeModal('inseratModal');
-                    closeModal('cookieModal');
+                    ['loginModal', 'inseratModal', 'cookieModal', 'impressumModal', 'datenschutzModal', 'agbModal'].forEach(id => toggleModal(id, false));
                 }
             });
 
-            ['loginModal', 'inseratModal', 'cookieModal'].forEach(function(modalId) {
+            ['loginModal', 'inseratModal', 'cookieModal', 'impressumModal', 'datenschutzModal', 'agbModal'].forEach(function(modalId) {
                 const modalEl = document.getElementById(modalId);
                 if (modalEl) {
                     modalEl.addEventListener('click', function(e) {
                         if (e.target === modalEl) {
-                            closeModal(modalId);
+                            toggleModal(modalId, false);
                         }
                     });
                 }
             });
 
-            // 4. EVENT LISTENERS FOR MODALS
-
-            // Login Modal Triggers
+            // 4. TRIGGER ATTACHMENTS
             const btnOpenLogin = document.getElementById('btnOpenLogin');
             const btnCloseLogin = document.getElementById('btnCloseLogin');
             const formLogin = document.getElementById('formLogin');
 
-            if (btnOpenLogin) btnOpenLogin.addEventListener('click', () => openModal('loginModal'));
-            if (btnCloseLogin) btnCloseLogin.addEventListener('click', () => closeModal('loginModal'));
+            if (btnOpenLogin) btnOpenLogin.addEventListener('click', toggleLoginModal);
+            if (btnCloseLogin) btnCloseLogin.addEventListener('click', toggleLoginModal);
             if (formLogin) {
                 formLogin.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    alert('Erfolgreich angemeldet bei baustoffwechsel!');
-                    closeModal('loginModal');
+                    showToast('Erfolgreich angemeldet!');
+                    toggleLoginModal();
                 });
             }
 
-            // Inserat Modal Triggers
             const btnOpenInserat = document.getElementById('btnOpenInserat');
             const btnCloseInserat = document.getElementById('btnCloseInserat');
             const formInserat = document.getElementById('formInserat');
 
-            if (btnOpenInserat) btnOpenInserat.addEventListener('click', () => openModal('inseratModal'));
-            if (btnCloseInserat) btnCloseInserat.addEventListener('click', () => closeModal('inseratModal'));
+            if (btnOpenInserat) btnOpenInserat.addEventListener('click', toggleInseratModal);
+            if (btnCloseInserat) btnCloseInserat.addEventListener('click', toggleInseratModal);
             if (formInserat) {
                 formInserat.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    alert('Dein Inserat wurde erfolgreich auf baustoffwechsel veröffentlicht!');
-                    closeModal('inseratModal');
+                    showToast('Dein Inserat wurde veröffentlicht!');
+                    toggleInseratModal();
                     formInserat.reset();
                 });
             }
 
-            // Cookie Management
+            // Cookie Management Triggers
             const cookieBanner = document.getElementById('cookieBanner');
             const btnAcceptAllCookies = document.getElementById('btnAcceptAllCookies');
             const btnAcceptEssentialCookies = document.getElementById('btnAcceptEssentialCookies');
@@ -596,33 +799,36 @@
             const btnFooterCookies = document.getElementById('btnFooterCookies');
             const btnSaveCookiePrefs = document.getElementById('btnSaveCookiePrefs');
             const btnAcceptAllModal = document.getElementById('btnAcceptAllModal');
+            const btnResetConsent = document.getElementById('btnResetConsent');
 
-            function applyCookieChoice(choice) {
-                localStorage.setItem('bsw_cookie_consent', choice);
-                if (cookieBanner) cookieBanner.classList.add('hidden');
-                closeModal('cookieModal');
-            }
-
-            // Check existing cookie consent
             const existingConsent = localStorage.getItem('bsw_cookie_consent');
             if (existingConsent && cookieBanner) {
                 cookieBanner.classList.add('hidden');
             }
 
-            if (btnAcceptAllCookies) btnAcceptAllCookies.addEventListener('click', () => applyCookieChoice('all'));
-            if (btnAcceptEssentialCookies) btnAcceptEssentialCookies.addEventListener('click', () => applyCookieChoice('essential'));
-            if (btnOpenCookieDetails) btnOpenCookieDetails.addEventListener('click', () => openModal('cookieModal'));
-            if (btnCloseCookieModal) btnCloseCookieModal.addEventListener('click', () => closeModal('cookieModal'));
-            if (btnFooterCookies) btnFooterCookies.addEventListener('click', () => openModal('cookieModal'));
+            if (btnAcceptAllCookies) btnAcceptAllCookies.addEventListener('click', () => acceptCookies('all'));
+            if (btnAcceptEssentialCookies) btnAcceptEssentialCookies.addEventListener('click', () => acceptCookies('essential'));
+            if (btnOpenCookieDetails) btnOpenCookieDetails.addEventListener('click', toggleCookieModal);
+            if (btnCloseCookieModal) btnCloseCookieModal.addEventListener('click', toggleCookieModal);
+            if (btnFooterCookies) btnFooterCookies.addEventListener('click', toggleCookieModal);
 
             if (btnSaveCookiePrefs) {
                 btnSaveCookiePrefs.addEventListener('click', function() {
                     const optionalCheckbox = document.getElementById('optionalCookies');
                     const isChecked = optionalCheckbox ? optionalCheckbox.checked : false;
-                    applyCookieChoice(isChecked ? 'all' : 'essential');
+                    acceptCookies(isChecked ? 'all' : 'essential');
                 });
             }
-            if (btnAcceptAllModal) btnAcceptAllModal.addEventListener('click', () => applyCookieChoice('all'));
+            if (btnAcceptAllModal) btnAcceptAllModal.addEventListener('click', () => acceptCookies('all'));
+            if (btnResetConsent) btnResetConsent.addEventListener('click', resetCookieConsent);
+
+            // Filter Search Simulation
+            const btnFilterSearch = document.getElementById('btnFilterSearch');
+            if (btnFilterSearch) {
+                btnFilterSearch.addEventListener('click', function() {
+                    showToast('Filter angewendet. Suchergebnisse aktualisiert.');
+                });
+            }
 
             // 5. SCROLL-SPY FOR NAVIGATION LINKS
             const sections = document.querySelectorAll('section[id], main[id]');
