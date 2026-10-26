@@ -274,41 +274,82 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    
+    <!-- About Section (Über das Projekt / Mehrwert) -->
     <section id="ueber-uns" class="bg-creamBg py-20 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mb-14">
-                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">Philosophie & Vision</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Über das Projekt baustoffwechsel</h2>
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">Philosophie & Schnittstellen</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Die regionale Drehscheibe für Baustoffe</h2>
                 <p class="text-slateGray text-lg mt-4 leading-relaxed">
-                    Jedes Jahr entstehen auf Baustellen Tonnen von wertvollem Aushub, Mutterboden und Restbaustoffen. Oft landete intaktes Material teuer auf der Deponie – während Nachbarn wenige Kilometer weiter dasselbe Material neu kaufen mussten.
+                    <strong>baustoffwechsel</strong> vernetzt Angebot und Nachfrage direkt in deiner Region. Anstatt intakten Aushub teuer zu entsorgen und andernorts neu zu kaufen, schaffen wir kurze Wege und eine direkte Verbindung zwischen allen Akteuren.
                 </p>
             </div>
 
+            <!-- 3 Feature Cards (Schnittstellen & Mehrwert) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
-                    <div class="w-12 h-12 bg-moss text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">1</div>
-                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Die Idee</h3>
-                    <p class="text-sm text-slateGray leading-relaxed">
-                        Eine direkte digitale Brücke zwischen Angebot und Nachfrage vor Ort schaffen. Egal ob Häuslebauer, Gala-Bauer oder Bauunternehmen – Baustoffe werden lokal weitergegeben statt entsorgt.
-                    </p>
+                
+                <!-- Karte 1: Privat & Gewerbe Schnittstelle -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-hover-card transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-6">
+                            <span class="bg-moss/10 text-moss text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Privat ⇄ Privat</span>
+                            <span class="bg-slateDark/10 text-slateDark text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Privat ⇄ Gewerbe</span>
+                        </div>
+                        <div class="w-12 h-12 bg-moss text-white rounded-2xl flex items-center justify-center font-bold text-xl mb-5 shadow-md">
+                            🔄
+                        </div>
+                        <h3 class="font-extrabold text-xl text-slateDark mb-3">Intelligente Vernetzung</h3>
+                        <p class="text-sm text-slateGray leading-relaxed">
+                            Ob der Häuslebauer mit überschüssigem Mutterboden, der Gala-Bauer mit Pflasterstein-Restbeständen oder der Privatgarten: Unsere Plattform verbindet Angebot und Nachfrage nahtlos und hürdenfrei.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center text-xs font-bold text-moss">
+                        <span>Direkter lokaler Austausch</span>
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
                 </div>
 
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
-                    <div class="w-12 h-12 bg-terra text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">2</div>
-                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Ökologischer Vorteil</h3>
-                    <p class="text-sm text-slateGray leading-relaxed">
-                        Schonung natürlicher Ressourcen, Entlastung überfüllter Deponien und massive Reduktion von CO₂-Emissionen durch den Wegfall langer LKW-Transportwege.
-                    </p>
+                <!-- Karte 2: Ökologischer Mehrwert -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-hover-card transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-6">
+                            <span class="bg-terra/10 text-terra text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Nachhaltigkeit</span>
+                        </div>
+                        <div class="w-12 h-12 bg-terra text-white rounded-2xl flex items-center justify-center font-bold text-xl mb-5 shadow-md">
+                            🌱
+                        </div>
+                        <h3 class="font-extrabold text-xl text-slateDark mb-3">Ökologischer Mehrwert</h3>
+                        <p class="text-sm text-slateGray leading-relaxed">
+                            Jeder wiederverwendete Kubikmeter spart weite LKW-Transportwege, entlastet die regionalen Deponien und verhindert den Raubbau an natürlichen Ressourcen.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center text-xs font-bold text-terra">
+                        <span>Massive CO₂-Reduktion</span>
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
                 </div>
 
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
-                    <div class="w-12 h-12 bg-slateDark text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">3</div>
-                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Abgrenzung zu Mitbewerbern</h3>
-                    <p class="text-sm text-slateGray leading-relaxed">
-                        Keine unübersichtliche Flut an Kleinanzeigen und keine teure, komplexe B2B-Software. <strong>baustoffwechsel</strong> fokussiert sich rein auf Baustoffe mit präziser Umkreissuche und Mengeneinheiten.
-                    </p>
+                <!-- Karte 3: Ökonomischer Vorteil -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-hover-card transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-6">
+                            <span class="bg-slateDark/10 text-slateDark text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Win-Win Effekt</span>
+                        </div>
+                        <div class="w-12 h-12 bg-slateDark text-white rounded-2xl flex items-center justify-center font-bold text-xl mb-5 shadow-md">
+                            💡
+                        </div>
+                        <h3 class="font-extrabold text-xl text-slateDark mb-3">Finanzieller Vorteil</h3>
+                        <p class="text-sm text-slateGray leading-relaxed">
+                            Abgeber sparen teure Deponie- und Entsorgungsgebühren, Abnehmer erhalten hochwertige Baustoffe günstig oder sogar geschenkt aus der unmittelbaren Nachbarschaft.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center text-xs font-bold text-slateDark">
+                        <span>Spart Zeit & Deponiegebühren</span>
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
