@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>baustoffwechsel - Regionale Kreislaufwirtschaft für Baustoffe & Aushub</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -26,21 +27,30 @@
             }
         }
     </script>
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map { height: 440px; width: 100%; border-radius: 1rem; }
         html { scroll-padding-top: 5rem; }
         .nav-link { transition: all 0.2s ease-in-out; }
         .nav-link.active { color: #5B7837; font-weight: 700; border-bottom: 2px solid #5B7837; padding-bottom: 2px; }
+        /* Custom scrollbar for legal modals */
+        .modal-scroll::-webkit-scrollbar { width: 6px; }
+        .modal-scroll::-webkit-scrollbar-track { background: #F8F9FA; border-radius: 8px; }
+        .modal-scroll::-webkit-scrollbar-thumb { background: #CBD5E0; border-radius: 8px; }
+        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #A0AEC0; }
     </style>
 </head>
 <body class="bg-creamBg text-slateDark font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- Header / Sticky One-Page Navigation -->
+    <!-- Notification Toast Container -->
+    <div id="toastContainer" class="fixed top-24 right-4 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+    <!-- Header / Navigation -->
     <header class="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40 shadow-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <!-- Logo & Brand Name -->
+            <!-- Brand Logo -->
             <a href="#hero" class="flex items-center space-x-3 cursor-pointer group">
                 <div class="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105 duration-200">
                     <svg class="w-12 h-12 drop-shadow-sm" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,14 +78,14 @@
                 <a href="#ueber-uns" data-section="ueber-uns" class="nav-link text-slateGray hover:text-moss">Über das Projekt</a>
             </nav>
 
-            <!-- Action Buttons -->
+            <!-- User Actions -->
             <div class="flex items-center space-x-3 sm:space-x-4">
-                <button onclick="toggleLoginModal(true)" class="text-slateDark hover:text-moss font-bold text-sm px-3 py-2 flex items-center space-x-1.5 transition duration-200 cursor-pointer">
+                <button id="btnOpenLogin" type="button" class="text-slateDark hover:text-moss font-bold text-sm px-3 py-2 flex items-center space-x-1.5 transition duration-200 cursor-pointer">
                     <svg class="w-5 h-5 text-slateGray" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     <span>Anmelden</span>
                 </button>
 
-                <button onclick="toggleInseratModal(true)" class="bg-moss hover:bg-mossDark text-white px-4 sm:px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2 transform hover:-translate-y-0.5 cursor-pointer">
+                <button id="btnOpenInserat" type="button" class="bg-moss hover:bg-mossDark text-white px-4 sm:px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2 transform hover:-translate-y-0.5 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                     <span>Inserat erstellen</span>
                 </button>
@@ -103,49 +113,51 @@
 
     <!-- Marketplace Section -->
     <main id="marktplatz" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Filter Bar -->
         <div class="bg-white p-6 rounded-3xl shadow-soft border border-gray-200 mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Kategorie</label>
-                <select class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
-                    <option>Alle Kategorien</option>
-                    <option>Aushub & Mutterboden</option>
-                    <option>Kies, Sand & Schotter</option>
-                    <option>Pflastersteine & Ziegel</option>
-                    <option>Holz & Baustoffe</option>
+                <label for="filterCategory" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Kategorie</label>
+                <select id="filterCategory" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+                    <option value="">Alle Kategorien</option>
+                    <option value="Aushub & Mutterboden">Aushub & Mutterboden</option>
+                    <option value="Kies, Sand & Schotter">Kies, Sand & Schotter</option>
+                    <option value="Pflastersteine & Ziegel">Pflastersteine & Ziegel</option>
+                    <option value="Holz & Baustoffe">Holz & Baustoffe</option>
                 </select>
             </div>
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Standort / PLZ</label>
-                <input type="text" placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+                <label for="filterLocation" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Standort / PLZ</label>
+                <input id="filterLocation" type="text" placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
             </div>
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Umkreis</label>
-                <select class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
-                    <option>Bis 10 km</option>
-                    <option selected>Bis 25 km</option>
-                    <option>Bis 50 km</option>
+                <label for="filterRadius" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Umkreis</label>
+                <select id="filterRadius" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+                    <option value="10">Bis 10 km</option>
+                    <option value="25" selected>Bis 25 km</option>
+                    <option value="50">Bis 50 km</option>
                 </select>
             </div>
             <div class="flex items-end">
-                <button class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer">
+                <button id="btnFilterSearch" type="button" class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     <span>Suchen & Filtern</span>
                 </button>
             </div>
         </div>
 
+        <!-- Content Grid: Listings & Map -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-5">
+            <div class="lg:col-span-2 space-y-5" id="listingsContainer">
                 <div class="flex justify-between items-center mb-2">
                     <h2 class="font-black text-2xl text-slateDark">Aktuelle Angebote in der Nähe</h2>
-                    <span class="text-xs font-bold text-slateGray bg-white px-3 py-1 rounded-full border border-gray-200">2 Treffer aktiv</span>
+                    <span id="activeListingsCount" class="text-xs font-bold text-slateGray bg-white px-3 py-1 rounded-full border border-gray-200">2 Treffer aktiv</span>
                 </div>
 
                 <!-- Card 1 -->
                 <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
-                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden">
+                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden shrink-0">
                         <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span>Foto folgt</span>
+                        <span>Mutterboden</span>
                         <span class="absolute top-3 left-3 bg-moss text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Privat</span>
                     </div>
                     <div class="flex-grow flex flex-col justify-between">
@@ -166,7 +178,7 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-moss text-lg">Zu verschenken</span>
                             </div>
-                            <button onclick="showToast('Kontaktanfrage gesendet!')" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                            <button type="button" onclick="showContactNotice()" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -175,9 +187,9 @@
 
                 <!-- Card 2 -->
                 <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
-                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden">
+                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden shrink-0">
                         <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span>Foto folgt</span>
+                        <span>Pflastersteine</span>
                         <span class="absolute top-3 left-3 bg-slateDark text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Gewerbe</span>
                     </div>
                     <div class="flex-grow flex flex-col justify-between">
@@ -198,7 +210,7 @@
                                 <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
                                 <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
                             </div>
-                            <button onclick="showToast('Kontaktanfrage gesendet!')" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                            <button type="button" onclick="showContactNotice()" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
                                 Details & Kontakt
                             </button>
                         </div>
@@ -211,7 +223,7 @@
                 <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-soft sticky top-28">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-extrabold text-base text-slateDark">Standort-Übersicht</h3>
-                        <span class="text-xs text-moss font-bold cursor-pointer hover:underline">Vollbild</span>
+                        <span id="btnResetMap" class="text-xs text-moss font-bold cursor-pointer hover:underline">Zentrieren</span>
                     </div>
                     <div id="map"></div>
                 </div>
@@ -227,7 +239,7 @@
                     <span class="text-xs font-extrabold text-terra uppercase tracking-wider block mb-2">Live-Kalkulator</span>
                     <h2 class="text-3xl font-black text-slateDark mb-3">Wie viel sparst du gegenüber der Deponie?</h2>
                     <p class="text-sm text-slateGray leading-relaxed">
-                        Berechne sofort deine finanzielle Ersparnis und den ökologischen Mehrwert für dein Bau- oder Gartenprojekt.
+                        Berechne sofort deine finanzielle Ersparnis und den ökologischen Mehrwert für dein Bau- oder Gartenprojekt mit <strong>baustoffwechsel</strong>.
                     </p>
                 </div>
 
@@ -262,104 +274,42 @@
         </div>
     </section>
 
-    <!-- About Section (Über das Projekt) -->
-    <section id="ueber-uns" class="bg-creamBg py-20 border-b border-gray-200 relative overflow-hidden">
+    <!-- About Section -->
+    <section id="ueber-uns" class="bg-creamBg py-20 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
-                <div class="lg:col-span-8 space-y-4">
-                    <span class="text-xs font-extrabold text-moss uppercase tracking-wider block">Vision & Kreislaufwirtschaft</span>
-                    <h2 class="text-3xl sm:text-4xl font-black text-slateDark leading-tight">
-                        Ein Symbol für nachhaltigen Wertstoff-Wechsel vor Ort.
-                    </h2>
-                    <p class="text-slateGray text-base sm:text-lg leading-relaxed">
-                        Das Logo von <span class="font-bold text-slateDark">baustoffwechsel</span> steht für die nahtlose Symbiose aller Elemente im Bauwesen: Die grüne Spitze symbolisiert den wertvollen Mutterboden, Terracotta steht für Ziegel und Ton, Grau für Schotter und Pflaster. Im Zentrum verbinden wir die Akteure der Region zu einem geschlossenen, ressourcenschonenden Kreislauf.
+            <div class="max-w-3xl mb-14">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">Philosophie & Vision</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Über das Projekt baustoffwechsel</h2>
+                <p class="text-slateGray text-lg mt-4 leading-relaxed">
+                    Jedes Jahr entstehen auf Baustellen Tonnen von wertvollem Aushub, Mutterboden und Restbaustoffen. Oft landete intaktes Material teuer auf der Deponie – während Nachbarn wenige Kilometer weiter dasselbe Material neu kaufen mussten.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-moss text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">1</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Die Idee</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Eine direkte digitale Brücke zwischen Angebot und Nachfrage vor Ort schaffen. Egal ob Häuslebauer, Gala-Bauer oder Bauunternehmen – Baustoffe werden lokal weitergegeben statt entsorgt.
                     </p>
                 </div>
 
-                <div class="lg:col-span-4 flex justify-center">
-                    <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-soft flex flex-col items-center text-center relative">
-                        <div class="w-28 h-28 mb-4 flex items-center justify-center">
-                            <svg class="w-28 h-28 drop-shadow-md" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M50 0C22.3858 0 0 22.3858 0 50C0 75 35 110 50 120C65 110 100 75 100 50C100 22.3858 77.6142 0 50 0Z" fill="#2D3748"/>
-                                <path d="M50 0C22.3858 0 0 22.3858 0 50H100C100 22.3858 77.6142 0 50 0Z" fill="#5B7837"/>
-                                <circle cx="50" cy="50" r="18" fill="white"/>
-                                <path d="M55 22C50 22 45 28 45 35C52 35 58 30 58 22H55Z" fill="#5B7837"/>
-                                <path d="M15 65L38 52L48 70L25 83Z" fill="#985830"/>
-                                <path d="M52 70L62 52L85 65L75 83Z" fill="#718096"/>
-                                <path d="M30 87L50 74L70 87L50 100Z" fill="#A0AEC0"/>
-                            </svg>
-                        </div>
-                        <span class="font-black text-xl text-slateDark tracking-tight">baustoffwechsel</span>
-                        <span class="text-xs text-slateGray font-medium mt-1">Vermeiden. Wiederverwenden. Region stärken.</span>
-                    </div>
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-terra text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">2</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Ökologischer Vorteil</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Schonung natürlicher Ressourcen, Entlastung überfüllter Deponien und massive Reduktion von CO₂-Emissionen durch den Wegfall langer LKW-Transportwege.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <div class="w-12 h-12 bg-slateDark text-white rounded-2xl flex items-center justify-center font-black text-lg mb-6 shadow-md">3</div>
+                    <h3 class="font-extrabold text-xl text-slateDark mb-3">Abgrenzung zu Mitbewerbern</h3>
+                    <p class="text-sm text-slateGray leading-relaxed">
+                        Keine unübersichtliche Flut an Kleinanzeigen und keine teure, komplexe B2B-Software. <strong>baustoffwechsel</strong> fokussiert sich rein auf Baustoffe mit präziser Umkreissuche und Mengeneinheiten.
+                    </p>
                 </div>
             </div>
-
-            <!-- Network Grid -->
-            <div class="mb-16">
-                <div class="text-center max-w-2xl mx-auto mb-10">
-                    <h3 class="font-extrabold text-2xl text-slateDark">Nahtlose Schnittstelle für alle Akteure</h3>
-                    <p class="text-sm text-slateGray mt-2">Egal ob Gartenbesitzer oder Bauunternehmen – baustoffwechsel verbindet die Bedarfe direkt.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-                    <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm relative flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="bg-moss/10 text-moss text-xs font-black px-3 py-1 rounded-full uppercase">Privat ⇄ Privat</span>
-                            <span class="text-2xl">🏡</span>
-                        </div>
-                        <h4 class="font-extrabold text-lg text-slateDark mb-2">Vom Nachbarn für den Nachbarn</h4>
-                        <p class="text-xs text-slateGray leading-relaxed">
-                            Der eine baut den Pool und sucht Abnehmer für Mutterboden – der andere legt ein Hochbeet an. Direkter Tausch ohne Zwischenhändler.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm relative flex flex-col justify-between border-moss/30 ring-2 ring-moss/10">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="bg-terra/10 text-terra text-xs font-black px-3 py-1 rounded-full uppercase">Privat ⇄ Gewerbe</span>
-                            <span class="text-2xl">🚜</span>
-                        </div>
-                        <h4 class="font-extrabold text-lg text-slateDark mb-2">Restmengen & Nahversorgung</h4>
-                        <p class="text-xs text-slateGray leading-relaxed">
-                            Gewerbliche Galabauer geben übrig gebliebene Pflastersteine günstig an Privatleute ab oder sichern sich sauberen Aushub für Bauprojekte.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm relative flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="bg-slateDark/10 text-slateDark text-xs font-black px-3 py-1 rounded-full uppercase">Gewerbe ⇄ Gewerbe</span>
-                            <span class="text-2xl">🏗️</span>
-                        </div>
-                        <h4 class="font-extrabold text-lg text-slateDark mb-2">Effizientes Baustellen-Matching</h4>
-                        <p class="text-xs text-slateGray leading-relaxed">
-                            Baufirmen stimmen Materialströme regional ab. Aushub von Baustelle A wird direkt zum Verfüllen auf Baustelle B transportiert.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kennzahlenblock -->
-            <div class="bg-gradient-to-r from-slateDark to-slateDark/95 text-white p-8 lg:p-10 rounded-3xl shadow-xl">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slateGray/30">
-                    <div class="pt-4 md:pt-0">
-                        <span class="text-4xl font-black text-moss block">100%</span>
-                        <span class="text-xs font-bold uppercase tracking-wider text-gray-300 mt-2 block">Regionale Fokussierung</span>
-                        <span class="text-[11px] text-slateGray mt-1 block">Kurze Wege im direkten Landkreis</span>
-                    </div>
-                    <div class="pt-4 md:pt-0 md:pl-8">
-                        <span class="text-4xl font-black text-terra block">0 km</span>
-                        <span class="text-xs font-bold uppercase tracking-wider text-gray-300 mt-2 block">Unnötige Leerfahrten</span>
-                        <span class="text-[11px] text-slateGray mt-1 block">Material bleibt direkt vor Ort</span>
-                    </div>
-                    <div class="pt-4 md:pt-0 md:pl-8">
-                        <span class="text-4xl font-black text-warmSand block">24 / 7</span>
-                        <span class="text-xs font-bold uppercase tracking-wider text-gray-300 mt-2 block">Direkte Verfügbarkeit</span>
-                        <span class="text-[11px] text-slateGray mt-1 block">Einfache digitale Abstimmung</span>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -370,73 +320,68 @@
                 <span class="font-bold text-slateDark text-sm">baustoffwechsel</span>
                 <span>&copy; 2026. Alle Rechte vorbehalten.</span>
             </div>
-            <div class="flex space-x-6">
-                <button onclick="toggleLegalModal('impressum')" class="hover:text-moss transition cursor-pointer">Impressum</button>
-                <button onclick="toggleLegalModal('datenschutz')" class="hover:text-moss transition cursor-pointer">Datenschutz</button>
-                <button onclick="toggleLegalModal('agb')" class="hover:text-moss transition cursor-pointer">AGB</button>
-                <button onclick="resetCookieConsent()" class="hover:text-moss transition text-slateGray underline cursor-pointer">Cookie-Einstellungen</button>
+            <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
+                <button type="button" onclick="toggleLegalModal('impressumModal')" class="hover:text-moss transition cursor-pointer">Impressum</button>
+                <button type="button" onclick="toggleLegalModal('datenschutzModal')" class="hover:text-moss transition cursor-pointer">Datenschutz</button>
+                <button type="button" onclick="toggleLegalModal('agbModal')" class="hover:text-moss transition cursor-pointer">AGB</button>
+                <button id="btnFooterCookies" type="button" class="hover:text-moss transition text-slateGray underline cursor-pointer">Cookie-Einstellungen</button>
             </div>
         </div>
     </footer>
 
-    <!-- Toast Notification Banner -->
-    <div id="toastNotification" class="fixed bottom-6 right-6 bg-slateDark text-white px-5 py-3.5 rounded-2xl shadow-2xl z-50 flex items-center space-x-3 hidden transition-all duration-300 transform translate-y-2">
-        <span class="text-lg">✨</span>
-        <span id="toastText" class="text-xs font-semibold"></span>
-    </div>
-
-    <!-- Login Modal -->
+    <!-- MODAL 1: Login Modal -->
     <div id="loginModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-8 border border-gray-200 shadow-2xl relative">
-            <button onclick="toggleLoginModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button id="btnCloseLogin" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
             <div class="mb-6">
                 <h3 class="text-2xl font-black text-slateDark">Willkommen zurück!</h3>
-                <p class="text-sm text-slateGray mt-1">Melde dich an, um Inserate zu verwalten oder Anfragen zu senden.</p>
+                <p class="text-sm text-slateGray mt-1">Melde dich an, um Inserate zu verwalten oder Anfragen bei <strong>baustoffwechsel</strong> zu senden.</p>
             </div>
-            <form class="space-y-4" onsubmit="event.preventDefault(); showToast('Login erfolgreich!'); toggleLoginModal(false);">
+            <form id="formLogin" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">E-Mail Adresse</label>
-                    <input type="email" placeholder="name@beispiel.de" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                    <label for="loginEmail" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">E-Mail Adresse</label>
+                    <input id="loginEmail" type="email" required placeholder="name@beispiel.de" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Passwort</label>
-                    <input type="password" placeholder="••••••••" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                    <label for="loginPassword" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Passwort</label>
+                    <input id="loginPassword" type="password" required placeholder="••••••••" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
                 </div>
                 <div class="flex justify-between items-center text-xs">
                     <label class="flex items-center text-slateGray cursor-pointer">
                         <input type="checkbox" class="rounded border-gray-300 text-moss focus:ring-moss mr-2"> Angemeldet bleiben
                     </label>
-                    <a href="#" class="text-moss font-bold hover:underline">Passwort vergessen?</a>
+                    <a href="#" onclick="showToast('Passwort-Rücksetzung angefordert.'); return false;" class="text-moss font-bold hover:underline">Passwort vergessen?</a>
                 </div>
                 <button type="submit" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3.5 rounded-xl text-sm shadow-md transition duration-200 cursor-pointer">
                     Anmelden
                 </button>
             </form>
             <div class="mt-6 pt-6 border-t border-gray-100 text-center text-xs text-slateGray">
-                Noch kein Konto? <a href="#" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
+                Noch kein Konto? <a href="#" onclick="showToast('Registrierung derzeit im Betatest.'); return false;" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
             </div>
         </div>
     </div>
 
-    <!-- Inserat erstellen Modal -->
+    <!-- MODAL 2: Inserat erstellen Modal -->
     <div id="inseratModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleInseratModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
-            
+            <button id="btnCloseInserat" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
             <div class="mb-6">
-                <h3 class="text-2xl font-black text-slateDark">Neues Inserat erstellen</h3>
-                <p class="text-sm text-slateGray mt-1">Gib Baustoffe oder Aushub einfach in deiner Region weiter.</p>
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Kostenlos auf baustoffwechsel</span>
+                <h3 class="text-2xl font-black text-slateDark">Neues Inserat aufgeben</h3>
+                <p class="text-sm text-slateGray mt-1">Stelle deine Baustoffe, Mutterboden oder Aushub direkt für die Region ein.</p>
             </div>
 
-            <form class="space-y-4" onsubmit="event.preventDefault(); showToast('Inserat erfolgreich veröffentlicht!'); toggleInseratModal(false);">
+            <form id="formInserat" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Titel des Inserats</label>
-                    <input type="text" placeholder="z. B. 10 m³ gesiebter Mutterboden" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg" required>
+                    <label for="insTitle" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Titel des Inserats</label>
+                    <input id="insTitle" type="text" required placeholder="z. B. 15 m³ gesiebter Mutterboden" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
                 </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Kategorie</label>
-                        <select class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                        <label for="insCat" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Kategorie</label>
+                        <select id="insCat" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
                             <option>Aushub & Mutterboden</option>
                             <option>Kies, Sand & Schotter</option>
                             <option>Pflastersteine & Ziegel</option>
@@ -444,17 +389,32 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Typ</label>
-                        <select class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
-                            <option>Privatangebot</option>
-                            <option>Gewerbeangebot</option>
-                        </select>
+                        <label for="insAmount" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Menge (z. B. m³, Paletten)</label>
+                        <input id="insAmount" type="text" required placeholder="z. B. 15 m³" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
                     </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Beschreibung</label>
-                    <textarea rows="3" placeholder="Beschreibe die Qualität, Verlademöglichkeiten etc." class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg"></textarea>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="insPrice" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Preisangebot</label>
+                        <input id="insPrice" type="text" required placeholder="z. B. Zu verschenken oder 50 €" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                    </div>
+                    <div>
+                        <label for="insZip" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Standort / PLZ</label>
+                        <input id="insZip" type="text" required placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+                    </div>
                 </div>
+
+                <div>
+                    <label for="insDesc" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Beschreibung & Abholbedingungen</label>
+                    <textarea id="insDesc" rows="3" placeholder="Beschreibe die Zufahrt für LKW, Qualität des Materials etc." class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg"></textarea>
+                </div>
+
+                <div class="border-2 border-dashed border-gray-300 rounded-2xl p-4 text-center cursor-pointer hover:border-moss transition">
+                    <svg class="w-8 h-8 text-slateGray/50 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span class="text-xs text-slateGray font-semibold block">Fotos hochladen (optional)</span>
+                </div>
+
                 <button type="submit" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3.5 rounded-xl text-sm shadow-md transition duration-200 cursor-pointer">
                     Inserat jetzt veröffentlichen
                 </button>
@@ -462,7 +422,7 @@
         </div>
     </div>
 
-    <!-- Cookie Consent Banner -->
+    <!-- MODAL 3: Cookie Banner -->
     <div id="cookieBanner" class="fixed bottom-4 right-4 left-4 md:left-auto md:max-w-md bg-white border border-gray-200 rounded-3xl p-6 shadow-2xl z-50">
         <div class="flex items-start space-x-3 mb-3">
             <div class="w-9 h-9 bg-warmSand text-moss rounded-xl flex items-center justify-center font-bold text-lg shrink-0">
@@ -471,251 +431,427 @@
             <div>
                 <h4 class="font-bold text-slateDark text-base">Datenschutz & Cookies</h4>
                 <p class="text-xs text-slateGray mt-1 leading-relaxed">
-                    Wir nutzen Cookies, um die Nutzung auf baustoffwechsel optimal zu gestalten und Kartenfunktionen bereit zustellen.
+                    Wir nutzen Cookies, um die Nutzung auf <strong>baustoffwechsel</strong> optimal zu gestalten und Kartenfunktionen bereitzustellen.
                 </p>
             </div>
         </div>
         <div class="flex flex-wrap gap-2 mt-4">
-            <button onclick="acceptCookies('all')" class="bg-moss hover:bg-mossDark text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
+            <button id="btnAcceptAllCookies" type="button" class="bg-moss hover:bg-mossDark text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
                 Alle akzeptieren
             </button>
-            <button onclick="acceptCookies('essential')" class="bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
+            <button id="btnAcceptEssentialCookies" type="button" class="bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 flex-1 cursor-pointer">
                 Nur essenzielle
             </button>
         </div>
         <div class="mt-2 text-center">
-            <button onclick="toggleCookieModal(true)" class="text-[11px] text-slateGray underline hover:text-moss cursor-pointer">
+            <button id="btnOpenCookieDetails" type="button" class="text-[11px] text-slateGray underline hover:text-moss cursor-pointer">
                 Cookie-Details / Einstellungen anpassen
             </button>
         </div>
     </div>
 
-    <!-- Cookie Details Modal -->
+    <!-- MODAL 4: Cookie Details Modal -->
     <div id="cookieModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleCookieModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button id="btnCloseCookieModal" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
             
             <div class="mb-6">
                 <h3 class="text-2xl font-black text-slateDark">Cookie-Einstellungen</h3>
-                <p class="text-sm text-slateGray mt-1">Hier kannst du auswählen, welche Cookies du zulässt.</p>
+                <p class="text-sm text-slateGray mt-1">Hier kannst du auswählen, welche Cookies du für <strong>baustoffwechsel</strong> zulässt.</p>
             </div>
 
             <div class="space-y-4 text-xs">
+                <!-- Essential -->
                 <div class="bg-creamBg p-4 rounded-2xl border border-gray-200">
                     <div class="flex justify-between items-center mb-1">
                         <span class="font-bold text-slateDark text-sm">Essenzielle Cookies</span>
                         <input type="checkbox" checked disabled class="rounded border-gray-300 text-moss cursor-not-allowed">
                     </div>
                     <p class="text-slateGray leading-relaxed">
-                        Erforderlich für Grundfunktionen (z. B. Speicherung deiner Cookie-Auswahl).
+                        Diese Cookies sind für die Grundfunktionen der Website zwingend erforderlich (z. B. Speicherung deiner Cookie-Auswahl).
                     </p>
                 </div>
+
+                <!-- Maps / Functional -->
                 <div class="bg-creamBg p-4 rounded-2xl border border-gray-200">
                     <div class="flex justify-between items-center mb-1">
                         <span class="font-bold text-slateDark text-sm">Statistik & Karten (Leaflet)</span>
                         <input type="checkbox" id="optionalCookies" class="rounded border-gray-300 text-moss focus:ring-moss cursor-pointer" checked>
                     </div>
                     <p class="text-slateGray leading-relaxed">
-                        Ermöglichen die interaktive Landkarte.
+                        Ermöglichen die reibungslose Darstellung der interaktiven Landkarten und helfen uns, die Website-Performance zu verbessern.
                     </p>
                 </div>
             </div>
 
             <div class="mt-8 flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-100">
-                <button onclick="saveCookiePreferences()" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3 rounded-xl text-xs transition duration-200 cursor-pointer">
+                <button id="btnSaveCookiePrefs" type="button" class="w-full bg-moss hover:bg-mossDark text-white font-bold py-3 rounded-xl text-xs transition duration-200 cursor-pointer">
                     Auswahl speichern
                 </button>
-                <button onclick="acceptCookies('all')" class="w-full bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-3 rounded-xl text-xs transition duration-200 cursor-pointer">
+                <button id="btnAcceptAllModal" type="button" class="w-full bg-warmSand hover:bg-gray-200 text-slateDark font-bold py-3 rounded-xl text-xs transition duration-200 cursor-pointer">
                     Alle akzeptieren
                 </button>
             </div>
-        </div>
-    </div>
-
-    <!-- Legal Modal (Impressum, Datenschutz, AGB) -->
-    <div id="legalModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl max-w-2xl w-full p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] overflow-y-auto">
-            <button onclick="toggleLegalModal(false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
-            <div id="legalContent" class="prose prose-sm max-w-none">
-                <!-- Dynamischer Inhalt -->
+            <div class="mt-4 text-center">
+                <button id="btnResetConsent" type="button" class="text-[11px] text-terra underline hover:text-slateDark cursor-pointer">
+                    Einwilligung zurücksetzen & Banner anzeigen
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Leaflet JS & Scripts -->
+    <!-- MODAL 5: Impressum Modal -->
+    <div id="impressumModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <button onclick="toggleLegalModal('impressumModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            
+            <div class="mb-4 pb-4 border-b border-gray-100">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Rechtliche Hinweise</span>
+                <h3 class="text-2xl font-black text-slateDark">Impressum</h3>
+                <p class="text-xs text-slateGray mt-0.5">Anbieterkennzeichnung gemäß § 5 DDG (Digital-Dienste-Gesetz)</p>
+            </div>
+
+            <div class="overflow-y-auto modal-scroll pr-2 space-y-4 text-xs text-slateGray leading-relaxed flex-grow">
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Diensteanbieter / Betreiber i.Gr.</h4>
+                    <p class="font-semibold text-slateDark">baustoffwechsel i.Gr.</p>
+                    <p>Musterstraße 42</p>
+                    <p>57392 Schmallenberg / Sauerland</p>
+                    <p>Deutschland</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Vertretungsberechtigte Personen</h4>
+                    <p>Max Mustermann (Gründer / Geschäftsführer i.Gr.)</p>
+                    <p>E-Mail: kontakt@baustoffwechsel.de</p>
+                    <p>Telefon: +49 (0) 2972 9999-0 (Platzhalter)</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Registereintrag & Umsatzsteuer</h4>
+                    <p>Registergericht: Amtsgericht Arnsberg (Eintragung in Gründung)</p>
+                    <p>Registernummer: HRB XXXXX (wird nach Gründung ergänzt)</p>
+                    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE3XXXXXX (in Beantragung)</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h4>
+                    <p>Max Mustermann, Musterstraße 42, 57392 Schmallenberg</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">Streitbeilegung</h4>
+                    <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener" class="text-moss underline">https://ec.europa.eu/consumers/odr</a>. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="toggleLegalModal('impressumModal')" type="button" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark font-bold py-2.5 px-6 rounded-xl text-xs transition duration-200 cursor-pointer">
+                    Schließen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 6: Datenschutz Modal -->
+    <div id="datenschutzModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <button onclick="toggleLegalModal('datenschutzModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            
+            <div class="mb-4 pb-4 border-b border-gray-100">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Datenschutzerklärung</span>
+                <h3 class="text-2xl font-black text-slateDark">Datenschutzerklärung (DSGVO)</h3>
+                <p class="text-xs text-slateGray mt-0.5">Informationen zur Verarbeitung personenbezogener Daten auf baustoffwechsel</p>
+            </div>
+
+            <div class="overflow-y-auto modal-scroll pr-2 space-y-4 text-xs text-slateGray leading-relaxed flex-grow">
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">1. Datenschutz auf einen Blick</h4>
+                    <p>Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie unsere Website besuchen.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">2. Verantwortliche Stelle</h4>
+                    <p class="font-semibold text-slateDark">baustoffwechsel i.Gr.</p>
+                    <p>Musterstraße 42, 57392 Schmallenberg</p>
+                    <p>E-Mail: datenschutz@baustoffwechsel.de</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">3. Datenerfassung auf unserer Website</h4>
+                    <p><strong>Formulardaten (Anmeldung & Inserate):</strong> Wenn Sie über Formulare Daten übermitteln (Titel, Standort, Kontakt), werden diese zur Abwicklung der Vermittlung auf Basis von Art. 6 Abs. 1 lit. b DSGVO verarbeitet.</p>
+                    <p class="mt-1"><strong>Kartenmaterial (Leaflet & OpenStreetMap):</strong> Für die Standortkarte wird OpenStreetMap genutzt. Hierbei kann Ihre IP-Adresse an den Dienstanbieter übertragen werden.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">4. Cookies & Speicherung</h4>
+                    <p>Wir verwenden lokale Speichertechnologien (localStorage), um Ihre Cookie-Einwilligungen dauerhaft abzuspeichern. Dies erfolgt auf Grundlage unseres berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO) an einer datenschutzkonformen Interaktion.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">5. Ihre Rechte (Art. 15 ff. DSGVO)</h4>
+                    <p>Sie haben jederzeit das Recht auf kostenlose Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger sowie den Zweck der Datenverarbeitung und ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="toggleLegalModal('datenschutzModal')" type="button" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark font-bold py-2.5 px-6 rounded-xl text-xs transition duration-200 cursor-pointer">
+                    Schließen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 7: AGB Modal -->
+    <div id="agbModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <button onclick="toggleLegalModal('agbModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            
+            <div class="mb-4 pb-4 border-b border-gray-100">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Nutzungsbedingungen</span>
+                <h3 class="text-2xl font-black text-slateDark">Allgemeine Geschäftsbedingungen (AGB)</h3>
+                <p class="text-xs text-slateGray mt-0.5">Nutzung des Marktplatzes baustoffwechsel</p>
+            </div>
+
+            <div class="overflow-y-auto modal-scroll pr-2 space-y-4 text-xs text-slateGray leading-relaxed flex-grow">
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">§ 1 Geltungsbereich & Leistungsgegenstand</h4>
+                    <p>Diese AGB gelten für die Nutzung der Vermittlungsplattform <strong>baustoffwechsel</strong>. baustoffwechsel stellt eine digitale Plattform zur Verfügung, auf der Nutzer (m/w/d) Angebote und Gesuche bezüglich Baustoffen, Aushub, Mutterboden und verwandten Materialien einstellen und einsehen können.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">§ 2 Rolle von baustoffwechsel / Vermittlerrolle</h4>
+                    <p>baustoffwechsel ist nicht selbst Vertragspartei der zwischen den Nutzern geschlossenen Abnahme- oder Kaufverträge. Die Abwicklung, Abholung und Qualitätsprüfung obliegt ausschließlich den jeweiligen Nutzern.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">§ 3 Einstellung von Inseraten & Inhaltsverantwortung</h4>
+                    <p>Der Inserent garantiert, dass alle Angaben zu Mengen, Materialqualitäten (z.B. Schadstofffreiheit von Mutterboden/Aushub) wahrheitsgemäß erfolgen. Verbotene oder kontaminierte Abfälle dürfen nicht über die Plattform angeboten werden.</p>
+                </div>
+
+                <div>
+                    <h4 class="font-extrabold text-sm text-slateDark mb-1">§ 4 Haftungsbeschränkung</h4>
+                    <p>baustoffwechsel haftet nur für Schäden, die auf vorsätzlichen oder grob fahrlässigen Pflichtverletzungen beruhen. Für die Richtigkeit der Inseratsangaben übernimmt baustoffwechsel keine Gewähr.</p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                <button onclick="toggleLegalModal('agbModal')" type="button" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark font-bold py-2.5 px-6 rounded-xl text-xs transition duration-200 cursor-pointer">
+                    Schließen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS & Application Logic -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Leaflet Map Init
-        const map = L.map('map').setView([51.15, 8.28], 11);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap'
-        }).addTo(map);
+        // Global variables for accessibility & state
+        let leafletMap = null;
 
-        L.marker([51.16, 8.27]).addTo(map).bindPopup('<b>Mutterboden</b><br>Zu verschenken');
-        L.marker([51.12, 8.32]).addTo(map).bindPopup('<b>Betonpflaster</b><br>80 € / Palette');
-
-        // Live Rechner Logic
-        const slider = document.getElementById('volumeSlider');
-        const volumeVal = document.getElementById('volumeValue');
-        const moneySavings = document.getElementById('moneySavings');
-        const co2Savings = document.getElementById('co2Savings');
-
-        if (slider) {
-            slider.addEventListener('input', function() {
-                const m3 = parseInt(this.value);
-                volumeVal.innerText = m3;
-                moneySavings.innerText = (m3 * 18).toLocaleString('de-DE') + ' €';
-                co2Savings.innerText = (m3 * 9).toLocaleString('de-DE') + ' kg CO₂';
-            });
-        }
-
-        // Toast Helper
+        // Helper Toast Notification
         function showToast(message) {
-            const toast = document.getElementById('toastNotification');
-            const text = document.getElementById('toastText');
-            if (toast && text) {
-                text.innerText = message;
-                toast.classList.remove('hidden', 'translate-y-2');
-                setTimeout(() => {
-                    toast.classList.add('hidden', 'translate-y-2');
-                }, 3000);
-            }
-        }
-
-        // Modal Controls
-        function toggleLoginModal(show) {
-            const modal = document.getElementById('loginModal');
-            if (modal) modal.classList.toggle('hidden', !show);
-        }
-
-        function toggleInseratModal(show) {
-            const modal = document.getElementById('inseratModal');
-            if (modal) modal.classList.toggle('hidden', !show);
-        }
-
-        function toggleCookieModal(show) {
-            const modal = document.getElementById('cookieModal');
-            if (modal) modal.classList.toggle('hidden', !show);
-        }
-
-        function toggleLegalModal(type) {
-            const modal = document.getElementById('legalModal');
-            const content = document.getElementById('legalContent');
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'bg-slateDark text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl border border-gray-700 pointer-events-auto flex items-center space-x-2 transition-all duration-300 transform translate-x-10 opacity-0';
+            toast.innerHTML = `<span class="text-moss font-black">●</span><span>${message}</span>`;
+            container.appendChild(toast);
             
-            if (!type) {
-                if (modal) modal.classList.add('hidden');
-                return;
-            }
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-x-10', 'opacity-0');
+            });
 
-            let html = '';
-            if (type === 'impressum') {
-                html = `
-                    <h3 class="text-2xl font-black text-slateDark mb-4">Impressum</h3>
-                    <p class="text-xs text-slateGray uppercase font-bold tracking-wider mb-2">Angaben gemäß § 5 DDG (i.Gr.)</p>
-                    <p class="text-sm text-slateDark leading-relaxed">
-                        <strong>baustoffwechsel</strong><br>
-                        Projekt in Gründung / Vorbereitung<br>
-                        57392 Schmallenberg / Lennestadt<br>
-                        Deutschland
-                    </p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">Vertreten durch</h4>
-                    <p class="text-sm text-slateGray leading-relaxed">Die Gründer der Plattform baustoffwechsel.</p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">Kontakt</h4>
-                    <p class="text-sm text-slateGray">E-Mail: kontakt@baustoffwechsel.de</p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">Verbraucherstreitbeilegung</h4>
-                    <p class="text-xs text-slateGray leading-relaxed">
-                        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
-                    </p>
-                `;
-            } else if (type === 'datenschutz') {
-                html = `
-                    <h3 class="text-2xl font-black text-slateDark mb-4">Datenschutzerklärung</h3>
-                    <p class="text-sm text-slateGray leading-relaxed">
-                        Der Schutz deiner persönlichen Daten ist uns ein wichtiges Anliegen. Nachfolgend informieren wir ausführlich über die Verarbeitung personenbezogener Daten auf baustoffwechsel.
-                    </p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">1. Speicherung von Präferenzen (LocalStorage / Cookies)</h4>
-                    <p class="text-xs text-slateGray leading-relaxed">
-                        Wir verwenden lokales Browserspeichern (LocalStorage), um deine Cookie-Einwilligung dauerhaft auf deinem Endgerät zu sichern. Dies geschieht auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
-                    </p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">2. Einbindung interaktiver Karten (Leaflet / OpenStreetMap)</h4>
-                    <p class="text-xs text-slateGray leading-relaxed">
-                        Zur Darstellung regionaler Angebote nutzen wir OpenStreetMap. Beim Aufruf der Karte wird deine IP-Adresse an Server der OpenStreetMap Foundation übertragen.
-                    </p>
-                `;
-            } else if (type === 'agb') {
-                html = `
-                    <h3 class="text-2xl font-black text-slateDark mb-4">Allgemeine Geschäftsbedingungen (AGB)</h3>
-                    <p class="text-sm text-slateGray leading-relaxed">
-                        baustoffwechsel ist ein regionaler Vermittlungsmarktplatz für die Kreislaufwirtschaft von Baustoffen, Mutterboden und Aushub zwischen Privatpersonen und Unternehmen.
-                    </p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">1. Geltungsbereich</h4>
-                    <p class="text-xs text-slateGray leading-relaxed">
-                        Diese Nutzungshinweise gelten für die Nutzung der Plattform durch Privatpersonen und Gewerbetreibende.
-                    </p>
-                    <h4 class="font-bold text-slateDark mt-4 mb-1 text-sm">2. Verantwortlichkeit für Inserate</h4>
-                    <p class="text-xs text-slateGray leading-relaxed">
-                        Inserenten sind für die Richtigkeit der Angaben zu Menge, Beschaffenheit und Belastung des Materials selbst verantwortlich. baustoffwechsel übernimmt keine Gewähr für die Güte der angebotenen Stoffe.
-                    </p>
-                `;
-            }
-
-            if (content) content.innerHTML = html;
-            if (modal) modal.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-x-10');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
         }
 
-        // Scroll-Spy Navigation
-        const sections = document.querySelectorAll('section[id], main[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
+        function showContactNotice() {
+            showToast('Kontaktfunktion für Betatester freigeschaltet.');
+        }
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 130;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-section') === current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // Cookie Banner Visibility
-        window.addEventListener('DOMContentLoaded', () => {
-            const consent = localStorage.getItem('bsw_cookie_consent');
-            const banner = document.getElementById('cookieBanner');
-            if (consent && banner) {
-                banner.classList.add('hidden');
+        // Toggle Generic Modal Helper
+        function toggleModal(modalId, forceState) {
+            const el = document.getElementById(modalId);
+            if (!el) return;
+            if (forceState !== undefined) {
+                if (forceState) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            } else {
+                el.classList.toggle('hidden');
             }
-        });
+        }
+
+        // Specific Named Handlers required by query
+        function toggleLoginModal() { toggleModal('loginModal'); }
+        function toggleInseratModal() { toggleModal('inseratModal'); }
+        function toggleCookieModal() { toggleModal('cookieModal'); }
+        function toggleLegalModal(id) { toggleModal(id); }
 
         function acceptCookies(type) {
             localStorage.setItem('bsw_cookie_consent', type);
             const banner = document.getElementById('cookieBanner');
-            const modal = document.getElementById('cookieModal');
             if (banner) banner.classList.add('hidden');
-            if (modal) modal.classList.add('hidden');
-            showToast('Cookie-Einstellungen gespeichert');
-        }
-
-        function saveCookiePreferences() {
-            const optional = document.getElementById('optionalCookies').checked;
-            localStorage.setItem('bsw_cookie_consent', optional ? 'custom_all' : 'essential_only');
-            document.getElementById('cookieBanner').classList.add('hidden');
-            document.getElementById('cookieModal').classList.add('hidden');
-            showToast('Cookie-Präferenzen aktualisiert');
+            toggleModal('cookieModal', false);
+            showToast(type === 'all' ? 'Alle Cookies akzeptiert.' : 'Essenzielle Cookies gespeichert.');
         }
 
         function resetCookieConsent() {
             localStorage.removeItem('bsw_cookie_consent');
+            toggleModal('cookieModal', false);
             const banner = document.getElementById('cookieBanner');
             if (banner) banner.classList.remove('hidden');
-            showToast('Cookie-Einstellungen zurückgesetzt');
+            showToast('Cookie-Einstellungen zurückgesetzt.');
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // 1. LEAFLET MAP INITIALIZATION
+            const mapContainer = document.getElementById('map');
+            if (mapContainer) {
+                leafletMap = L.map('map').setView([51.15, 8.28], 11);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap'
+                }).addTo(leafletMap);
+
+                const m1 = L.marker([51.16, 8.27]).addTo(leafletMap).bindPopup('<b>Mutterboden</b><br>Zu verschenken (Schmallenberg)');
+                const m2 = L.marker([51.12, 8.32]).addTo(leafletMap).bindPopup('<b>Betonpflaster</b><br>80 € / Palette (Lennestadt)');
+
+                const btnResetMap = document.getElementById('btnResetMap');
+                if (btnResetMap) {
+                    btnResetMap.addEventListener('click', function() {
+                        leafletMap.setView([51.15, 8.28], 11);
+                    });
+                }
+            }
+
+            // 2. LIVE CALCULATOR LOGIC
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumeValue = document.getElementById('volumeValue');
+            const moneySavings = document.getElementById('moneySavings');
+            const co2Savings = document.getElementById('co2Savings');
+
+            if (volumeSlider) {
+                volumeSlider.addEventListener('input', function() {
+                    const m3 = parseInt(this.value, 10);
+                    if (volumeValue) volumeValue.innerText = m3;
+                    if (moneySavings) moneySavings.innerText = (m3 * 18).toLocaleString('de-DE') + ' €';
+                    if (co2Savings) co2Savings.innerText = (m3 * 9).toLocaleString('de-DE') + ' kg CO₂';
+                });
+            }
+
+            // 3. GLOBAL ESCAPE & BACKDROP CLOSING
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    ['loginModal', 'inseratModal', 'cookieModal', 'impressumModal', 'datenschutzModal', 'agbModal'].forEach(id => toggleModal(id, false));
+                }
+            });
+
+            ['loginModal', 'inseratModal', 'cookieModal', 'impressumModal', 'datenschutzModal', 'agbModal'].forEach(function(modalId) {
+                const modalEl = document.getElementById(modalId);
+                if (modalEl) {
+                    modalEl.addEventListener('click', function(e) {
+                        if (e.target === modalEl) {
+                            toggleModal(modalId, false);
+                        }
+                    });
+                }
+            });
+
+            // 4. TRIGGER ATTACHMENTS
+            const btnOpenLogin = document.getElementById('btnOpenLogin');
+            const btnCloseLogin = document.getElementById('btnCloseLogin');
+            const formLogin = document.getElementById('formLogin');
+
+            if (btnOpenLogin) btnOpenLogin.addEventListener('click', toggleLoginModal);
+            if (btnCloseLogin) btnCloseLogin.addEventListener('click', toggleLoginModal);
+            if (formLogin) {
+                formLogin.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showToast('Erfolgreich angemeldet!');
+                    toggleLoginModal();
+                });
+            }
+
+            const btnOpenInserat = document.getElementById('btnOpenInserat');
+            const btnCloseInserat = document.getElementById('btnCloseInserat');
+            const formInserat = document.getElementById('formInserat');
+
+            if (btnOpenInserat) btnOpenInserat.addEventListener('click', toggleInseratModal);
+            if (btnCloseInserat) btnCloseInserat.addEventListener('click', toggleInseratModal);
+            if (formInserat) {
+                formInserat.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showToast('Dein Inserat wurde veröffentlicht!');
+                    toggleInseratModal();
+                    formInserat.reset();
+                });
+            }
+
+            // Cookie Management Triggers
+            const cookieBanner = document.getElementById('cookieBanner');
+            const btnAcceptAllCookies = document.getElementById('btnAcceptAllCookies');
+            const btnAcceptEssentialCookies = document.getElementById('btnAcceptEssentialCookies');
+            const btnOpenCookieDetails = document.getElementById('btnOpenCookieDetails');
+            const btnCloseCookieModal = document.getElementById('btnCloseCookieModal');
+            const btnFooterCookies = document.getElementById('btnFooterCookies');
+            const btnSaveCookiePrefs = document.getElementById('btnSaveCookiePrefs');
+            const btnAcceptAllModal = document.getElementById('btnAcceptAllModal');
+            const btnResetConsent = document.getElementById('btnResetConsent');
+
+            const existingConsent = localStorage.getItem('bsw_cookie_consent');
+            if (existingConsent && cookieBanner) {
+                cookieBanner.classList.add('hidden');
+            }
+
+            if (btnAcceptAllCookies) btnAcceptAllCookies.addEventListener('click', () => acceptCookies('all'));
+            if (btnAcceptEssentialCookies) btnAcceptEssentialCookies.addEventListener('click', () => acceptCookies('essential'));
+            if (btnOpenCookieDetails) btnOpenCookieDetails.addEventListener('click', toggleCookieModal);
+            if (btnCloseCookieModal) btnCloseCookieModal.addEventListener('click', toggleCookieModal);
+            if (btnFooterCookies) btnFooterCookies.addEventListener('click', toggleCookieModal);
+
+            if (btnSaveCookiePrefs) {
+                btnSaveCookiePrefs.addEventListener('click', function() {
+                    const optionalCheckbox = document.getElementById('optionalCookies');
+                    const isChecked = optionalCheckbox ? optionalCheckbox.checked : false;
+                    acceptCookies(isChecked ? 'all' : 'essential');
+                });
+            }
+            if (btnAcceptAllModal) btnAcceptAllModal.addEventListener('click', () => acceptCookies('all'));
+            if (btnResetConsent) btnResetConsent.addEventListener('click', resetCookieConsent);
+
+            // Filter Search Simulation
+            const btnFilterSearch = document.getElementById('btnFilterSearch');
+            if (btnFilterSearch) {
+                btnFilterSearch.addEventListener('click', function() {
+                    showToast('Filter angewendet. Suchergebnisse aktualisiert.');
+                });
+            }
+
+            // 5. SCROLL-SPY FOR NAVIGATION LINKS
+            const sections = document.querySelectorAll('section[id], main[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', function() {
+                let currentSectionId = '';
+                sections.forEach(function(section) {
+                    const sectionTop = section.offsetTop - 140;
+                    if (window.scrollY >= sectionTop) {
+                        currentSectionId = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-section') === currentSectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+        });
     </script>
 </body>
 </html>
