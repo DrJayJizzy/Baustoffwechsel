@@ -274,11 +274,10 @@
         </div>
     </section>
 
-    <!-- About Section (Über das Projekt / Philosophie & Vision) -->
+    <!-- About Section -->
     <section id="ueber-uns" class="bg-creamBg py-20 border-b border-gray-200 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- Header mit Logo-Fokus & Mission -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
                 <div class="lg:col-span-8 space-y-4">
                     <span class="text-xs font-extrabold text-moss uppercase tracking-wider block">Philosophie & Vision</span>
@@ -290,7 +289,6 @@
                     </p>
                 </div>
 
-                <!-- Großes integriertes Marken-Icon -->
                 <div class="lg:col-span-4 flex justify-center">
                     <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-soft flex flex-col items-center text-center relative w-full max-w-xs">
                         <div class="w-24 h-24 mb-4 flex items-center justify-center">
@@ -310,7 +308,7 @@
                 </div>
             </div>
 
-            <!-- Interaktive Schnittstellen-Grafik (Network Grid) -->
+            <!-- Network Grid -->
             <div class="mb-16">
                 <div class="text-center max-w-2xl mx-auto mb-10">
                     <h3 class="font-extrabold text-2xl text-slateDark">Nahtlose Schnittstelle für alle Akteure</h3>
@@ -318,7 +316,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Schnittstelle 1: Privat & Privat -->
                     <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between">
                         <div class="flex items-center justify-between mb-4">
                             <span class="bg-moss/10 text-moss text-xs font-black px-3 py-1 rounded-full uppercase">Privat ⇄ Privat</span>
@@ -330,7 +327,6 @@
                         </p>
                     </div>
 
-                    <!-- Schnittstelle 2: Privat & Gewerbe -->
                     <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between border-moss/30 ring-2 ring-moss/10">
                         <div class="flex items-center justify-between mb-4">
                             <span class="bg-terra/10 text-terra text-xs font-black px-3 py-1 rounded-full uppercase">Privat ⇄ Gewerbe</span>
@@ -342,7 +338,6 @@
                         </p>
                     </div>
 
-                    <!-- Schnittstelle 3: Gewerbe & Gewerbe -->
                     <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between">
                         <div class="flex items-center justify-between mb-4">
                             <span class="bg-slateDark/10 text-slateDark text-xs font-black px-3 py-1 rounded-full uppercase">Gewerbe ⇄ Gewerbe</span>
@@ -356,7 +351,7 @@
                 </div>
             </div>
 
-            <!-- Makro-Kennzahlenblock -->
+            <!-- Kennzahlenblock -->
             <div class="bg-gradient-to-r from-slateDark to-slateDark/95 text-white p-8 lg:p-10 rounded-3xl shadow-xl">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slateGray/30">
                     <div class="pt-4 md:pt-0">
@@ -388,9 +383,9 @@
                 <span>&copy; 2026. Alle Rechte vorbehalten.</span>
             </div>
             <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
-                <button type="button" onclick="toggleLegalModal('impressumModal')" class="hover:text-moss transition cursor-pointer">Impressum</button>
-                <button type="button" onclick="toggleLegalModal('datenschutzModal')" class="hover:text-moss transition cursor-pointer">Datenschutz</button>
-                <button type="button" onclick="toggleLegalModal('agbModal')" class="hover:text-moss transition cursor-pointer">AGB</button>
+                <button type="button" onclick="openLegalModal('impressumModal')" class="hover:text-moss transition cursor-pointer">Impressum</button>
+                <button type="button" onclick="openLegalModal('datenschutzModal')" class="hover:text-moss transition cursor-pointer">Datenschutz</button>
+                <button type="button" onclick="openLegalModal('agbModal')" class="hover:text-moss transition cursor-pointer">AGB</button>
                 <button id="btnFooterCookies" type="button" class="hover:text-moss transition text-slateGray underline cursor-pointer">Cookie-Einstellungen</button>
             </div>
         </div>
@@ -553,7 +548,7 @@
     <!-- MODAL 5: Impressum Modal -->
     <div id="impressumModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] overflow-y-auto modal-scroll">
-            <button type="button" onclick="toggleLegalModal('impressumModal', false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button type="button" onclick="closeLegalModal('impressumModal')" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
             <div class="space-y-4">
                 <h3 class="text-2xl font-black text-slateDark mb-2">Impressum</h3>
                 <p class="text-xs text-slateGray uppercase font-bold tracking-wider">Angaben gemäß § 5 DDG (i.Gr.)</p>
@@ -576,7 +571,7 @@
     <!-- MODAL 6: Datenschutz Modal -->
     <div id="datenschutzModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] overflow-y-auto modal-scroll">
-            <button type="button" onclick="toggleLegalModal('datenschutzModal', false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button type="button" onclick="closeLegalModal('datenschutzModal')" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
             <div class="space-y-4">
                 <h3 class="text-2xl font-black text-slateDark mb-2">Datenschutzerklärung</h3>
                 <p class="text-xs text-slateGray leading-relaxed">
@@ -597,7 +592,7 @@
     <!-- MODAL 7: AGB Modal -->
     <div id="agbModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] overflow-y-auto modal-scroll">
-            <button type="button" onclick="toggleLegalModal('agbModal', false)" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+            <button type="button" onclick="closeLegalModal('agbModal')" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
             <div class="space-y-4">
                 <h3 class="text-2xl font-black text-slateDark mb-2">Allgemeine Geschäftsbedingungen</h3>
                 <p class="text-xs text-slateGray leading-relaxed">
@@ -624,8 +619,8 @@
             attribution: '&copy; OpenStreetMap'
         }).addTo(map);
 
-        const marker1 = L.marker([51.16, 8.27]).addTo(map).bindPopup('<b>Mutterboden</b><br>Zu verschenken');
-        const marker2 = L.marker([51.12, 8.32]).addTo(map).bindPopup('<b>Betonpflaster</b><br>80 € / Palette');
+        L.marker([51.16, 8.27]).addTo(map).bindPopup('<b>Mutterboden</b><br>Zu verschenken');
+        L.marker([51.12, 8.32]).addTo(map).bindPopup('<b>Betonpflaster</b><br>80 € / Palette');
 
         document.getElementById('btnResetMap')?.addEventListener('click', () => {
             map.setView([51.15, 8.28], 11);
@@ -683,12 +678,15 @@
         document.getElementById('btnCloseCookieModal')?.addEventListener('click', () => cookieModal.classList.add('hidden'));
         document.getElementById('btnFooterCookies')?.addEventListener('click', () => cookieModal.classList.remove('hidden'));
 
-        function toggleLegalModal(modalId, show) {
+        // Legal Modals Helper
+        function openLegalModal(modalId) {
             const m = document.getElementById(modalId);
-            if (m) {
-                if (show) m.classList.remove('hidden');
-                else m.classList.add('hidden');
-            }
+            if (m) m.classList.remove('hidden');
+        }
+
+        function closeLegalModal(modalId) {
+            const m = document.getElementById(modalId);
+            if (m) m.classList.add('hidden');
         }
 
         // Cookie Actions
@@ -732,9 +730,9 @@
             if (e.target === loginModal) loginModal.classList.add('hidden');
             if (e.target === inseratModal) inseratModal.classList.add('hidden');
             if (e.target === cookieModal) cookieModal.classList.add('hidden');
-            if (e.target === document.getElementById('impressumModal')) toggleLegalModal('impressumModal', false);
-            if (e.target === document.getElementById('datenschutzModal')) toggleLegalModal('datenschutzModal', false);
-            if (e.target === document.getElementById('agbModal')) toggleLegalModal('agbModal', false);
+            if (e.target === document.getElementById('impressumModal')) closeLegalModal('impressumModal');
+            if (e.target === document.getElementById('datenschutzModal')) closeLegalModal('datenschutzModal');
+            if (e.target === document.getElementById('agbModal')) closeLegalModal('agbModal');
         });
 
         // Scroll-Spy Highlighting
