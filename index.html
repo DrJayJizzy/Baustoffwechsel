@@ -453,13 +453,66 @@
                     Anmelden
                 </button>
             </form>
-            <div class="mt-6 pt-6 border-t border-gray-100 text-center text-xs text-slateGray">
-                Noch kein Konto? <a href="#" onclick="showToast('Registrierung derzeit im Betatest.'); return false;" class="text-moss font-bold hover:underline">Jetzt kostenlos registrieren</a>
+            <div class="mt-6 text-center text-xs text-slateGray">
+                Noch kein Konto? <a href="#" onclick="switchToRegister(event)" class="text-moss font-bold hover:underline">Jetzt registrieren</a>
             </div>
         </div>
     </div>
 
-    <!-- MODAL 2: Inserat erstellen Modal -->
+<!-- MODAL 2: Registrierungs-Modal (NEU) -->
+<div id="registerModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-8 border border-gray-200 shadow-2xl relative">
+        <button type="button" onclick="closeRegisterModal()" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
+        
+        <div class="mb-6">
+            <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Kostenloses Konto</span>
+            <h3 class="text-2xl font-black text-slateDark">Konto erstellen</h3>
+            <p class="text-sm text-slateGray mt-1">Erstelle ein Konto, um Inserate zu schalten und direkt regional zu tauschen.</p>
+        </div>
+
+        <form id="formRegister" onsubmit="handleRegister(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slateDark uppercase tracking-wider mb-2">Ich bin:</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex items-center justify-center px-4 py-3 border border-gray-200 rounded-xl cursor-pointer hover:border-moss transition-all font-bold text-xs text-slateDark">
+                        <input type="radio" name="accountType" value="privat" checked class="accent-moss mr-2">
+                        <span>Privatperson</span>
+                    </label>
+                    <label class="flex items-center justify-center px-4 py-3 border border-gray-200 rounded-xl cursor-pointer hover:border-moss transition-all font-bold text-xs text-slateDark">
+                        <input type="radio" name="accountType" value="gewerbe" class="accent-moss mr-2">
+                        <span>Gewerbe</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label for="regName" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Name / Firmenname</label>
+                <input id="regName" type="text" required placeholder="z. B. Max Mustermann" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+            </div>
+
+            <div>
+                <label for="regEmail" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">E-Mail Adresse</label>
+                <input id="regEmail" type="email" required placeholder="name@beispiel.de" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+            </div>
+
+            <div>
+                <label for="regPassword" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-1">Passwort</label>
+                <input id="regPassword" type="password" required minlength="6" placeholder="Min. 6 Zeichen" class="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg">
+            </div>
+
+            <button type="submit" class="w-full bg-moss hover:bg-mossDark text-white font-extrabold py-3.5 rounded-xl shadow-md transition-all duration-200 cursor-pointer">
+                Kostenlos registrieren
+            </button>
+        </form>
+
+        <div class="mt-6 text-center text-xs text-slateGray">
+            Bereits ein Konto? <a href="#" onclick="switchToLogin(event)" class="text-moss font-bold hover:underline">Hier anmelden</a>
+        </div>
+    </div>
+</div>
+
+
+    <!-- MODAL 3: Inserat erstellen Modal -->
     <div id="inseratModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button id="btnCloseInserat" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
@@ -519,7 +572,7 @@
         </div>
     </div>
 
-    <!-- MODAL 3: Cookie Banner -->
+    <!-- MODAL 4: Cookie Banner -->
     <div id="cookieBanner" class="fixed bottom-4 right-4 left-4 md:left-auto md:max-w-md bg-white border border-gray-200 rounded-3xl p-6 shadow-2xl z-50">
         <div class="flex items-start space-x-3 mb-3">
             <div class="w-9 h-9 bg-warmSand text-moss rounded-xl flex items-center justify-center font-bold text-lg shrink-0">
@@ -547,7 +600,7 @@
         </div>
     </div>
 
-    <!-- MODAL 4: Cookie Details Modal -->
+    <!-- MODAL 5: Cookie Details Modal -->
     <div id="cookieModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-lg w-full p-8 border border-gray-200 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button id="btnCloseCookieModal" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
@@ -597,7 +650,7 @@
         </div>
     </div>
 
-    <!-- MODAL 5: Impressum Modal -->
+    <!-- MODAL 6: Impressum Modal -->
     <div id="impressumModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
             <button onclick="toggleLegalModal('impressumModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
@@ -650,7 +703,7 @@
         </div>
     </div>
 
-    <!-- MODAL 6: Datenschutz Modal -->
+    <!-- MODAL 7: Datenschutz Modal -->
     <div id="datenschutzModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
             <button onclick="toggleLegalModal('datenschutzModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
@@ -699,7 +752,7 @@
         </div>
     </div>
 
-    <!-- MODAL 7: AGB Modal -->
+    <!-- MODAL 8: AGB Modal -->
     <div id="agbModal" class="fixed inset-0 bg-slateDark/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-gray-200 shadow-2xl relative max-h-[85vh] flex flex-col">
             <button onclick="toggleLegalModal('agbModal')" type="button" class="absolute top-6 right-6 text-slateGray hover:text-slateDark text-xl font-bold cursor-pointer">✕</button>
@@ -1002,6 +1055,43 @@
         document.addEventListener('DOMContentLoaded', () => {
             initAnimatedCounters();
         });
+
+// Modal Steuerung für Login & Registrierung
+function openLoginModal() {
+            document.getElementById('loginModal')?.classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal')?.classList.add('hidden');
+        }
+
+        function openRegisterModal() {
+            document.getElementById('registerModal')?.classList.remove('hidden');
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('registerModal')?.classList.add('hidden');
+        }
+
+        function switchToRegister(e) {
+            if (e) e.preventDefault();
+            closeLoginModal();
+            openRegisterModal();
+        }
+
+        function switchToLogin(e) {
+            if (e) e.preventDefault();
+            closeRegisterModal();
+            openLoginModal();
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            alert(`Danke für deine Registrierung, ${name}! Im nächsten Schritt verbinden wir das mit Supabase.`);
+            closeRegisterModal();
+        }
+
     </script>
 </body>
 </html>
