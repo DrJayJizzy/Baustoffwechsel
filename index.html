@@ -925,11 +925,11 @@
                 });
             }
 
-            const btnOpenInserat = document.getElementById('btnOpenInserat');
-            const btnCloseInserat = document.getElementById('btnCloseInserat');
+     // const btnOpenInserat = document.getElementById('btnOpenInserat'); // Entfernt, da wir jetzt onclick nutzen
+     const btnCloseInserat = document.getElementById('btnCloseInserat');
             const formInserat = document.getElementById('formInserat');
 
-            if (btnOpenInserat) btnOpenInserat.addEventListener('click', toggleInseratModal);
+            // if (btnOpenInserat) btnOpenInserat.addEventListener('click', toggleInseratModal); // Entfernt!
             if (btnCloseInserat) btnCloseInserat.addEventListener('click', toggleInseratModal);
             if (formInserat) {
                 formInserat.addEventListener('submit', function(e) {
@@ -938,6 +938,7 @@
                     toggleInseratModal();
                     formInserat.reset();
                 });
+            }
             }
 
             // Cookie Management Triggers
