@@ -1099,17 +1099,24 @@ let isLoggedIn = false;
 
 // Prüft beim Klick auf "Inserat erstellen", ob der Nutzer eingeloggt ist
 function handleCreateListingClick() {
+    // Event-Ausbreitung stoppen, falls ein anderer Listener auslöst
+    if (window.event) {
+        window.event.stopPropagation();
+    }
+
     if (isLoggedIn) {
         alert("Du bist bereits eingeloggt! Hier öffnet sich später das Inserat-Formular.");
     } else {
-        // Nicht eingeloggt -> Anmeldefenster öffnen
+        // Nicht eingeloggt -> Zuerst alle eventuellen anderen Modals schließen
+        document.getElementById('registerModal')?.classList.add('hidden');
+        
+        // Dann das Login-Modal direkt im Vordergrund öffnen
         const loginModal = document.getElementById('loginModal');
         if (loginModal) {
             loginModal.classList.remove('hidden');
         }
     }
 }
-
 
     </script>
 </body>
