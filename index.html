@@ -817,42 +817,32 @@
         // 2. HELFER & TOASTS
         // ==========================================
 
-        // Globale Variable als Duplikat-Sperre
-let activeToastMessage = null;
+     // Globale Duplikat-Sperre für Toasts
+     let activeToastMessage = null;
 
 function showToast(message) {
-    // Falls dieselbe Nachricht bereits aktiv ist -> Abbrechen!
+    // Verhindert identische doppelte Toasts gleichzeitig
     if (activeToastMessage === message) return;
-    
     activeToastMessage = message;
 
-    // Toast-Element aus dem HTML holen
-    let toast = document.getElementById('toastNotification');
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'bg-slateDark text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl border border-gray-700 pointer-events-auto flex items-center space-x-2 transition-all duration-300 transform translate-x-10 opacity-0';
+    toast.innerHTML = `<span class="text-moss font-black">✦</span><span>${message}</span>`;
+    container.appendChild(toast);
     
-    if (toast) {
-        // Text setzen
-        const toastMessage = document.getElementById('toastMessage') || toast;
-        toastMessage.textContent = message;
+    requestAnimationFrame(() => {
+        toast.classList.remove('translate-x-10', 'opacity-0');
+    });
 
-        // Dein originales Soft-Popup oben rechts einblenden
-        toast.classList.remove('hidden', 'translate-y-[-20px]', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-
-        // Nach 3 Sekunden wieder sanft ausblenden
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-x-10');
         setTimeout(() => {
-            toast.classList.remove('translate-y-0', 'opacity-100');
-            toast.classList.add('translate-y-[-20px]', 'opacity-0');
-            
-            setTimeout(() => {
-                toast.classList.add('hidden');
-                activeToastMessage = null; // Sperre wieder freigeben
-            }, 300); // Entspricht der Transitions-Dauer
-        }, 3000);
-    } else {
-        // Fallback, falls das HTML-Element fehlt
-        alert(message);
-        activeToastMessage = null;
-    }
+            toast.remove();
+            activeToastMessage = null; // Sperre wieder aufheben
+        }, 300);
+    }, 3500);
 }
 
         function showContactNotice() {
