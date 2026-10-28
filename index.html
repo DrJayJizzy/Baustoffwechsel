@@ -816,23 +816,35 @@
         // ==========================================
         // 2. HELFER & TOASTS
         // ==========================================
-        function showToast(message) {
-            const container = document.getElementById('toastContainer');
-            if (!container) return;
-            const toast = document.createElement('div');
-            toast.className = 'bg-slateDark text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl border border-gray-700 pointer-events-auto flex items-center space-x-2 transition-all duration-300 transform translate-x-10 opacity-0';
-            toast.innerHTML = `<span class="text-moss font-black"></span><span>${message}</span>`;
-            container.appendChild(toast);
-            
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-x-10', 'opacity-0');
-            });
+      // Globale Variable als Duplikat-Sperre
+let activeToastMessage = null;
 
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-x-10');
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
-        }
+function showToast(message) {
+    // Falls dieselbe Nachricht bereits aktiv ist -> Abbrechen!
+    if (activeToastMessage === message) return;
+    
+    activeToastMessage = message;
+
+    // Toast-Element aus dem HTML holen
+    let toast = document.getElementById('toastNotification');
+    
+    if (!toast) {
+        // Falls kein Element im HTML ist, erzeugen wir es dynamisch
+        toast = document.createElement('div');
+        toast.id = 'toastNotification';
+        toast.className = 'fixed bottom-5 right-5 z-50 bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg transition-all duration-300';
+        document.body.appendChild(toast);
+    }
+    
+    toast.textContent = message;
+    toast.classList.remove('hidden', 'opacity-0');
+
+    // Nach 3 Sekunden ausblenden und Sperre aufheben
+    setTimeout(() => {
+        toast.classList.add('hidden');
+        activeToastMessage = null;
+    }, 3000);
+}
 
         function showContactNotice() {
             showToast('Kontaktfunktion für Betatester freigeschaltet.');
@@ -877,24 +889,16 @@
             
             supabaseClient.auth.getSession().then(({ data: { session } }) => {
                 if (session && session.user) {
-                    // Nutzer ist eingeloggt -> Modal zuverlässig öffnen
                     if (inseratModal) {
                         inseratModal.classList.remove('hidden');
-                    } else {
-                        alert("Eingeloggt, aber das Inserat-Modal (ID: inseratModal) wurde nicht gefunden.");
                     }
                 } else {
-                    // Nutzer ist abgemeldet -> Login-Modal öffnen
                     closeRegisterModal();
                     openLoginModal();
-                    
-                    // Wir prüfen hier kurz, ob der Toast schon da ist, 
-                    // oder rufen ihn garantiert nur an dieser EINEN Stelle auf:
                     showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
                 }
             });
         }
-
         // Inserat-Modal schließen
 function closeInseratModal() {
     const inseratModal = document.getElementById('inseratModal');
