@@ -877,17 +877,17 @@
             
             supabaseClient.auth.getSession().then(({ data: { session } }) => {
                 if (session && session.user) {
-                    // Nutzer ist eingeloggt -> Inserat-Fenster zuverlässig öffnen
+                    // Nutzer ist eingeloggt -> Modal zuverlässig öffnen
                     if (inseratModal) {
                         inseratModal.classList.remove('hidden');
                     } else {
                         alert("Eingeloggt, aber das Inserat-Modal (ID: inseratModal) wurde nicht gefunden.");
                     }
                 } else {
-                    // Nutzer ist abgemeldet -> Login-Fenster öffnen
+                    // Nutzer ist abgemeldet -> Login-Modal öffnen & GENAU EINMAL Toast anzeigen
                     closeRegisterModal();
                     openLoginModal();
-                    // showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
+                    showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
                 }
             });
         }
