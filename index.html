@@ -796,20 +796,32 @@
             </div>
         </div>
     </div>
-
-    <!-- Leaflet JS & Application Logic -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <script>
-        // Global variables for accessibility & state
-        let leafletMap = null;
+        // ==========================================
+        // 1. SUPABASE KONFIGURATION
+        // ==========================================
+        const SUPABASE_URL = 'https://yrxcvbpjredezbtiqxps.supabase.co'; 
+        const SUPABASE_ANON_KEY = 'sb_publishable_ZWHD_ZztGySzga9V_EIJDg_JYyjFIuv';
+        
+        // Supabase Client initialisieren
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Helper Toast Notification
+        // Globale Variablen
+        let leafletMap = null;
+        let isLoggedIn = false;
+        let currentUser = null;
+
+        // ==========================================
+        // 2. HELFER & TOASTS
+        // ==========================================
         function showToast(message) {
             const container = document.getElementById('toastContainer');
             if (!container) return;
             const toast = document.createElement('div');
             toast.className = 'bg-slateDark text-white text-xs font-bold px-4 py-3 rounded-xl shadow-2xl border border-gray-700 pointer-events-auto flex items-center space-x-2 transition-all duration-300 transform translate-x-10 opacity-0';
-            toast.innerHTML = `<span class="text-moss font-black">●</span><span>${message}</span>`;
+            toast.innerHTML = `<span class="text-moss font-black"></span><span>${message}</span>`;
             container.appendChild(toast);
             
             requestAnimationFrame(() => {
@@ -826,7 +838,9 @@
             showToast('Kontaktfunktion für Betatester freigeschaltet.');
         }
 
-        // Toggle Generic Modal Helper
+        // ==========================================
+        // 3. MODAL STEUERUNG
+        // ==========================================
         function toggleModal(modalId, forceState) {
             const el = document.getElementById(modalId);
             if (!el) return;
@@ -838,244 +852,10 @@
             }
         }
 
-        // Specific Named Handlers required by query
-        function toggleLoginModal() { toggleModal('loginModal'); }
-        function toggleInseratModal() { toggleModal('inseratModal'); }
-        function toggleCookieModal() { toggleModal('cookieModal'); }
-        function toggleLegalModal(id) { toggleModal(id); }
-
-        function acceptCookies(type) {
-            localStorage.setItem('bsw_cookie_consent', type);
-            const banner = document.getElementById('cookieBanner');
-            if (banner) banner.classList.add('hidden');
-            toggleModal('cookieModal', false);
-            showToast(type === 'all' ? 'Alle Cookies akzeptiert.' : 'Essenzielle Cookies gespeichert.');
-        }
-
-        function resetCookieConsent() {
-            localStorage.removeItem('bsw_cookie_consent');
-            toggleModal('cookieModal', false);
-            const banner = document.getElementById('cookieBanner');
-            if (banner) banner.classList.remove('hidden');
-            showToast('Cookie-Einstellungen zurückgesetzt.');
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-
-            // 1. LEAFLET MAP INITIALIZATION
-            const mapContainer = document.getElementById('map');
-            if (mapContainer) {
-                leafletMap = L.map('map').setView([51.15, 8.28], 11);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap'
-                }).addTo(leafletMap);
-
-                const m1 = L.marker([51.16, 8.27]).addTo(leafletMap).bindPopup('<b>Mutterboden</b><br>Zu verschenken (Schmallenberg)');
-                const m2 = L.marker([51.12, 8.32]).addTo(leafletMap).bindPopup('<b>Betonpflaster</b><br>80 € / Palette (Lennestadt)');
-
-                const btnResetMap = document.getElementById('btnResetMap');
-                if (btnResetMap) {
-                    btnResetMap.addEventListener('click', function() {
-                        leafletMap.setView([51.15, 8.28], 11);
-                    });
-                }
-            }
-
-            // 2. LIVE CALCULATOR LOGIC
-            const volumeSlider = document.getElementById('volumeSlider');
-            const volumeValue = document.getElementById('volumeValue');
-            const moneySavings = document.getElementById('moneySavings');
-            const co2Savings = document.getElementById('co2Savings');
-
-            if (volumeSlider) {
-                volumeSlider.addEventListener('input', function() {
-                    const m3 = parseInt(this.value, 10);
-                    if (volumeValue) volumeValue.innerText = m3;
-                    if (moneySavings) moneySavings.innerText = (m3 * 18).toLocaleString('de-DE') + ' €';
-                    if (co2Savings) co2Savings.innerText = (m3 * 9).toLocaleString('de-DE') + ' kg CO₂';
-                });
-            }
-
-            // 3. GLOBAL ESCAPE & BACKDROP CLOSING
-            window.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    ['loginModal', 'inseratModal', 'cookieModal', 'impressumModal', 'datenschutzModal', 'agbModal'].forEach(id => toggleModal(id, false));
-                }
-            });
-
-            ['loginModal', 'inseratModal', 'cookieModal', 'impressumModal', 'datenschutzModal', 'agbModal'].forEach(function(modalId) {
-                const modalEl = document.getElementById(modalId);
-                if (modalEl) {
-                    modalEl.addEventListener('click', function(e) {
-                        if (e.target === modalEl) {
-                            toggleModal(modalId, false);
-                        }
-                    });
-                }
-            });
-
-            // 4. TRIGGER ATTACHMENTS
-            const btnOpenLogin = document.getElementById('btnOpenLogin');
-            const btnCloseLogin = document.getElementById('btnCloseLogin');
-            const formLogin = document.getElementById('formLogin');
-
-            if (btnOpenLogin) btnOpenLogin.addEventListener('click', toggleLoginModal);
-            if (btnCloseLogin) btnCloseLogin.addEventListener('click', toggleLoginModal);
-            if (formLogin) {
-                formLogin.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    showToast('Erfolgreich angemeldet!');
-                    toggleLoginModal();
-                });
-            }
-
-            const btnOpenInserat = document.getElementById('btnOpenInserat');
-            const btnCloseInserat = document.getElementById('btnCloseInserat');
-            const formInserat = document.getElementById('formInserat');
-
-            if (btnOpenInserat) btnOpenInserat.addEventListener('click', toggleInseratModal);
-            if (btnCloseInserat) btnCloseInserat.addEventListener('click', toggleInseratModal);
-            if (formInserat) {
-                formInserat.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    showToast('Dein Inserat wurde veröffentlicht!');
-                    toggleInseratModal();
-                    formInserat.reset();
-                });
-            }
-
-            // Cookie Management Triggers
-            const cookieBanner = document.getElementById('cookieBanner');
-            const btnAcceptAllCookies = document.getElementById('btnAcceptAllCookies');
-            const btnAcceptEssentialCookies = document.getElementById('btnAcceptEssentialCookies');
-            const btnOpenCookieDetails = document.getElementById('btnOpenCookieDetails');
-            const btnCloseCookieModal = document.getElementById('btnCloseCookieModal');
-            const btnFooterCookies = document.getElementById('btnFooterCookies');
-            const btnSaveCookiePrefs = document.getElementById('btnSaveCookiePrefs');
-            const btnAcceptAllModal = document.getElementById('btnAcceptAllModal');
-            const btnResetConsent = document.getElementById('btnResetConsent');
-
-            const existingConsent = localStorage.getItem('bsw_cookie_consent');
-            if (existingConsent && cookieBanner) {
-                cookieBanner.classList.add('hidden');
-            }
-
-            if (btnAcceptAllCookies) btnAcceptAllCookies.addEventListener('click', () => acceptCookies('all'));
-            if (btnAcceptEssentialCookies) btnAcceptEssentialCookies.addEventListener('click', () => acceptCookies('essential'));
-            if (btnOpenCookieDetails) btnOpenCookieDetails.addEventListener('click', toggleCookieModal);
-            if (btnCloseCookieModal) btnCloseCookieModal.addEventListener('click', toggleCookieModal);
-            if (btnFooterCookies) btnFooterCookies.addEventListener('click', toggleCookieModal);
-
-            if (btnSaveCookiePrefs) {
-                btnSaveCookiePrefs.addEventListener('click', function() {
-                    const optionalCheckbox = document.getElementById('optionalCookies');
-                    const isChecked = optionalCheckbox ? optionalCheckbox.checked : false;
-                    acceptCookies(isChecked ? 'all' : 'essential');
-                });
-            }
-            if (btnAcceptAllModal) btnAcceptAllModal.addEventListener('click', () => acceptCookies('all'));
-            if (btnResetConsent) btnResetConsent.addEventListener('click', resetCookieConsent);
-
-            // Filter Search Simulation
-            const btnFilterSearch = document.getElementById('btnFilterSearch');
-            if (btnFilterSearch) {
-                btnFilterSearch.addEventListener('click', function() {
-                    showToast('Filter angewendet. Suchergebnisse aktualisiert.');
-                });
-            }
-
-            // 5. SCROLL-SPY FOR NAVIGATION LINKS
-            const sections = document.querySelectorAll('section[id], main[id]');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            window.addEventListener('scroll', function() {
-                let currentSectionId = '';
-                sections.forEach(function(section) {
-                    const sectionTop = section.offsetTop - 140;
-                    if (window.scrollY >= sectionTop) {
-                        currentSectionId = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(function(link) {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-section') === currentSectionId) {
-                        link.classList.add('active');
-                    }
-                });
-            });
-
-        });
-        // Counter Animation Logic
-        function initAnimatedCounters() {
-            const targets = [
-                { id: 'counterTrade', endVal: 342, decimals: 0, suffix: '' },
-                { id: 'counterVolume', endVal: 4850, decimals: 0, suffix: '' },
-                { id: 'counterCo2', endVal: 43.6, decimals: 1, suffix: '' },
-                { id: 'counterTrees', endVal: 3488, decimals: 0, suffix: '' }
-            ];
-
-            let animated = false;
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !animated) {
-                        animated = true;
-                        targets.forEach(item => animateValue(item.id, 0, item.endVal, 2000, item.decimals));
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            const statsSection = document.getElementById('impact-stats');
-            if (statsSection) observer.observe(statsSection);
-        }
-
-        function animateValue(id, start, end, duration, decimals) {
-            const obj = document.getElementById(id);
-            if (!obj) return;
-            let startTimestamp = null;
-
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                // EaseOutExpo easing function for smooth slowing down at the end
-                const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-                const currentVal = start + easeProgress * (end - start);
-                
-                if (decimals > 0) {
-                    obj.textContent = currentVal.toFixed(decimals).replace('.', ',');
-                } else {
-                    obj.textContent = Math.floor(currentVal).toLocaleString('de-DE');
-                }
-
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // Call counter init after DOM loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            initAnimatedCounters();
-        });
-
-// Modal Steuerung für Login & Registrierung
-function openLoginModal() {
-            document.getElementById('loginModal')?.classList.remove('hidden');
-        }
-
-        function closeLoginModal() {
-            document.getElementById('loginModal')?.classList.add('hidden');
-        }
-
-        function openRegisterModal() {
-            document.getElementById('registerModal')?.classList.remove('hidden');
-        }
-
-        function closeRegisterModal() {
-            document.getElementById('registerModal')?.classList.add('hidden');
-        }
+        function openLoginModal() { document.getElementById('loginModal')?.classList.remove('hidden'); }
+        function closeLoginModal() { document.getElementById('loginModal')?.classList.add('hidden'); }
+        function openRegisterModal() { document.getElementById('registerModal')?.classList.remove('hidden'); }
+        function closeRegisterModal() { document.getElementById('registerModal')?.classList.add('hidden'); }
 
         function switchToRegister(e) {
             if (e) e.preventDefault();
@@ -1089,101 +869,31 @@ function openLoginModal() {
             openLoginModal();
         }
 
-        function handleRegister(e) {
-            e.preventDefault();
-            const name = document.getElementById('regName').value;
-            alert(`Danke für deine Registrierung, ${name}! Im nächsten Schritt verbinden wir das mit Supabase.`);
-            closeRegisterModal();
-        }
+        function toggleLegalModal(id) { toggleModal(id); }
+        function toggleCookieModal() { toggleModal('cookieModal'); }
 
-
-
-// Variable für den Login-Status (wird später über Supabase gesteuert)
-let isLoggedIn = false; 
-
-// Ersetzt die alte Funktion und steuert das Verhalten beim Klick auf "Inserat erstellen"
-function toggleInseratModal() {
-    if (isLoggedIn) {
-        // Fall 1: Nutzer ist eingeloggt -> Hier öffnet sich später dein normales Inserat-Formular
-        const inseratModal = document.getElementById('inseratModal'); // (oder wie dein Inserat-Modal heißt)
-        if (inseratModal) {
-            inseratModal.classList.toggle('hidden');
-        } else {
-            alert("Du bist eingeloggt! Hier öffnet sich später das Inserat-Formular.");
-        }
-    } else {
-        // Fall 2: Nutzer ist NICHT eingeloggt -> Registrierungs- & andere Modals verstecken, Login öffnen
-        document.getElementById('registerModal')?.classList.add('hidden');
-        
-        const loginModal = document.getElementById('loginModal');
-        if (loginModal) {
-            loginModal.classList.remove('hidden');
-        }
-    }
-}
-
-
-// ==========================================
-        // SUPABASE KONFIGURATION
-        // ==========================================
-        const SUPABASE_URL = 'https://yrxcvbpjredezbtiqxps.supabase.co'; // <--- Hier deine Supabase URL eintragen!
-        const SUPABASE_ANON_KEY = 'sb_publishable_ZWHD_ZztGySzga9V_EIJDg_JYyjFIuv';
-        
-        // Supabase Client initialisieren
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // Globaler Login-Status
-        let isLoggedIn = false;
-        let currentUser = null;
-
-        // Beim Laden der Seite Sitzung prüfen und Event-Listener für Formulare setzen
-        document.addEventListener('DOMContentLoaded', async () => {
-            // 1. Supabase Session prüfen
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                isLoggedIn = true;
-                currentUser = session.user;
-                updateAuthUI();
-            }
-
-            supabaseClient.auth.onAuthStateChange((_event, session) => {
-                if (session) {
-                    isLoggedIn = true;
-                    currentUser = session.user;
-                } else {
-                    isLoggedIn = false;
-                    currentUser = null;
+        // Inserat-Modal Logik mit Login-Prüfung
+        function toggleInseratModal() {
+            if (isLoggedIn) {
+                const inseratModal = document.getElementById('inseratModal');
+                if (inseratModal) {
+                    inseratModal.classList.toggle('hidden');
                 }
-                updateAuthUI();
-            });
-
-            // 2. Formulare automatisch finden & mit Supabase verknüpfen
-            // Sucht nach Formularen in deinen Modals
-            const modals = document.querySelectorAll('div');
-            
-            // Finde das Registrierungs-Formular (sucht nach dem Button mit "registrieren" o.ä.)
-            const regForm = document.querySelector('#registerModal form') || document.querySelector('form');
-            if (regForm) {
-                regForm.addEventListener('submit', handleRegister);
+            } else {
+                closeRegisterModal();
+                openLoginModal();
             }
+        }
 
-            // Finde das Login-Formular
-            const loginForm = document.querySelector('#loginModal form');
-            if (loginForm) {
-                loginForm.addEventListener('submit', handleLogin);
-            }
-        });
-
-        // ------------------------------------------
-        // REGISTRIERUNG
-        // ------------------------------------------
+        // ==========================================
+        // 4. SUPABASE AUTH LOGIK (REGISTRIERUNG & LOGIN)
+        // ==========================================
         async function handleRegister(e) {
             e.preventDefault();
             
-            // Holt die Werte aus den Input-Feldern (sucht nach den üblichen IDs)
             const name = document.getElementById('regName')?.value || 'Nutzer';
-            const email = document.getElementById('regEmail')?.value || document.querySelector('#registerModal input[type="email"]')?.value;
-            const password = document.getElementById('regPassword')?.value || document.querySelector('#registerModal input[type="password"]')?.value;
+            const email = document.getElementById('regEmail')?.value;
+            const password = document.getElementById('regPassword')?.value;
             const accountType = document.querySelector('input[name="accountType"]:checked')?.value || 'privat';
 
             if (!email || !password) {
@@ -1213,14 +923,11 @@ function toggleInseratModal() {
             }
         }
 
-        // ------------------------------------------
-        // LOGIN
-        // ------------------------------------------
         async function handleLogin(e) {
             e.preventDefault();
 
-            const email = document.getElementById('loginEmail')?.value || document.querySelector('#loginModal input[type="email"]')?.value;
-            const password = document.getElementById('loginPassword')?.value || document.querySelector('#loginModal input[type="password"]')?.value;
+            const email = document.getElementById('loginEmail')?.value;
+            const password = document.getElementById('loginPassword')?.value;
 
             if (!email || !password) {
                 alert("Bitte E-Mail und Passwort eingeben.");
@@ -1243,18 +950,12 @@ function toggleInseratModal() {
             }
         }
 
-        // ------------------------------------------
-        // LOGOUT
-        // ------------------------------------------
         async function handleLogout() {
             await supabaseClient.auth.signOut();
             alert('Du wurdest erfolgreich abgemeldet.');
             window.location.reload();
         }
 
-        // ------------------------------------------
-        // UI ANPASSEN
-        // ------------------------------------------
         function updateAuthUI() {
             const btnOpenLogin = document.getElementById('btnOpenLogin');
             if (btnOpenLogin) {
@@ -1268,7 +969,247 @@ function toggleInseratModal() {
             }
         }
 
+        // ==========================================
+        // 5. DOM READY & INITIALISIERUNG
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', async () => {
 
+            // A. Supabase Session beim Start prüfen
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (session) {
+                    isLoggedIn = true;
+                    currentUser = session.user;
+                    updateAuthUI();
+                }
+
+                supabaseClient.auth.onAuthStateChange((_event, session) => {
+                    if (session) {
+                        isLoggedIn = true;
+                        currentUser = session.user;
+                    } else {
+                        isLoggedIn = false;
+                        currentUser = null;
+                    }
+                    updateAuthUI();
+                });
+            } catch (err) {
+                console.error("Supabase Session Fehler:", err);
+            }
+
+            // B. Formular-Event-Listener anbinden
+            const formLogin = document.getElementById('formLogin');
+            if (formLogin) {
+                formLogin.addEventListener('submit', handleLogin);
+            }
+
+            const formRegister = document.getElementById('formRegister');
+            if (formRegister) {
+                formRegister.addEventListener('submit', handleRegister);
+            }
+
+            const formInserat = document.getElementById('formInserat');
+            if (formInserat) {
+                formInserat.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showToast('Dein Inserat wurde veröffentlicht!');
+                    toggleInseratModal();
+                    formInserat.reset();
+                });
+            }
+
+            // C. Buttons verknüpfen
+            const btnOpenLogin = document.getElementById('btnOpenLogin');
+            const btnCloseLogin = document.getElementById('btnCloseLogin');
+            if (btnOpenLogin && !isLoggedIn) btnOpenLogin.addEventListener('click', openLoginModal);
+            if (btnCloseLogin) btnCloseLogin.addEventListener('click', closeLoginModal);
+
+            const btnCloseInserat = document.getElementById('btnCloseInserat');
+            if (btnCloseInserat) btnCloseInserat.addEventListener('click', toggleInseratModal);
+
+            // D. Leaflet Map Initialisierung
+            const mapContainer = document.getElementById('map');
+            if (mapContainer) {
+                leafletMap = L.map('map').setView([51.15, 8.28], 11);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap'
+                }).addTo(leafletMap);
+
+                L.marker([51.16, 8.27]).addTo(leafletMap).bindPopup('<b>Mutterboden</b><br>Zu verschenken (Schmallenberg)');
+                L.marker([51.12, 8.32]).addTo(leafletMap).bindPopup('<b>Betonpflaster</b><br>80 € / Palette (Lennestadt)');
+
+                const btnResetMap = document.getElementById('btnResetMap');
+                if (btnResetMap) {
+                    btnResetMap.addEventListener('click', function() {
+                        leafletMap.setView([51.15, 8.28], 11);
+                    });
+                }
+            }
+
+            // E. Live Rechner Logik
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumeValue = document.getElementById('volumeValue');
+            const moneySavings = document.getElementById('moneySavings');
+            const co2Savings = document.getElementById('co2Savings');
+
+            if (volumeSlider) {
+                volumeSlider.addEventListener('input', function() {
+                    const m3 = parseInt(this.value, 10);
+                    if (volumeValue) volumeValue.innerText = m3;
+                    if (moneySavings) moneySavings.innerText = (m3 * 18).toLocaleString('de-DE') + ' €';
+                    if (co2Savings) co2Savings.innerText = (m3 * 9).toLocaleString('de-DE') + ' kg CO₂';
+                });
+            }
+
+            // F. Cookie Management
+            const cookieBanner = document.getElementById('cookieBanner');
+            const existingConsent = localStorage.getItem('bsw_cookie_consent');
+            if (existingConsent && cookieBanner) {
+                cookieBanner.classList.add('hidden');
+            }
+
+            const btnAcceptAllCookies = document.getElementById('btnAcceptAllCookies');
+            const btnAcceptEssentialCookies = document.getElementById('btnAcceptEssentialCookies');
+            const btnOpenCookieDetails = document.getElementById('btnOpenCookieDetails');
+            const btnCloseCookieModal = document.getElementById('btnCloseCookieModal');
+            const btnFooterCookies = document.getElementById('btnFooterCookies');
+            const btnSaveCookiePrefs = document.getElementById('btnSaveCookiePrefs');
+            const btnAcceptAllModal = document.getElementById('btnAcceptAllModal');
+            const btnResetConsent = document.getElementById('btnResetConsent');
+
+            if (btnAcceptAllCookies) btnAcceptAllCookies.addEventListener('click', () => acceptCookies('all'));
+            if (btnAcceptEssentialCookies) btnAcceptEssentialCookies.addEventListener('click', () => acceptCookies('essential'));
+            if (btnOpenCookieDetails) btnOpenCookieDetails.addEventListener('click', toggleCookieModal);
+            if (btnCloseCookieModal) btnCloseCookieModal.addEventListener('click', toggleCookieModal);
+            if (btnFooterCookies) btnFooterCookies.addEventListener('click', toggleCookieModal);
+
+            if (btnSaveCookiePrefs) {
+                btnSaveCookiePrefs.addEventListener('click', function() {
+                    const optionalCheckbox = document.getElementById('optionalCookies');
+                    const isChecked = optionalCheckbox ? optionalCheckbox.checked : false;
+                    acceptCookies(isChecked ? 'all' : 'essential');
+                });
+            }
+            if (btnAcceptAllModal) btnAcceptAllModal.addEventListener('click', () => acceptCookies('all'));
+            if (btnResetConsent) btnResetConsent.addEventListener('click', resetCookieConsent);
+
+            // G. Escape & Backdrop Modal Closing
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    ['loginModal', 'registerModal', 'inseratModal', 'cookieModal', 'impressumModal', 'datenschutzModal', 'agbModal'].forEach(id => toggleModal(id, false));
+                }
+            });
+
+            ['loginModal', 'registerModal', 'inseratModal', 'cookieModal', 'impressumModal', 'datenschutzModal', 'agbModal'].forEach(function(modalId) {
+                const modalEl = document.getElementById(modalId);
+                if (modalEl) {
+                    modalEl.addEventListener('click', function(e) {
+                        if (e.target === modalEl) {
+                            toggleModal(modalId, false);
+                        }
+                    });
+                }
+            });
+
+            // H. Filter Search
+            const btnFilterSearch = document.getElementById('btnFilterSearch');
+            if (btnFilterSearch) {
+                btnFilterSearch.addEventListener('click', function() {
+                    showToast('Filter angewendet. Suchergebnisse aktualisiert.');
+                });
+            }
+
+            // I. Scroll-Spy
+            const sections = document.querySelectorAll('section[id], main[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', function() {
+                let currentSectionId = '';
+                sections.forEach(function(section) {
+                    const sectionTop = section.offsetTop - 140;
+                    if (window.scrollY >= sectionTop) {
+                        currentSectionId = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-section') === currentSectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // J. Start Counters
+            initAnimatedCounters();
+        });
+
+        // Hilfsfunktionen für Cookies
+        function acceptCookies(type) {
+            localStorage.setItem('bsw_cookie_consent', type);
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.classList.add('hidden');
+            toggleModal('cookieModal', false);
+            showToast(type === 'all' ? 'Alle Cookies akzeptiert.' : 'Essenzielle Cookies gespeichert.');
+        }
+
+        function resetCookieConsent() {
+            localStorage.removeItem('bsw_cookie_consent');
+            toggleModal('cookieModal', false);
+            const banner = document.getElementById('cookieBanner');
+            if (banner) banner.classList.remove('hidden');
+            showToast('Cookie-Einstellungen zurückgesetzt.');
+        }
+
+        // ==========================================
+        // 6. ANIMIERTE COUNTER
+        // ==========================================
+        function initAnimatedCounters() {
+            const targets = [
+                { id: 'counterTrade', endVal: 342, decimals: 0 },
+                { id: 'counterVolume', endVal: 4850, decimals: 0 },
+                { id: 'counterCo2', endVal: 43.6, decimals: 1 },
+                { id: 'counterTrees', endVal: 3488, decimals: 0 }
+            ];
+
+            let animated = false;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !animated) {
+                        animated = true;
+                        targets.forEach(item => animateValue(item.id, 0, item.endVal, 2000, item.decimals));
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            const statsSection = document.getElementById('impact-stats');
+            if (statsSection) observer.observe(statsSection);
+        }
+
+        function animateValue(id, start, end, duration, decimals) {
+            const obj = document.getElementById(id);
+            if (!obj) return;
+            let startTimestamp = null;
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                const currentVal = start + easeProgress * (end - start);
+                
+                if (decimals > 0) {
+                    obj.textContent = currentVal.toFixed(decimals).replace('.', ',');
+                } else {
+                    obj.textContent = Math.floor(currentVal).toLocaleString('de-DE');
+                }
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
     </script>
 </body>
 </html>
