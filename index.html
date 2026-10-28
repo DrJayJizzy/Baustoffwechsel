@@ -89,7 +89,7 @@
                     <span>Anmelden</span>
                 </button>
 
-                <button id="btnOpenInserat" type="button" onclick="handleCreateListingClick()" class="bg-moss hover:bg-mossDark text-white px-4 sm:px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2 transform hover:-translate-y-0.5 cursor-pointer">
+                <button id="btnOpenInserat" type="button" onclick="toggleInseratModal()" class="bg-moss hover:bg-mossDark text-white px-4 sm:px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2 transform hover:-translate-y-0.5 cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                     <span>Inserat erstellen</span>
                 </button>
@@ -797,7 +797,7 @@
         </div>
     </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+
     <script>
         // ==========================================
         // 1. SUPABASE KONFIGURATION
@@ -1024,8 +1024,8 @@
             if (btnOpenLogin && !isLoggedIn) btnOpenLogin.addEventListener('click', openLoginModal);
             if (btnCloseLogin) btnCloseLogin.addEventListener('click', closeLoginModal);
 
-            const btnCloseInserat = document.getElementById('btnCloseInserat');
-            if (btnCloseInserat) btnCloseInserat.addEventListener('click', toggleInseratModal);
+            const btnOpenInserat = document.getElementById('btnOpenInserat');
+            if (btnOpenInserat) btnOpenInserat.addEventListener('click', toggleInseratModal);
 
             // D. Leaflet Map Initialisierung
             const mapContainer = document.getElementById('map');
