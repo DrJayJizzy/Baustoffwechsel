@@ -887,10 +887,27 @@
                     // Nutzer ist abgemeldet -> Login-Fenster öffnen
                     closeRegisterModal();
                     openLoginModal();
-                    showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
+                    // showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
                 }
             });
         }
+
+        // Inserat-Modal schließen
+function closeInseratModal() {
+    const inseratModal = document.getElementById('inseratModal');
+    if (inseratModal) {
+        inseratModal.classList.add('hidden');
+    }
+}
+
+// Klick-Listener für das 'X' und Abbrechen-Buttons registrieren
+document.addEventListener('DOMContentLoaded', () => {
+    const btnCloseInserat = document.getElementById('btnCloseInserat');
+    if (btnCloseInserat) {
+        btnCloseInserat.addEventListener('click', closeInseratModal);
+    }
+});
+
 
         // ==========================================
         // 4. SUPABASE AUTH LOGIK (REGISTRIERUNG & LOGIN)
