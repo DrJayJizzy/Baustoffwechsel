@@ -872,16 +872,22 @@
         function toggleLegalModal(id) { toggleModal(id); }
         function toggleCookieModal() { toggleModal('cookieModal'); }
 
-        // Inserat-Modal Logik mit Login-Prüfung
-        function toggleInseratModal() {
+ // Inserat-Modal Logik mit Login-Prüfung & Öffnungs-Garantie
+ function toggleInseratModal() {
+            const inseratModal = document.getElementById('inseratModal');
+            
             if (isLoggedIn) {
-                const inseratModal = document.getElementById('inseratModal');
+                // Nutzer ist eingeloggt -> Inserat-Modal öffnen/schließen
                 if (inseratModal) {
                     inseratModal.classList.toggle('hidden');
+                } else {
+                    alert("Du bist eingeloggt, aber das Inserat-Modal wurde im HTML nicht gefunden.");
                 }
             } else {
+                // Nutzer ist NICHT eingeloggt -> Erst Login-Modal öffnen
                 closeRegisterModal();
                 openLoginModal();
+                showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
             }
         }
 
