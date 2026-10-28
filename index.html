@@ -816,7 +816,8 @@
         // ==========================================
         // 2. HELFER & TOASTS
         // ==========================================
-      // Globale Variable als Duplikat-Sperre
+
+        // Globale Variable als Duplikat-Sperre
 let activeToastMessage = null;
 
 function showToast(message) {
@@ -828,22 +829,30 @@ function showToast(message) {
     // Toast-Element aus dem HTML holen
     let toast = document.getElementById('toastNotification');
     
-    if (!toast) {
-        // Falls kein Element im HTML ist, erzeugen wir es dynamisch
-        toast = document.createElement('div');
-        toast.id = 'toastNotification';
-        toast.className = 'fixed bottom-5 right-5 z-50 bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg transition-all duration-300';
-        document.body.appendChild(toast);
-    }
-    
-    toast.textContent = message;
-    toast.classList.remove('hidden', 'opacity-0');
+    if (toast) {
+        // Text setzen
+        const toastMessage = document.getElementById('toastMessage') || toast;
+        toastMessage.textContent = message;
 
-    // Nach 3 Sekunden ausblenden und Sperre aufheben
-    setTimeout(() => {
-        toast.classList.add('hidden');
+        // Dein originales Soft-Popup oben rechts einblenden
+        toast.classList.remove('hidden', 'translate-y-[-20px]', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        // Nach 3 Sekunden wieder sanft ausblenden
+        setTimeout(() => {
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('translate-y-[-20px]', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                activeToastMessage = null; // Sperre wieder freigeben
+            }, 300); // Entspricht der Transitions-Dauer
+        }, 3000);
+    } else {
+        // Fallback, falls das HTML-Element fehlt
+        alert(message);
         activeToastMessage = null;
-    }, 3000);
+    }
 }
 
         function showContactNotice() {
