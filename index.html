@@ -740,73 +740,6 @@
         </div>
     </div>
 
-    <!-- Registrierungs-Modal (Register) -->
-    <div id="registerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slateDark/60 backdrop-blur-xs hidden">
-        <div class="bg-white rounded-3xl max-w-md w-full mx-4 p-8 shadow-2xl border border-gray-100 relative animate-in fade-in zoom-in duration-200">
-            
-            <!-- Close Button -->
-            <button onclick="closeRegisterModal()" class="absolute top-6 right-6 text-slateGray hover:text-slateDark p-2 rounded-full hover:bg-creamBg transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-
-            <!-- Header -->
-            <div class="mb-6">
-                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-1">Kostenloses Konto</span>
-                <h3 class="text-2xl font-black text-slateDark">Willkommen bei baustoffwechsel</h3>
-                <p class="text-sm text-slateGray mt-1">Erstelle ein Konto, um Inserate zu schalten und direkt regional zu tauschen.</p>
-            </div>
-
-            <!-- Form -->
-            <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4">
-                
-                <!-- Account Typ Auswahl -->
-                <div>
-                    <label class="block text-xs font-bold text-slateDark uppercase tracking-wider mb-2">Ich bin:</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label class="flex items-center justify-center px-4 py-3 border border-gray-200 rounded-xl cursor-pointer hover:border-moss transition-all font-bold text-xs text-slateDark has-checked:border-moss has-checked:bg-moss/5">
-                            <input type="radio" name="accountType" value="privat" checked class="sr-only">
-                            <span>Privatperson</span>
-                        </label>
-                        <label class="flex items-center justify-center px-4 py-3 border border-gray-200 rounded-xl cursor-pointer hover:border-moss transition-all font-bold text-xs text-slateDark has-checked:border-moss has-checked:bg-moss/5">
-                            <input type="radio" name="accountType" value="gewerbe" class="sr-only">
-                            <span>Gewerbe / Betrieb</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Name / Betrieb -->
-                <div>
-                    <label class="block text-xs font-bold text-slateDark uppercase tracking-wider mb-1">Name / Firmenname</label>
-                    <input type="text" id="regName" required placeholder="z.B. Max Mustermann oder Gartenbau Schmidt" class="w-full px-4 py-3 bg-creamBg border border-gray-200 rounded-xl text-sm text-slateDark focus:outline-none focus:border-moss transition-colors">
-                </div>
-
-                <!-- E-Mail -->
-                <div>
-                    <label class="block text-xs font-bold text-slateDark uppercase tracking-wider mb-1">E-Mail-Adresse</label>
-                    <input type="email" id="regEmail" required placeholder="name@beispiel.de" class="w-full px-4 py-3 bg-creamBg border border-gray-200 rounded-xl text-sm text-slateDark focus:outline-none focus:border-moss transition-colors">
-                </div>
-
-                <!-- Passwort -->
-                <div>
-                    <label class="block text-xs font-bold text-slateDark uppercase tracking-wider mb-1">Passwort</label>
-                    <input type="password" id="regPassword" required minlength="6" placeholder="Min. 6 Zeichen" class="w-full px-4 py-3 bg-creamBg border border-gray-200 rounded-xl text-sm text-slateDark focus:outline-none focus:border-moss transition-colors">
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="w-full py-3.5 bg-moss hover:bg-moss/90 text-white font-extrabold rounded-xl shadow-md transition-all duration-200 mt-2">
-                    Kostenlos registrieren
-                </button>
-            </form>
-
-            <!-- Footer Link zum Login -->
-            <div class="mt-6 text-center text-xs text-slateGray">
-                Bereits ein Konto? <a href="#" onclick="switchToLogin()" class="text-moss font-bold hover:underline">Anmelden</a>
-            </div>
-
-        </div>
-    </div>
-
-
     <!-- Leaflet JS & Application Logic -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -1069,28 +1002,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             initAnimatedCounters();
         });
-
-
-        // Modals für Registrierung öffnen/schließen
-        function openRegisterModal() {
-            const modal = document.getElementById('registerModal');
-            if (modal) modal.classList.remove('hidden');
-        }
-
-        function closeRegisterModal() {
-            const modal = document.getElementById('registerModal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        // Test-Funktion für das Absenden des Formulars (bevor Supabase dran ist)
-        function handleRegister(event) {
-            event.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            
-            alert(`Danke für deine Registrierung, ${name}! (E-Mail: ${email}). Im nächsten Schritt verbinden wir das mit Supabase.`);
-            closeRegisterModal();
-        }
     </script>
 </body>
 </html>
