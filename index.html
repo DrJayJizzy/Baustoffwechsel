@@ -1092,16 +1092,21 @@ function openLoginModal() {
             closeRegisterModal();
         }
 
-// Variable zur Verfolgung des Login-Status (später über Supabase gesteuert)
+
+
+// Variable für den Login-Status (wird später über Supabase gesteuert)
 let isLoggedIn = false; 
 
+// Prüft beim Klick auf "Inserat erstellen", ob der Nutzer eingeloggt ist
 function handleCreateListingClick() {
     if (isLoggedIn) {
-        // Später: Inserat-Modal öffnen
-        alert("Du bist eingeloggt! Hier öffnet sich später das Inserat-Formular.");
+        alert("Du bist bereits eingeloggt! Hier öffnet sich später das Inserat-Formular.");
     } else {
         // Nicht eingeloggt -> Anmeldefenster öffnen
-        openLoginModal();
+        const loginModal = document.getElementById('loginModal');
+        if (loginModal) {
+            loginModal.classList.remove('hidden');
+        }
     }
 }
 
