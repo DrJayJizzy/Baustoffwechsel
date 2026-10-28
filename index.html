@@ -872,21 +872,19 @@
         function toggleLegalModal(id) { toggleModal(id); }
         function toggleCookieModal() { toggleModal('cookieModal'); }
 
-// Inserat-Modal Logik (Direkt-Abfrage bei Supabase)
-function toggleInseratModal() {
+        function toggleInseratModal() {
             const inseratModal = document.getElementById('inseratModal');
             
-            // Wir fragen direkt bei Supabase nach, ob eine aktive Session existiert
             supabaseClient.auth.getSession().then(({ data: { session } }) => {
                 if (session && session.user) {
-                    // Nutzer ist DEFINITIV eingeloggt -> Inserat-Modal öffnen
+                    // Nutzer ist eingeloggt -> Inserat-Fenster zuverlässig öffnen
                     if (inseratModal) {
-                        inseratModal.classList.toggle('hidden');
+                        inseratModal.classList.remove('hidden');
                     } else {
-                        alert("Eingeloggt! Aber das Inserat-Modal (ID: inseratModal) wurde im HTML nicht gefunden.");
+                        alert("Eingeloggt, aber das Inserat-Modal (ID: inseratModal) wurde nicht gefunden.");
                     }
                 } else {
-                    // Nutzer ist NICHT eingeloggt -> Login-Modal öffnen
+                    // Nutzer ist abgemeldet -> Login-Fenster öffnen
                     closeRegisterModal();
                     openLoginModal();
                     showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
