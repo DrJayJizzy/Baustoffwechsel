@@ -872,23 +872,26 @@
         function toggleLegalModal(id) { toggleModal(id); }
         function toggleCookieModal() { toggleModal('cookieModal'); }
 
- // Inserat-Modal Logik mit Login-Prüfung & Öffnungs-Garantie
- function toggleInseratModal() {
+// Inserat-Modal Logik (Direkt-Abfrage bei Supabase)
+function toggleInseratModal() {
             const inseratModal = document.getElementById('inseratModal');
             
-            if (isLoggedIn) {
-                // Nutzer ist eingeloggt -> Inserat-Modal öffnen/schließen
-                if (inseratModal) {
-                    inseratModal.classList.toggle('hidden');
+            // Wir fragen direkt bei Supabase nach, ob eine aktive Session existiert
+            supabaseClient.auth.getSession().then(({ data: { session } }) => {
+                if (session && session.user) {
+                    // Nutzer ist DEFINITIV eingeloggt -> Inserat-Modal öffnen
+                    if (inseratModal) {
+                        inseratModal.classList.toggle('hidden');
+                    } else {
+                        alert("Eingeloggt! Aber das Inserat-Modal (ID: inseratModal) wurde im HTML nicht gefunden.");
+                    }
                 } else {
-                    alert("Du bist eingeloggt, aber das Inserat-Modal wurde im HTML nicht gefunden.");
+                    // Nutzer ist NICHT eingeloggt -> Login-Modal öffnen
+                    closeRegisterModal();
+                    openLoginModal();
+                    showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
                 }
-            } else {
-                // Nutzer ist NICHT eingeloggt -> Erst Login-Modal öffnen
-                closeRegisterModal();
-                openLoginModal();
-                showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
-            }
+            });
         }
 
         // ==========================================
