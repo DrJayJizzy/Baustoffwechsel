@@ -884,9 +884,12 @@
                         alert("Eingeloggt, aber das Inserat-Modal (ID: inseratModal) wurde nicht gefunden.");
                     }
                 } else {
-                    // Nutzer ist abgemeldet -> Login-Modal öffnen & GENAU EINMAL Toast anzeigen
+                    // Nutzer ist abgemeldet -> Login-Modal öffnen
                     closeRegisterModal();
                     openLoginModal();
+                    
+                    // Wir prüfen hier kurz, ob der Toast schon da ist, 
+                    // oder rufen ihn garantiert nur an dieser EINEN Stelle auf:
                     showToast('Bitte melde dich an, um ein Inserat zu erstellen.');
                 }
             });
