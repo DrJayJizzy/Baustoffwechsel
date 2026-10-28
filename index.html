@@ -40,6 +40,10 @@
         .modal-scroll::-webkit-scrollbar-thumb { background: #CBD5E0; border-radius: 8px; }
         .modal-scroll::-webkit-scrollbar-thumb:hover { background: #A0AEC0; }
     </style>
+
+<!-- Supabase JS Client CDN (NEU) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 <body class="bg-creamBg text-slateDark font-sans antialiased min-h-screen flex flex-col">
 
@@ -1117,6 +1121,153 @@ function toggleInseratModal() {
         }
     }
 }
+
+
+// ==========================================
+        // SUPABASE KONFIGURATION
+        // ==========================================
+        const SUPABASE_URL = 'https://yrxcvbpjredezbtiqxps.supabase.co'; // <--- Hier deine Supabase URL eintragen!
+        const SUPABASE_ANON_KEY = 'sb_publishable_ZWHD_ZztGySzga9V_EIJDg_JYyjFIuv';
+        
+        // Supabase Client initialisieren
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Globaler Login-Status
+        let isLoggedIn = false;
+        let currentUser = null;
+
+        // Beim Laden der Seite Sitzung prüfen und Event-Listener für Formulare setzen
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Supabase Session prüfen
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                isLoggedIn = true;
+                currentUser = session.user;
+                updateAuthUI();
+            }
+
+            supabaseClient.auth.onAuthStateChange((_event, session) => {
+                if (session) {
+                    isLoggedIn = true;
+                    currentUser = session.user;
+                } else {
+                    isLoggedIn = false;
+                    currentUser = null;
+                }
+                updateAuthUI();
+            });
+
+            // 2. Formulare automatisch finden & mit Supabase verknüpfen
+            // Sucht nach Formularen in deinen Modals
+            const modals = document.querySelectorAll('div');
+            
+            // Finde das Registrierungs-Formular (sucht nach dem Button mit "registrieren" o.ä.)
+            const regForm = document.querySelector('#registerModal form') || document.querySelector('form');
+            if (regForm) {
+                regForm.addEventListener('submit', handleRegister);
+            }
+
+            // Finde das Login-Formular
+            const loginForm = document.querySelector('#loginModal form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleLogin);
+            }
+        });
+
+        // ------------------------------------------
+        // REGISTRIERUNG
+        // ------------------------------------------
+        async function handleRegister(e) {
+            e.preventDefault();
+            
+            // Holt die Werte aus den Input-Feldern (sucht nach den üblichen IDs)
+            const name = document.getElementById('regName')?.value || 'Nutzer';
+            const email = document.getElementById('regEmail')?.value || document.querySelector('#registerModal input[type="email"]')?.value;
+            const password = document.getElementById('regPassword')?.value || document.querySelector('#registerModal input[type="password"]')?.value;
+            const accountType = document.querySelector('input[name="accountType"]:checked')?.value || 'privat';
+
+            if (!email || !password) {
+                alert("Bitte E-Mail und Passwort eingeben.");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name,
+                            account_type: accountType
+                        }
+                    }
+                });
+
+                if (error) throw error;
+
+                alert(`Registrierung erfolgreich! Wir haben eine Bestätigungs-E-Mail an ${email} gesendet.`);
+                closeRegisterModal();
+
+            } catch (err) {
+                alert(`Fehler bei der Registrierung: ${err.message}`);
+            }
+        }
+
+        // ------------------------------------------
+        // LOGIN
+        // ------------------------------------------
+        async function handleLogin(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail')?.value || document.querySelector('#loginModal input[type="email"]')?.value;
+            const password = document.getElementById('loginPassword')?.value || document.querySelector('#loginModal input[type="password"]')?.value;
+
+            if (!email || !password) {
+                alert("Bitte E-Mail und Passwort eingeben.");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) throw error;
+
+                closeLoginModal();
+                alert(`Willkommen zurück, ${data.user.user_metadata?.full_name || email}!`);
+
+            } catch (err) {
+                alert(`Login fehlgeschlagen: ${err.message}`);
+            }
+        }
+
+        // ------------------------------------------
+        // LOGOUT
+        // ------------------------------------------
+        async function handleLogout() {
+            await supabaseClient.auth.signOut();
+            alert('Du wurdest erfolgreich abgemeldet.');
+            window.location.reload();
+        }
+
+        // ------------------------------------------
+        // UI ANPASSEN
+        // ------------------------------------------
+        function updateAuthUI() {
+            const btnOpenLogin = document.getElementById('btnOpenLogin');
+            if (btnOpenLogin) {
+                if (isLoggedIn) {
+                    btnOpenLogin.innerText = 'Abmelden';
+                    btnOpenLogin.onclick = handleLogout;
+                } else {
+                    btnOpenLogin.innerText = 'Anmelden';
+                    btnOpenLogin.onclick = openLoginModal;
+                }
+            }
+        }
+
 
     </script>
 </body>
