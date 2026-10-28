@@ -925,11 +925,11 @@
                 });
             }
 
-     // const btnOpenInserat = document.getElementById('btnOpenInserat'); // Entfernt, da wir jetzt onclick nutzen
-     const btnCloseInserat = document.getElementById('btnCloseInserat');
+            const btnOpenInserat = document.getElementById('btnOpenInserat');
+            const btnCloseInserat = document.getElementById('btnCloseInserat');
             const formInserat = document.getElementById('formInserat');
 
-            // if (btnOpenInserat) btnOpenInserat.addEventListener('click', toggleInseratModal); // Entfernt!
+            if (btnOpenInserat) btnOpenInserat.addEventListener('click', toggleInseratModal);
             if (btnCloseInserat) btnCloseInserat.addEventListener('click', toggleInseratModal);
             if (formInserat) {
                 formInserat.addEventListener('submit', function(e) {
@@ -938,7 +938,6 @@
                     toggleInseratModal();
                     formInserat.reset();
                 });
-            }
             }
 
             // Cookie Management Triggers
@@ -1098,20 +1097,20 @@ function openLoginModal() {
 // Variable für den Login-Status (wird später über Supabase gesteuert)
 let isLoggedIn = false; 
 
-// Prüft beim Klick auf "Inserat erstellen", ob der Nutzer eingeloggt ist
-function handleCreateListingClick() {
-    // Event-Ausbreitung stoppen, falls ein anderer Listener auslöst
-    if (window.event) {
-        window.event.stopPropagation();
-    }
-
+// Ersetzt die alte Funktion und steuert das Verhalten beim Klick auf "Inserat erstellen"
+function toggleInseratModal() {
     if (isLoggedIn) {
-        alert("Du bist bereits eingeloggt! Hier öffnet sich später das Inserat-Formular.");
+        // Fall 1: Nutzer ist eingeloggt -> Hier öffnet sich später dein normales Inserat-Formular
+        const inseratModal = document.getElementById('inseratModal'); // (oder wie dein Inserat-Modal heißt)
+        if (inseratModal) {
+            inseratModal.classList.toggle('hidden');
+        } else {
+            alert("Du bist eingeloggt! Hier öffnet sich später das Inserat-Formular.");
+        }
     } else {
-        // Nicht eingeloggt -> Zuerst alle eventuellen anderen Modals schließen
+        // Fall 2: Nutzer ist NICHT eingeloggt -> Registrierungs- & andere Modals verstecken, Login öffnen
         document.getElementById('registerModal')?.classList.add('hidden');
         
-        // Dann das Login-Modal direkt im Vordergrund öffnen
         const loginModal = document.getElementById('loginModal');
         if (loginModal) {
             loginModal.classList.remove('hidden');
