@@ -101,25 +101,25 @@
 <!-- Hero Section -->
 <section id="hero" class="relative bg-gradient-to-b from-warmSand to-creamBg py-16 lg:py-24 border-b border-gray-200 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
-            <!-- Linke Spalte: Text & Botschaft -->
+            <!-- Linke Spalte: Text & Botschaft (Typografie & Umbrüche optimiert) -->
             <div class="lg:col-span-7">
                 <div class="inline-flex items-center space-x-2 bg-moss/10 text-moss text-xs font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-6 border border-moss/20">
                     <span class="w-2 h-2 rounded-full bg-moss animate-pulse"></span>
                     <span>Revolution im Tief- & Gartenbau</span>
                 </div>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slateDark tracking-tight leading-[1.15]">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slateDark tracking-tight leading-[1.12] max-w-2xl">
                     Baustoffe & Aushub direkt vor Ort weitergeben.
                 </h1>
-                <p class="text-slateGray text-lg sm:text-xl mt-6 font-normal leading-relaxed max-w-2xl">
+                <p class="text-slateGray text-lg sm:text-xl mt-6 font-normal leading-relaxed max-w-xl">
                     Vermeide teure Deponiegebühren und lange Transportwege. Wir verbinden Angebot und Nachfrage in deiner Region und schaffen gemeinsam einen <span class="font-extrabold text-slateDark">baustoffwechsel</span>.
                 </p>
             </div>
 
-            <!-- Rechte Spalte: Gestaffelte Story-Animation -->
+            <!-- Rechte Spalte: Story-Choreografie (Match -> Fahrt -> Ergebnis) -->
             <div class="lg:col-span-5 relative">
-                <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden min-h-[380px] flex flex-col justify-between">
+                <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden min-h-[410px] flex flex-col justify-between">
                     
                     <!-- Header-Info -->
                     <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -134,86 +134,71 @@
                         </div>
                     </div>
 
-                    <!-- Dynamischer Animationsbereich -->
+                    <!-- Animations-Fläche -->
                     <div class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 my-3 flex-1 flex flex-col justify-between overflow-hidden">
                         
-                        <!-- Container für Grundstücke (Wechselt zwischen Start-Zustand groß und Kompakt oben) -->
-                        <div id="stage-container" class="relative py-2 transition-all duration-700 ease-in-out">
-                            
-                            <!-- ZUSTAND A: Großes Initial-Match (Zu Beginn im Fokus) -->
-                            <div id="match-intro" class="absolute inset-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur rounded-xl p-4 z-20 transition-all duration-500 shadow-sm border border-gray-100">
-                                <span class="text-[10px] font-black text-moss uppercase tracking-widest bg-moss/10 px-2.5 py-1 rounded-full mb-2">Neues Match gefunden!</span>
-                                <div class="flex items-center justify-center space-x-3 w-full">
+                        <!-- MATCH INTRO & COMPACT CARDS -->
+                        <div class="relative min-h-[90px]">
+                            <!-- Phase 1: Großes Match-Intro -->
+                            <div id="match-intro" class="absolute inset-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur rounded-xl p-3 z-20 transition-all duration-500 shadow-sm border border-gray-100">
+                                <span class="text-[10px] font-black text-moss uppercase tracking-widest bg-moss/10 px-2.5 py-0.5 rounded-full mb-2">Neues Match!</span>
+                                <div class="flex items-center justify-center space-x-4 w-full">
                                     <div class="text-center">
                                         <span class="text-2xl" id="intro-icon-a">🚜</span>
-                                        <p class="text-[11px] font-bold text-slateDark mt-1" id="intro-title-a">12 m³ Mutterboden</p>
+                                        <p class="text-[11px] font-bold text-slateDark mt-0.5" id="intro-title-a">12 m³ Mutterboden</p>
                                     </div>
-                                    <span class="text-xs font-black text-moss px-2">⚡</span>
+                                    <span class="text-xs font-black text-moss animate-pulse">⚡</span>
                                     <div class="text-center">
                                         <span class="text-2xl" id="intro-icon-b">🏡</span>
-                                        <p class="text-[11px] font-bold text-slateDark mt-1" id="intro-title-b">Garten-Auffüllung</p>
+                                        <p class="text-[11px] font-bold text-slateDark mt-0.5" id="intro-title-b">Garten-Auffüllung</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- ZUSTAND B: Klein & Oben (Wandert nach oben, wenn Animation startet) -->
-                            <div class="grid grid-cols-2 gap-3 opacity-0 transition-opacity duration-500" id="property-cards">
-                                <!-- Grundstück A -->
-                                <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-[10px] font-black text-terra uppercase">Grundstück A</span>
-                                        <span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">Geld gespart</span>
-                                    </div>
-                                    <div class="flex items-center space-x-2 mt-1">
-                                        <div class="text-base" id="icon-a">🚜</div>
-                                        <div class="overflow-hidden">
-                                            <p class="text-xs font-bold text-slateDark truncate" id="title-a">12 m³ Mutterboden</p>
-                                            <p class="text-[10px] font-medium text-emerald-600" id="save-a">420 € Deponie gespart</p>
-                                        </div>
+                            <!-- Kompakte Karten oben (nach dem Match) -->
+                            <div id="property-cards" class="grid grid-cols-2 gap-2.5 opacity-0 transition-all duration-500 transform translate-y-1">
+                                <div class="bg-white/90 backdrop-blur p-2 rounded-xl border border-gray-200 shadow-sm">
+                                    <span class="text-[9px] font-black text-terra uppercase block mb-0.5">Grundstück A</span>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-base" id="icon-a">🚜</span>
+                                        <p class="text-xs font-bold text-slateDark truncate" id="title-a">12 m³ Mutterboden</p>
                                     </div>
                                 </div>
-
-                                <!-- Grundstück B -->
-                                <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-[10px] font-black text-moss uppercase">Grundstück B</span>
-                                        <span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">Neukauf gespart</span>
-                                    </div>
-                                    <div class="flex items-center space-x-2 mt-1">
-                                        <div class="text-base" id="icon-b">🏡</div>
-                                        <div class="overflow-hidden">
-                                            <p class="text-xs font-bold text-slateDark truncate" id="title-b">Garten-Auffüllung</p>
-                                            <p class="text-[10px] font-medium text-emerald-600" id="save-b">380 € Neukauf gespart</p>
-                                        </div>
+                                <div class="bg-white/90 backdrop-blur p-2 rounded-xl border border-gray-200 shadow-sm">
+                                    <span class="text-[9px] font-black text-moss uppercase block mb-0.5">Grundstück B</span>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-base" id="icon-b">🏡</span>
+                                        <p class="text-xs font-bold text-slateDark truncate" id="title-b">Garten-Auffüllung</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Transportweg (Erscheint erst nach dem Hochwandern) -->
-                        <div class="relative my-3 py-2 opacity-0 transition-opacity duration-500" id="transport-section">
+                        <!-- Phase 2: Die LKW-Fahrt -->
+                        <div class="relative my-2 py-1 opacity-0 transition-opacity duration-500" id="transport-section">
                             <div class="absolute inset-x-0 -top-1 flex justify-center opacity-30">
                                 <div class="w-3/4 h-5 border-t-2 border-dashed border-gray-500 rounded-t-full flex items-center justify-center">
                                     <span class="text-[8px] bg-white/80 px-1 text-gray-500 font-medium -mt-4" id="route-deponie">Deponie (45 km)</span>
                                 </div>
                             </div>
 
-                            <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible mt-2">
+                            <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible mt-3">
                                 <div class="absolute top-0 left-0 h-full bg-moss rounded-full w-full opacity-30"></div>
-                                <div class="absolute -top-3.5 left-0 animate-[drive_3.5s_infinite_linear] flex items-center" id="truck-element">
+                                <!-- LKW mit gesteuerter JS-Klasse für exakten Start -->
+                                <div class="absolute -top-3.5 left-0 flex items-center" id="truck-element">
                                     <span class="text-xl transform -scale-x-100 filter drop-shadow">🚚</span>
                                 </div>
                             </div>
                             
                             <div class="flex justify-between text-[10px] text-slateGray mt-1.5 font-bold">
                                 <span>Start</span>
-                                <span class="text-moss" id="route-distance">Direktweg 3,2 km</span>
+                                <span class="text-moss font-extrabold" id="route-distance">Direktweg 3,2 km</span>
                                 <span>Ziel</span>
                             </div>
                         </div>
 
-                        <!-- Ersparnis-Anzeige -->
-                        <div class="bg-slateDark text-white p-3 rounded-xl flex items-center justify-between shadow-inner">
+                        <!-- Phase 3: Ersparnis-Ergebnis (Ploppt erst bei Ankunft auf) -->
+                        <div id="results-box" class="bg-slateDark text-white p-3 rounded-xl flex items-center justify-between shadow-inner opacity-0 scale-95 transition-all duration-500">
                             <div class="flex items-center space-x-2">
                                 <span class="text-sm">💶</span>
                                 <div>
@@ -245,46 +230,69 @@
         </div>
     </div>
 
-    <!-- Animation Styles & Sequenz-Skript -->
+    <!-- CSS für kontrollierte LKW-Fahrt -->
     <style>
-    @keyframes drive {
+    .truck-drive-active {
+        animation: driveTruck 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes driveTruck {
         0% { left: 0%; opacity: 0; }
         10% { opacity: 1; }
-        85% { opacity: 1; }
-        95% { opacity: 0; left: 88%; }
-        100% { opacity: 0; left: 88%; }
+        90% { opacity: 1; }
+        100% { left: 86%; opacity: 1; }
     }
     </style>
 
+    <!-- Ablauf-Choreografie JS -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const scenarios = [
             {
-                iconA: '🚜', titleA: '12 m³ Mutterboden', saveA: '420 € Deponie gespart',
-                iconB: '🏡', titleB: 'Garten-Auffüllung', saveB: '380 € Neukauf gespart',
+                iconA: '🚜', titleA: '12 m³ Mutterboden',
+                iconB: '🏡', titleB: 'Garten-Auffüllung',
                 distance: 'Direktweg 3,2 km', deponie: 'Deponie (45 km)',
-                money: '800 € Ersparnis', co2: '115 kg CO₂'
+                money: 'ca. 800 € gespart', co2: '115 kg CO₂'
             },
             {
-                iconA: '🧱', titleA: '80 m² Pflastersteine', saveA: '250 € Entsorgung gespart',
-                iconB: '🏗️', titleB: 'Hofeinfahrt Projekt', saveB: '640 € Material gespart',
+                iconA: '🧱', titleA: '80 m² Pflastersteine',
+                iconB: '🏗️', titleB: 'Hofeinfahrt Projekt',
                 distance: 'Direktweg 5,8 km', deponie: 'Deponie (38 km)',
-                money: '890 € Ersparnis', co2: '180 kg CO₂'
+                money: 'ca. 890 € gespart', co2: '180 kg CO₂'
             },
             {
-                iconA: '🪨', titleA: '15 t Schotter / Kies', saveA: '310 € Abtransport gespart',
-                iconB: '🪵', titleB: 'Terrassen-Unterbau', saveB: '450 € Neukauf gespart',
+                iconA: '🪨', titleA: '15 t Schotter / Kies',
+                iconB: '🪵', titleB: 'Terrassen-Unterbau',
                 distance: 'Direktweg 2,1 km', deponie: 'Deponie (52 km)',
-                money: '760 € Ersparnis', co2: '140 kg CO₂'
+                money: 'ca. 760 € gespart', co2: '140 kg CO₂'
             }
         ];
 
         let index = 0;
 
-        function runScenarioAnimation() {
+        function runChoreography() {
             const sc = scenarios[index];
 
-            // 1. Setze Inhalte
+            const intro = document.getElementById('match-intro');
+            const cards = document.getElementById('property-cards');
+            const transport = document.getElementById('transport-section');
+            const truck = document.getElementById('truck-element');
+            const results = document.getElementById('results-box');
+
+            // 1. RESET ALL STATES
+            intro.style.display = 'flex';
+            intro.style.opacity = '1';
+            intro.style.transform = 'scale(1)';
+
+            cards.style.opacity = '0';
+            transport.style.opacity = '0';
+            results.style.opacity = '0';
+            results.classList.remove('scale-100');
+            results.classList.add('scale-95');
+
+            truck.classList.remove('truck-drive-active');
+
+            // Daten eintragen
             document.getElementById('intro-icon-a').textContent = sc.iconA;
             document.getElementById('intro-title-a').textContent = sc.titleA;
             document.getElementById('intro-icon-b').textContent = sc.iconB;
@@ -292,60 +300,58 @@
 
             document.getElementById('icon-a').textContent = sc.iconA;
             document.getElementById('title-a').textContent = sc.titleA;
-            document.getElementById('save-a').textContent = sc.saveA;
             document.getElementById('icon-b').textContent = sc.iconB;
             document.getElementById('title-b').textContent = sc.titleB;
-            document.getElementById('save-b').textContent = sc.saveB;
 
             document.getElementById('route-distance').textContent = sc.distance;
             document.getElementById('route-deponie').textContent = sc.deponie;
             document.getElementById('total-money').textContent = sc.money;
             document.getElementById('total-co2').textContent = sc.co2;
 
-            // Dots anpassen
+            // Dots aktualisieren
             for (let i = 0; i < 3; i++) {
                 const dot = document.getElementById(`dot-${i}`);
-                if (i === index) {
-                    dot.className = 'w-4 h-2 rounded-full bg-moss transition-all duration-300';
-                } else {
-                    dot.className = 'w-2 h-2 rounded-full bg-gray-200 transition-all duration-300';
-                }
+                dot.className = i === index ? 'w-4 h-2 rounded-full bg-moss transition-all duration-300' : 'w-2 h-2 rounded-full bg-gray-200 transition-all duration-300';
             }
 
-            // SCHRITT 1: Großes Intro-Match sichtbar machen, Transportweg verstecken
-            const intro = document.getElementById('match-intro');
-            const cards = document.getElementById('property-cards');
-            const transport = document.getElementById('transport-section');
-
-            intro.style.opacity = '1';
-            intro.style.transform = 'scale(1)';
-            cards.style.opacity = '0';
-            transport.style.opacity = '0';
-
-            // SCHRITT 2: Nach 1.8 Sekunden wandern die Grundstücke nach oben & Transport startet
+            // PHASE 1: Match anzeigen (1.8 Sekunden stehen lassen)
             setTimeout(() => {
+                // Match schrumpft weg
                 intro.style.opacity = '0';
                 intro.style.transform = 'scale(0.95)';
-                
+
                 setTimeout(() => {
                     intro.style.display = 'none';
                     cards.style.opacity = '1';
                     transport.style.opacity = '1';
-                }, 300);
-            }, 2000);
+
+                    // PHASE 2: LKW startet JETZT mit der Fahrt
+                    setTimeout(() => {
+                        truck.classList.add('truck-drive-active');
+
+                        // PHASE 3: LKW kommt im Ziel an (nach 2.8s Fahrtzeit) -> Ergebnisse ploppen auf!
+                        setTimeout(() => {
+                            results.style.opacity = '1';
+                            results.classList.remove('scale-95');
+                            results.classList.add('scale-100');
+
+                            // PHASE 4: Pause zum Lesen, dann nächstes Szenario
+                            setTimeout(() => {
+                                index = (index + 1) % scenarios.length;
+                                runChoreography();
+                            }, 3500);
+
+                        }, 2800);
+
+                    }, 200);
+
+                }, 400);
+
+            }, 1800);
         }
 
-        // Initialer Start
-        runScenarioAnimation();
-
-        // Loop alle 5.5 Sekunden zum nächsten Szenario
-        setInterval(() => {
-            index = (index + 1) % scenarios.length;
-            // Intro-Box vorübergehend wieder einblenden für den Übergang
-            const intro = document.getElementById('match-intro');
-            intro.style.display = 'flex';
-            runScenarioAnimation();
-        }, 5500);
+        // Start der Choreografie
+        runChoreography();
     });
     </script>
 </section>
