@@ -360,125 +360,186 @@
     </script>
 </section>
 
-    <!-- Marketplace Section -->
-    <main id="marktplatz" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <!-- Filter Bar -->
-        <div class="bg-white p-6 rounded-3xl shadow-soft border border-gray-200 mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div>
-                <label for="filterCategory" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Kategorie</label>
-                <select id="filterCategory" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
-                    <option value="">Alle Kategorien</option>
-                    <option value="Aushub & Mutterboden">Aushub & Mutterboden</option>
-                    <option value="Kies, Sand & Schotter">Kies, Sand & Schotter</option>
-                    <option value="Pflastersteine & Ziegel">Pflastersteine & Ziegel</option>
-                    <option value="Holz & Baustoffe">Holz & Baustoffe</option>
-                </select>
+<!-- Marketplace Section (Intro + Filter & Live-Angebote) -->
+<main id="marktplatz" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+    <!-- Marktplatz Intro-Sektion -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center space-x-2 bg-moss/10 text-moss text-xs font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-4 border border-moss/20">
+            <span class="w-2 h-2 rounded-full bg-moss animate-pulse"></span>
+            <span>Der Live-Marktplatz</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-slateDark tracking-tight mt-2">
+            Hier verbindet sich Angebot und Nachfrage.
+        </h2>
+        <p class="text-slateGray text-base sm:text-lg mt-4 leading-relaxed">
+            Egal ob privater Gartenbesitzer oder professioneller Tiefbau-Betrieb: Finde Aushub, Schotter und Baustoffe direkt in deiner Umgebung oder biete überschüssiges Material an.
+        </p>
+    </div>
+
+    <!-- 3-Schritte-Guide Brückenelement -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center bg-gradient-to-br from-warmSand/50 to-creamBg p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm mb-10">
+        
+        <!-- Schritt 1 -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm text-center hover:border-moss/40 transition-all">
+            <div class="w-12 h-12 mx-auto rounded-xl bg-terra/10 text-terra flex items-center justify-center text-xl font-bold mb-4">
+                🚜
             </div>
-            <div>
-                <label for="filterLocation" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Standort / PLZ</label>
-                <input id="filterLocation" type="text" placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+            <h3 class="text-base font-extrabold text-slateDark">1. Material inserieren</h3>
+            <p class="text-xs text-slateGray mt-2 leading-relaxed">
+                Foto, Menge (m³/Stück) und Standort eingeben – in unter 2 Minuten online.
+            </p>
+        </div>
+
+        <!-- Schritt 2 -->
+        <div class="bg-white p-6 rounded-2xl border-2 border-moss shadow-md text-center transform md:-translate-y-2">
+            <div class="w-12 h-12 mx-auto rounded-xl bg-moss/10 text-moss flex items-center justify-center text-xl font-bold mb-4">
+                🗺️
             </div>
-            <div>
-                <label for="filterRadius" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Umkreis</label>
-                <select id="filterRadius" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
-                    <option value="10">Bis 10 km</option>
-                    <option value="25" selected>Bis 25 km</option>
-                    <option value="50">Bis 50 km</option>
-                </select>
+            <h3 class="text-base font-extrabold text-slateDark">2. Regional entdecken</h3>
+            <p class="text-xs text-slateGray mt-2 leading-relaxed">
+                Kartenbasierte Umkreissuche für Baustoffe direkt im Nachbarort.
+            </p>
+        </div>
+
+        <!-- Schritt 3 -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm text-center hover:border-moss/40 transition-all">
+            <div class="w-12 h-12 mx-auto rounded-xl bg-slateDark/10 text-slateDark flex items-center justify-center text-xl font-bold mb-4">
+                💬
             </div>
-            <div class="flex items-end">
-                <button id="btnFilterSearch" type="button" class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <span>Suchen & Filtern</span>
-                </button>
+            <h3 class="text-base font-extrabold text-slateDark">3. Direkt vernetzen</h3>
+            <p class="text-xs text-slateGray mt-2 leading-relaxed">
+                Über die direkte In-App-Chat-Funktion Details zur Abholung oder Lieferung klären.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Grüner CTA-Button zum schnellen Scrollen/Fokussieren der Angebote -->
+    <div class="mb-14 text-center">
+        <a href="#active-listings" class="inline-flex items-center space-x-3 bg-moss text-white font-extrabold px-8 py-4 rounded-2xl shadow-lg hover:bg-moss/90 transition-all transform hover:-translate-y-0.5">
+            <span>Jetzt Baustoffe entdecken</span>
+            <span class="text-lg">↓</span>
+        </a>
+    </div>
+
+    <!-- Filter Bar -->
+    <div id="active-listings" class="bg-white p-6 rounded-3xl shadow-soft border border-gray-200 mb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+            <label for="filterCategory" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Kategorie</label>
+            <select id="filterCategory" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+                <option value="">Alle Kategorien</option>
+                <option value="Aushub & Mutterboden">Aushub & Mutterboden</option>
+                <option value="Kies, Sand & Schotter">Kies, Sand & Schotter</option>
+                <option value="Pflastersteine & Ziegel">Pflastersteine & Ziegel</option>
+                <option value="Holz & Baustoffe">Holz & Baustoffe</option>
+            </select>
+        </div>
+        <div>
+            <label for="filterLocation" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Standort / PLZ</label>
+            <input id="filterLocation" type="text" placeholder="z. B. 57392 Schmallenberg" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+        </div>
+        <div>
+            <label for="filterRadius" class="block text-xs font-bold uppercase tracking-wider text-slateGray mb-2">Umkreis</label>
+            <select id="filterRadius" class="w-full border border-gray-300 rounded-xl p-3.5 text-sm font-semibold focus:ring-2 focus:ring-moss focus:outline-none bg-creamBg text-slateDark">
+                <option value="10">Bis 10 km</option>
+                <option value="25" selected>Bis 25 km</option>
+                <option value="50">Bis 50 km</option>
+            </select>
+        </div>
+        <div class="flex items-end">
+            <button id="btnFilterSearch" type="button" class="w-full bg-terra hover:bg-terra/90 text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all duration-200 flex items-center justify-center space-x-2 cursor-pointer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <span>Suchen & Filtern</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Content Grid: Listings & Map -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-5" id="listingsContainer">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="font-black text-2xl text-slateDark">Aktuelle Angebote in der Nähe</h3>
+                <span id="activeListingsCount" class="text-xs font-bold text-slateGray bg-white px-3 py-1 rounded-full border border-gray-200">2 Treffer aktiv</span>
+            </div>
+
+            <!-- Card 1 -->
+            <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
+                <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden shrink-0">
+                    <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>Mutterboden</span>
+                    <span class="absolute top-3 left-3 bg-moss text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Privat</span>
+                </div>
+                <div class="flex-grow flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold text-terra uppercase tracking-wider">Aushub & Mutterboden</span>
+                            <span class="text-xs text-slateGray font-semibold">vor 2 Std. • 4.2 km</span>
+                        </div>
+                        <h4 class="font-extrabold text-xl text-slateDark mt-1.5 group-hover:text-moss transition cursor-pointer">
+                            ca. 12 m³ gesiebter Mutterboden abzugeben
+                        </h4>
+                        <p class="text-sm text-slateGray mt-2 leading-relaxed">
+                            Sehr gute Qualität, ideal für Garten- und Landschaftsbau. Ebenerdig erreichbar für LKW und Anhänger.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
+                        <div>
+                            <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
+                            <span class="font-black text-moss text-lg">Zu verschenken</span>
+                        </div>
+                        <button type="button" onclick="showContactNotice()" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                            Details & Kontakt
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
+                <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden shrink-0">
+                    <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>Pflastersteine</span>
+                    <span class="absolute top-3 left-3 bg-slateDark text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Gewerbe</span>
+                </div>
+                <div class="flex-grow flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold text-terra uppercase tracking-wider">Pflastersteine</span>
+                            <span class="text-xs text-slateGray font-semibold">Gestern • 11.8 km</span>
+                        </div>
+                        <h4 class="font-extrabold text-xl text-slateDark mt-1.5 group-hover:text-moss transition cursor-pointer">
+                            4 Paletten Betonpflastersteine (grau, unbenutzt)
+                        </h4>
+                        <p class="text-sm text-slateGray mt-2 leading-relaxed">
+                            Restbestand von Gewerbeprojekt. Verladung vor Ort mit Gabelstapler problemlos möglich.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
+                        <div>
+                            <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
+                            <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
+                        </div>
+                        <button type="button" onclick="showContactNotice()" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
+                            Details & Kontakt
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Content Grid: Listings & Map -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-5" id="listingsContainer">
-                <div class="flex justify-between items-center mb-2">
-                    <h2 class="font-black text-2xl text-slateDark">Aktuelle Angebote in der Nähe</h2>
-                    <span id="activeListingsCount" class="text-xs font-bold text-slateGray bg-white px-3 py-1 rounded-full border border-gray-200">2 Treffer aktiv</span>
+        <!-- Map Column -->
+        <div class="lg:col-span-1">
+            <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-soft sticky top-28">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="font-extrabold text-base text-slateDark">Standort-Übersicht</h4>
+                    <span id="btnResetMap" class="text-xs text-moss font-bold cursor-pointer hover:underline">Zentrieren</span>
                 </div>
-
-                <!-- Card 1 -->
-                <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
-                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden shrink-0">
-                        <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span>Mutterboden</span>
-                        <span class="absolute top-3 left-3 bg-moss text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Privat</span>
-                    </div>
-                    <div class="flex-grow flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs font-bold text-terra uppercase tracking-wider">Aushub & Mutterboden</span>
-                                <span class="text-xs text-slateGray font-semibold">vor 2 Std. • 4.2 km</span>
-                            </div>
-                            <h3 class="font-extrabold text-xl text-slateDark mt-1.5 group-hover:text-moss transition cursor-pointer">
-                                ca. 12 m³ gesiebter Mutterboden abzugeben
-                            </h3>
-                            <p class="text-sm text-slateGray mt-2 leading-relaxed">
-                                Sehr gute Qualität, ideal für Garten- und Landschaftsbau. Ebenerdig erreichbar für LKW und Anhänger.
-                            </p>
-                        </div>
-                        <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
-                            <div>
-                                <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
-                                <span class="font-black text-moss text-lg">Zu verschenken</span>
-                            </div>
-                            <button type="button" onclick="showContactNotice()" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
-                                Details & Kontakt
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-soft hover:shadow-hover-card transition-all duration-300 flex flex-col sm:flex-row gap-6 group">
-                    <div class="w-full sm:w-48 h-40 bg-warmSand rounded-2xl flex flex-col items-center justify-center text-slateGray font-medium text-xs relative overflow-hidden shrink-0">
-                        <svg class="w-10 h-10 mb-1 text-slateGray/40 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span>Pflastersteine</span>
-                        <span class="absolute top-3 left-3 bg-slateDark text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">Gewerbe</span>
-                    </div>
-                    <div class="flex-grow flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs font-bold text-terra uppercase tracking-wider">Pflastersteine</span>
-                                <span class="text-xs text-slateGray font-semibold">Gestern • 11.8 km</span>
-                            </div>
-                            <h3 class="font-extrabold text-xl text-slateDark mt-1.5 group-hover:text-moss transition cursor-pointer">
-                                4 Paletten Betonpflastersteine (grau, unbenutzt)
-                            </h3>
-                            <p class="text-sm text-slateGray mt-2 leading-relaxed">
-                                Restbestand von Gewerbeprojekt. Verladung vor Ort mit Gabelstapler problemlos möglich.
-                            </p>
-                        </div>
-                        <div class="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
-                            <div>
-                                <span class="text-[11px] text-slateGray font-semibold block uppercase">Preis</span>
-                                <span class="font-black text-slateDark text-lg">80,00 € <span class="text-xs font-normal">/ Palette</span></span>
-                            </div>
-                            <button type="button" onclick="showContactNotice()" class="bg-warmSand hover:bg-moss hover:text-white text-slateDark text-xs font-bold px-5 py-3 rounded-xl transition-all duration-200 cursor-pointer">
-                                Details & Kontakt
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Map Column -->
-            <div class="lg:col-span-1">
-                <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-soft sticky top-28">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-extrabold text-base text-slateDark">Standort-Übersicht</h3>
-                        <span id="btnResetMap" class="text-xs text-moss font-bold cursor-pointer hover:underline">Zentrieren</span>
-                    </div>
-                    <div id="map"></div>
-                </div>
+                <div id="map"></div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
     <!-- Calculator Section -->
     <section id="rechner" class="py-20 bg-white border-t border-b border-gray-200">
