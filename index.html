@@ -1419,7 +1419,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-          // H. Filter Search
+          // H. Filter Search (Funktionierende PLZ- & Ortssuche)
           const btnFilterSearch = document.getElementById('btnFilterSearch');
             if (btnFilterSearch) {
                 btnFilterSearch.addEventListener('click', function() {
@@ -1431,26 +1431,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     let visibleCount = 0;
 
                     cards.forEach(card => {
-                        const cardCategory = card.getAttribute('data-category');
+                        const cardCategory = card.getAttribute('data-category') || '';
                         const cardLocation = card.getAttribute('data-location') || '';
                         const cardText = card.innerText.toLowerCase();
 
-                        // 1. Kategorie
+                        // 1. Kategorie-Prüfung
                         const matchesCategory = !selectedCategory || cardCategory === selectedCategory;
                         
-                        // 2. Ort / PLZ (Sucht in data-location und Kartentext)
-                        const matchesLocation = !searchLocation || cardLocation.includes(searchLocation) || cardText.includes(searchLocation);
+                        // 2. Standort / PLZ-Prüfung
+                        // Findet Teil-PLZs (z. B. "573") oder Ortsnamen (z. B. "schmallenberg")
+                        const matchesLocation = !searchLocation || 
+                                                cardLocation.includes(searchLocation) || 
+                                                cardText.includes(searchLocation);
 
-                        // 3. Umkreis
+                        // 3. Umkreis-Prüfung (nur aktiv, wenn KEINE spezifische PLZ/Ort gesucht wird)
                         let matchesRadius = true;
-                        const distanceMatch = card.innerText.match(/([\d.,]+)\s*km/i);
-                        if (distanceMatch && distanceMatch[1]) {
-                            const cardKm = parseFloat(distanceMatch[1].replace(',', '.'));
-                            if (cardKm > selectedRadius) {
-                                matchesRadius = false;
+                        if (!searchLocation) {
+                            const distanceMatch = cardText.match(/([\d.,]+)\s*km/i);
+                            if (distanceMatch && distanceMatch[1]) {
+                                const cardKm = parseFloat(distanceMatch[1].replace(',', '.'));
+                                if (cardKm > selectedRadius) {
+                                    matchesRadius = false;
+                                }
                             }
                         }
 
+                        // Auswertung
                         if (matchesCategory && matchesLocation && matchesRadius) {
                             card.style.display = 'flex';
                             visibleCount++;
@@ -1459,6 +1465,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
 
+                    // Trefferanzeige im UI aktualisieren
                     const activeListingsCount = document.getElementById('activeListingsCount');
                     if (activeListingsCount) {
                         activeListingsCount.innerText = `${visibleCount} Treffer aktiv`;
