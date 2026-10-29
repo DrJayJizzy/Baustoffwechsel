@@ -103,14 +103,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
-            <!-- Linke Spalte: Text & Botschaft -->
+            <!-- Linke Spalte: Text & Botschaft (Optimierter Zeilenumbruch) -->
             <div class="lg:col-span-7">
                 <div class="inline-flex items-center space-x-2 bg-moss/10 text-moss text-xs font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-6 border border-moss/20">
                     <span class="w-2 h-2 rounded-full bg-moss animate-pulse"></span>
                     <span>Revolution im Tief- & Gartenbau</span>
                 </div>
+                <!-- Sauberer Umbruch per br, damit "weitergeben" nicht alleine steht -->
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slateDark tracking-tight leading-[1.12] max-w-2xl">
-                    Baustoffe & Aushub direkt vor Ort weitergeben.
+                    Baustoffe & Aushub direkt<br class="hidden sm:inline"> vor Ort weitergeben.
                 </h1>
                 <p class="text-slateGray text-lg sm:text-xl mt-6 font-normal leading-relaxed max-w-xl">
                     Vermeide teure Deponiegebühren und lange Transportwege. Wir verbinden Angebot und Nachfrage in deiner Region und schaffen gemeinsam einen <span class="font-extrabold text-slateDark">baustoffwechsel</span>.
@@ -217,8 +218,9 @@
 
                     </div>
 
+                    <!-- Schlusstext unten -->
                     <p class="text-[11px] text-center text-slateGray font-medium">
-                        Beide Seiten sparen – Material bleibt in der Region.
+                        Beide Seiten sparen – so schaffen wir gemeinsam einen <span class="font-extrabold text-slateDark">baustoffwechsel</span>.
                     </p>
                 </div>
 
@@ -319,7 +321,7 @@
             setTimeout(() => {
                 canvas.style.opacity = '1';
 
-                // PHASE 1: Match anzeigen (jetzt länger: 4,5 Sekunden zum Lesen), dann sanft hochschieben
+                // PHASE 1: Match anzeigen (3,5 Sekunden), dann sanft hochschieben
                 setTimeout(() => {
                     intro.style.transform = 'translateY(-20px)';
                     intro.style.opacity = '0';
@@ -352,11 +354,11 @@
 
                             }, 3500);
 
-                        }, 7000); // Exakt nach der 7-Sekunden-Fahrt
+                        }, 6000); // Exakt nach der 6-Sekunden-Fahrt
 
                     }, 500);
 
-                }, 4500); // Erhöht auf 4,5 Sekunden Anzeigedauer für das Match
+                }, 400000); // 4 Sekunden Anzeigedauer für das Match
 
             }, 100);
         }
