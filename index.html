@@ -117,67 +117,117 @@
                 </p>
             </div>
 
-            <!-- Rechte Spalte: Interaktive UI-Animation -->
+            <!-- Rechte Spalte: Animierte Direkt-Route -->
             <div class="lg:col-span-5 relative">
-                <!-- Hauptkarte mit sanftem Schwebe-Effekt -->
-                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-xl relative z-10 transition-transform duration-500 hover:-translate-y-1">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs font-extrabold text-moss uppercase tracking-wider bg-moss/10 px-3 py-1 rounded-full">
-                            Live-Matching
-                        </span>
-                        <span class="text-xs text-slateGray font-semibold flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                            Aktiv in Schmallenberg
-                        </span>
+                <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden">
+                    
+                    <!-- Header-Info -->
+                    <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            <span class="text-xs font-bold text-slateDark uppercase tracking-wider">Direkt-Route vor Ort</span>
+                        </div>
+                        <span class="text-[11px] font-semibold text-moss bg-moss/10 px-2.5 py-0.5 rounded-full">Direkt statt Deponie</span>
                     </div>
 
-                    <!-- Match-Visualisierung -->
-                    <div class="space-y-3">
-                        <div class="bg-creamBg p-3.5 rounded-2xl border border-gray-100 flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-9 h-9 rounded-xl bg-terra/10 text-terra font-bold flex items-center justify-center text-xs">
-                                    Biete
+                    <!-- Visuelle Animations-Fläche -->
+                    <div class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 min-h-[220px] flex flex-col justify-between overflow-hidden">
+                        
+                        <!-- Grundstück A & B -->
+                        <div class="grid grid-cols-2 gap-4 relative z-10">
+                            <div class="bg-white/80 backdrop-blur p-2.5 rounded-xl border border-gray-200/80 shadow-sm">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-[10px] font-black text-terra uppercase">Grundstück A</span>
+                                    <span class="text-[10px] font-bold text-slateGray">Hat Aushub</span>
                                 </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="text-lg">🚜</div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slateDark leading-none">12 m³ Mutterboden</p>
+                                        <p class="text-[10px] text-slateGray mt-0.5">Will entsorgen</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white/80 backdrop-blur p-2.5 rounded-xl border border-gray-200/80 shadow-sm">
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-[10px] font-black text-moss uppercase">Grundstück B</span>
+                                    <span class="text-[10px] font-bold text-slateGray">Sucht Aushub</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="text-lg">🏡</div>
+                                    <div>
+                                        <p class="text-xs font-bold text-slateDark leading-none">Garten-Auffüllung</p>
+                                        <p class="text-[10px] text-slateGray mt-0.5">Braucht Material</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LKW Strecke -->
+                        <div class="relative my-4 py-2">
+                            <div class="absolute inset-x-0 -top-1 flex justify-center opacity-40">
+                                <div class="w-3/4 h-6 border-t-2 border-dashed border-gray-400 rounded-t-full flex items-center justify-center">
+                                    <span class="text-[9px] bg-white px-1 text-gray-500 font-medium -mt-5">Teure Deponie (45 km)</span>
+                                </div>
+                            </div>
+
+                            <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible">
+                                <div class="absolute top-0 left-0 h-full bg-moss rounded-full w-full opacity-30"></div>
+                                <div class="absolute -top-3.5 left-0 animate-[drive_4s_infinite_linear] flex items-center">
+                                    <span class="text-xl transform -scale-x-100 filter drop-shadow">🚚</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between text-[9px] text-slateGray mt-1 font-semibold">
+                                <span>Start: Nachbarschaft</span>
+                                <span class="text-moss font-bold">Direktweg (3,2 km)</span>
+                                <span>Ziel: Ankunft</span>
+                            </div>
+                        </div>
+
+                        <!-- Ersparnis-Anzeige -->
+                        <div class="bg-slateDark text-white p-3 rounded-xl flex items-center justify-between shadow-inner">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs">💰</span>
                                 <div>
-                                    <p class="text-xs font-bold text-slateDark">15 m³ Mutterboden</p>
-                                    <p class="text-[10px] text-slateGray">Aushub Gartenprojekt</p>
+                                    <p class="text-[10px] text-gray-300 uppercase tracking-wider font-bold">Geld gespart</p>
+                                    <p class="text-xs sm:text-sm font-black text-amber-400">ca. 420 € Deponie</p>
                                 </div>
                             </div>
-                            <span class="text-xs font-black text-moss">0 €</span>
-                        </div>
-
-                        <div class="flex justify-center -my-1">
-                            <div class="bg-moss text-white p-1.5 rounded-full shadow-md animate-bounce">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                            </div>
-                        </div>
-
-                        <div class="bg-creamBg p-3.5 rounded-2xl border border-gray-100 flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-9 h-9 rounded-xl bg-moss/10 text-moss font-bold flex items-center justify-center text-xs">
-                                    Suche
-                                </div>
+                            <div class="h-6 w-px bg-gray-700"></div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs">🌱</span>
                                 <div>
-                                    <p class="text-xs font-bold text-slateDark">Mutterboden gesucht</p>
-                                    <p class="text-[10px] text-slateGray">Gala-Bau Projekt • 3.2 km</p>
+                                    <p class="text-[10px] text-gray-300 uppercase tracking-wider font-bold">CO₂ vermieden</p>
+                                    <p class="text-xs sm:text-sm font-black text-emerald-400">~115 kg Diesel</p>
                                 </div>
                             </div>
-                            <span class="text-[10px] font-bold bg-moss text-white px-2 py-0.5 rounded-md">Match!</span>
                         </div>
+
                     </div>
 
-                    <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-slateGray font-medium">
-                        <span>Eingesparte CO₂-Emissionen:</span>
-                        <span class="font-extrabold text-slateDark">~135 kg</span>
-                    </div>
+                    <p class="text-[11px] text-center text-slateGray mt-3">
+                        Keine Umwege zur Deponie. Material bleibt in der Region.
+                    </p>
                 </div>
 
-                <!-- Dekoratives Hintergrund-Element -->
-                <div class="absolute -bottom-4 -right-4 w-full h-full bg-warmSand rounded-3xl -z-0"></div>
+                <!-- Hintergrund-Schatten -->
+                <div class="absolute -bottom-3 -right-3 w-full h-full bg-warmSand rounded-3xl -z-0"></div>
             </div>
 
         </div>
     </div>
+
+    <!-- CSS Keyframes für die LKW-Fahrt -->
+    <style>
+    @keyframes drive {
+        0% { left: 0%; opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { left: 85%; opacity: 0; }
+    }
+    </style>
 </section>
 
     <!-- Marketplace Section -->
