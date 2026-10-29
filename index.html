@@ -1408,12 +1408,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-          // H. Filter Search (Funktionalität)
+          // H. Filter Search (Inklusive Kategorie, PLZ/Ort und echtem Umkreis-Filter)
           const btnFilterSearch = document.getElementById('btnFilterSearch');
             if (btnFilterSearch) {
                 btnFilterSearch.addEventListener('click', function() {
                     const selectedCategory = document.getElementById('filterCategory').value;
                     const searchLocation = document.getElementById('filterLocation').value.toLowerCase().trim();
+                    const selectedRadius = parseInt(document.getElementById('filterRadius').value, 10);
                     
                     const cards = document.querySelectorAll('.listing-card');
                     let visibleCount = 0;
@@ -1422,12 +1423,24 @@ document.addEventListener('DOMContentLoaded', () => {
                         const cardCategory = card.getAttribute('data-category');
                         const cardText = card.innerText.toLowerCase();
 
-                        // Prüfen ob Kategorie übereinstimmt (oder keine gewählt)
+                        // 1. Kategorie-Check
                         const matchesCategory = !selectedCategory || cardCategory === selectedCategory;
-                        // Prüfen ob Suchtext / Ort im Text vorkommt (oder kein Text eingegeben)
+                        
+                        // 2. Standort / PLZ-Check (wenn etwas eingegeben wurde)
                         const matchesLocation = !searchLocation || cardText.includes(searchLocation);
 
-                        if (matchesCategory && matchesLocation) {
+                        // 3. Umkreis-Check (km-Angabe aus der Karte extrahieren)
+                        let matchesRadius = true;
+                        const distanceMatch = card.innerText.match(/([\d.,]+)\s*km/i);
+                        if (distanceMatch && distanceMatch[1]) {
+                            const cardKm = parseFloat(distanceMatch[1].replace(',', '.'));
+                            if (cardKm > selectedRadius) {
+                                matchesRadius = false; // Karte ist weiter weg als der gewählte Radius
+                            }
+                        }
+
+                        // Wenn alle Kriterien stimmen, anzeigen, sonst ausblenden
+                        if (matchesCategory && matchesLocation && matchesRadius) {
                             card.style.display = 'flex';
                             visibleCount++;
                         } else {
