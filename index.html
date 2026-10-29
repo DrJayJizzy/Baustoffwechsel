@@ -134,8 +134,8 @@
                         </div>
                     </div>
 
-                    <!-- Haupt-Animationscontainer (Wird als Ganzes am Ende ausgeblendet) -->
-                    <div id="animation-canvas" class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 my-3 flex-1 flex flex-col justify-between overflow-hidden transition-opacity duration-500">
+                    <!-- Haupt-Animationscontainer -->
+                    <div id="animation-canvas" class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 my-3 flex-1 flex flex-col justify-between overflow-hidden transition-opacity duration-700">
                         
                         <!-- MATCH AREA: Rutscht geschmeidig nach oben -->
                         <div class="relative min-h-[100px]">
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
 
-                            <!-- Kompakte Karten oben (Erscheinen beim Hochschieben) -->
+                            <!-- Kompakte Karten oben -->
                             <div id="property-cards" class="grid grid-cols-2 gap-3 opacity-0 transition-all duration-700 ease-out transform translate-y-2">
                                 <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm">
                                     <span class="text-[10px] font-black text-terra uppercase block mb-0.5">Grundstück A</span>
@@ -196,7 +196,7 @@
                             </div>
                         </div>
 
-                        <!-- Phase 3: Ersparnis-Ergebnis (Größere Typografie) -->
+                        <!-- Phase 3: Ersparnis-Ergebnis -->
                         <div id="results-box" class="bg-slateDark text-white p-3.5 rounded-xl flex items-center justify-between shadow-inner opacity-0 scale-95 transition-all duration-500">
                             <div class="flex items-center space-x-2.5">
                                 <span class="text-base">💶</span>
@@ -229,15 +229,16 @@
         </div>
     </div>
 
+    <!-- CSS für ruhige, langsame LKW-Fahrt -->
     <style>
     .truck-drive-active {
-        animation: driveTruck 4.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation: driveTruck 7.0s linear forwards;
     }
 
     @keyframes driveTruck {
         0% { left: 0%; opacity: 0; }
-        8% { opacity: 1; }
-        92% { opacity: 1; }
+        5% { opacity: 1; }
+        95% { opacity: 1; }
         100% { left: 86%; opacity: 1; }
     }
     </style>
@@ -277,16 +278,14 @@
             const truck = document.getElementById('truck-element');
             const results = document.getElementById('results-box');
 
-            // 1. ZURÜCKSETZEN ALLER ELEMENTE AUF STARTZUSTAND
-            canvas.style.opacity = '1';
-            
+            // 1. ZURÜCKSETZEN ALLER ZUSTÄNDE (Während Canvas unsichtbar ist)
             intro.style.display = 'flex';
             intro.style.opacity = '1';
             intro.style.transform = 'translateY(0)';
 
             cards.style.opacity = '0';
             cards.style.transform = 'translateY(8px)';
-            
+
             transport.style.opacity = '0';
             truck.classList.remove('truck-drive-active');
 
@@ -294,7 +293,7 @@
             results.classList.remove('scale-100');
             results.classList.add('scale-95');
 
-            // Daten eintragen
+            // Neue Daten eintragen
             document.getElementById('intro-icon-a').textContent = sc.iconA;
             document.getElementById('intro-title-a').textContent = sc.titleA;
             document.getElementById('intro-icon-b').textContent = sc.iconB;
@@ -316,43 +315,50 @@
                 dot.className = i === index ? 'w-4 h-2 rounded-full bg-moss transition-all duration-300' : 'w-2 h-2 rounded-full bg-gray-200 transition-all duration-300';
             }
 
-            // PHASE 1: Match anzeigen (1.6 Sek), dann geschmeidig nach Oben schieben (Slide-Up)
+            // 2. CANVAS SANFT EINBLENDEN
             setTimeout(() => {
-                intro.style.transform = 'translateY(-20px)';
-                intro.style.opacity = '0';
+                canvas.style.opacity = '1';
 
-                cards.style.opacity = '1';
-                cards.style.transform = 'translateY(0)';
-
+                // PHASE 1: Match anzeigen (2,0 Sek), dann sanft hochschieben
                 setTimeout(() => {
-                    intro.style.display = 'none';
-                    transport.style.opacity = '1';
+                    intro.style.transform = 'translateY(-20px)';
+                    intro.style.opacity = '0';
 
-                    // PHASE 2: LKW startet direkt im Anschluss die Fahrt
-                    truck.classList.add('truck-drive-active');
+                    cards.style.opacity = '1';
+                    cards.style.transform = 'translateY(0)';
 
-                    // PHASE 3: Ziel erreicht (nach 4.0s) -> Ergebnis-Box ploppt auf
                     setTimeout(() => {
-                        results.style.opacity = '1';
-                        results.classList.remove('scale-95');
-                        results.classList.add('scale-100');
+                        intro.style.display = 'none';
+                        transport.style.opacity = '1';
 
-                        // PHASE 4: Lesepause, danach ALLES SYNCHRON ausblenden!
+                        // PHASE 2: LKW startet ruhige Fahrt (7,0 Sekunden)
+                        truck.classList.add('truck-drive-active');
+
+                        // PHASE 3: Ziel erreicht -> Ergebnisse ploppen auf
                         setTimeout(() => {
-                            canvas.style.opacity = '0'; // Der gesamte Bereich blendet sauber aus
+                            results.style.opacity = '1';
+                            results.classList.remove('scale-95');
+                            results.classList.add('scale-100');
 
+                            // PHASE 4: Lesepause (3,5 Sek), dann geschmeidiger Fade-Out des gesamten Feldes
                             setTimeout(() => {
-                                index = (index + 1) % scenarios.length;
-                                runChoreography(); // Neustart für das nächste Szenario
-                            }, 500);
+                                canvas.style.opacity = '0';
 
-                        }, 3500);
+                                // Wenn komplett unsichtbar -> Nächstes Szenario laden
+                                setTimeout(() => {
+                                    index = (index + 1) % scenarios.length;
+                                    runChoreography();
+                                }, 750);
 
-                    }, 4000);
+                            }, 3500);
 
-                }, 400);
+                        }, 7000); // Exakt nach der 7-Sekunden-Fahrt
 
-            }, 1600);
+                    }, 500);
+
+                }, 2000);
+
+            }, 100);
         }
 
         // Initialer Start
