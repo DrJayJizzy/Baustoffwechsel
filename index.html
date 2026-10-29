@@ -117,17 +117,16 @@
                 </p>
             </div>
 
-            <!-- Rechte Spalte: Professionelle Story-Animation -->
+            <!-- Rechte Spalte: Gestaffelte Story-Animation -->
             <div class="lg:col-span-5 relative">
                 <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden min-h-[380px] flex flex-col justify-between">
                     
-                    <!-- Header-Info & Beispiel-Indikator -->
+                    <!-- Header-Info -->
                     <div class="flex items-center justify-between border-b border-gray-100 pb-3">
                         <div class="flex items-center space-x-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
                             <span class="text-xs font-bold text-slateDark uppercase tracking-wider">Direkt-Route vor Ort</span>
                         </div>
-                        <!-- Szenario-Tabs / Indikatoren -->
                         <div class="flex items-center space-x-1" id="scenario-dots">
                             <span class="w-2 h-2 rounded-full bg-moss transition-all duration-300" id="dot-0"></span>
                             <span class="w-2 h-2 rounded-full bg-gray-200 transition-all duration-300" id="dot-1"></span>
@@ -138,59 +137,74 @@
                     <!-- Dynamischer Animationsbereich -->
                     <div class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 my-3 flex-1 flex flex-col justify-between overflow-hidden">
                         
-                        <!-- Stufe 1: Grundstück A & B (rutschen sanft nach oben) -->
-                        <div id="property-cards" class="grid grid-cols-2 gap-3 transition-all duration-700 ease-in-out">
-                            <!-- Grundstück A -->
-                            <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm transition-all duration-500">
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-[10px] font-black text-terra uppercase">Grundstück A</span>
-                                    <span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">Geld gespart</span>
-                                </div>
-                                <div class="flex items-center space-x-2 mt-1">
-                                    <div class="text-base" id="icon-a">🚜</div>
-                                    <div class="overflow-hidden">
-                                        <p class="text-xs font-bold text-slateDark truncate" id="title-a">12 m³ Mutterboden</p>
-                                        <p class="text-[10px] font-medium text-emerald-600" id="save-a">0 € Deponie</p>
+                        <!-- Container für Grundstücke (Wechselt zwischen Start-Zustand groß und Kompakt oben) -->
+                        <div id="stage-container" class="relative py-2 transition-all duration-700 ease-in-out">
+                            
+                            <!-- ZUSTAND A: Großes Initial-Match (Zu Beginn im Fokus) -->
+                            <div id="match-intro" class="absolute inset-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur rounded-xl p-4 z-20 transition-all duration-500 shadow-sm border border-gray-100">
+                                <span class="text-[10px] font-black text-moss uppercase tracking-widest bg-moss/10 px-2.5 py-1 rounded-full mb-2">Neues Match gefunden!</span>
+                                <div class="flex items-center justify-center space-x-3 w-full">
+                                    <div class="text-center">
+                                        <span class="text-2xl" id="intro-icon-a">🚜</span>
+                                        <p class="text-[11px] font-bold text-slateDark mt-1" id="intro-title-a">12 m³ Mutterboden</p>
+                                    </div>
+                                    <span class="text-xs font-black text-moss px-2">⚡</span>
+                                    <div class="text-center">
+                                        <span class="text-2xl" id="intro-icon-b">🏡</span>
+                                        <p class="text-[11px] font-bold text-slateDark mt-1" id="intro-title-b">Garten-Auffüllung</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Grundstück B -->
-                            <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm transition-all duration-500">
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-[10px] font-black text-moss uppercase">Grundstück B</span>
-                                    <span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">Neukauf gespart</span>
+                            <!-- ZUSTAND B: Klein & Oben (Wandert nach oben, wenn Animation startet) -->
+                            <div class="grid grid-cols-2 gap-3 opacity-0 transition-opacity duration-500" id="property-cards">
+                                <!-- Grundstück A -->
+                                <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-[10px] font-black text-terra uppercase">Grundstück A</span>
+                                        <span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">Geld gespart</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <div class="text-base" id="icon-a">🚜</div>
+                                        <div class="overflow-hidden">
+                                            <p class="text-xs font-bold text-slateDark truncate" id="title-a">12 m³ Mutterboden</p>
+                                            <p class="text-[10px] font-medium text-emerald-600" id="save-a">420 € Deponie gespart</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="flex items-center space-x-2 mt-1">
-                                    <div class="text-base" id="icon-b">🏡</div>
-                                    <div class="overflow-hidden">
-                                        <p class="text-xs font-bold text-slateDark truncate" id="title-b">Garten-Auffüllung</p>
-                                        <p class="text-[10px] font-medium text-emerald-600" id="save-b">380 € gespart</p>
+
+                                <!-- Grundstück B -->
+                                <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-[10px] font-black text-moss uppercase">Grundstück B</span>
+                                        <span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">Neukauf gespart</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 mt-1">
+                                        <div class="text-base" id="icon-b">🏡</div>
+                                        <div class="overflow-hidden">
+                                            <p class="text-xs font-bold text-slateDark truncate" id="title-b">Garten-Auffüllung</p>
+                                            <p class="text-[10px] font-medium text-emerald-600" id="save-b">380 € Neukauf gespart</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Stufe 2: LKW-Transportweg (Erscheint dynamisch) -->
-                        <div class="relative my-3 py-2 opacity-100 transition-opacity duration-500">
-                            <!-- Deponie-Umweg (gestrichelt) -->
+                        <!-- Transportweg (Erscheint erst nach dem Hochwandern) -->
+                        <div class="relative my-3 py-2 opacity-0 transition-opacity duration-500" id="transport-section">
                             <div class="absolute inset-x-0 -top-1 flex justify-center opacity-30">
                                 <div class="w-3/4 h-5 border-t-2 border-dashed border-gray-500 rounded-t-full flex items-center justify-center">
                                     <span class="text-[8px] bg-white/80 px-1 text-gray-500 font-medium -mt-4" id="route-deponie">Deponie (45 km)</span>
                                 </div>
                             </div>
 
-                            <!-- Direktweg-Schiene -->
                             <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible mt-2">
                                 <div class="absolute top-0 left-0 h-full bg-moss rounded-full w-full opacity-30"></div>
-                                
-                                <!-- LKW -->
-                                <div class="absolute -top-3.5 left-0 animate-[drive_4s_infinite_linear] flex items-center">
+                                <div class="absolute -top-3.5 left-0 animate-[drive_3.5s_infinite_linear] flex items-center" id="truck-element">
                                     <span class="text-xl transform -scale-x-100 filter drop-shadow">🚚</span>
                                 </div>
                             </div>
                             
-                            <!-- Schlanke Beschriftung -->
                             <div class="flex justify-between text-[10px] text-slateGray mt-1.5 font-bold">
                                 <span>Start</span>
                                 <span class="text-moss" id="route-distance">Direktweg 3,2 km</span>
@@ -198,7 +212,7 @@
                             </div>
                         </div>
 
-                        <!-- Stufe 3: Ersparnis-Anzeige (Gesamtnutzen beider Parteien + CO2) -->
+                        <!-- Ersparnis-Anzeige -->
                         <div class="bg-slateDark text-white p-3 rounded-xl flex items-center justify-between shadow-inner">
                             <div class="flex items-center space-x-2">
                                 <span class="text-sm">💶</span>
@@ -231,11 +245,11 @@
         </div>
     </div>
 
-    <!-- Animation & Dynamic Wechsel-Skript -->
+    <!-- Animation Styles & Sequenz-Skript -->
     <style>
     @keyframes drive {
         0% { left: 0%; opacity: 0; }
-        8% { opacity: 1; }
+        10% { opacity: 1; }
         85% { opacity: 1; }
         95% { opacity: 0; left: 88%; }
         100% { opacity: 0; left: 88%; }
@@ -267,15 +281,18 @@
 
         let index = 0;
 
-        setInterval(() => {
-            index = (index + 1) % scenarios.length;
+        function runScenarioAnimation() {
             const sc = scenarios[index];
 
-            // Updates mit leichtem Fade-Effekt
+            // 1. Setze Inhalte
+            document.getElementById('intro-icon-a').textContent = sc.iconA;
+            document.getElementById('intro-title-a').textContent = sc.titleA;
+            document.getElementById('intro-icon-b').textContent = sc.iconB;
+            document.getElementById('intro-title-b').textContent = sc.titleB;
+
             document.getElementById('icon-a').textContent = sc.iconA;
             document.getElementById('title-a').textContent = sc.titleA;
             document.getElementById('save-a').textContent = sc.saveA;
-
             document.getElementById('icon-b').textContent = sc.iconB;
             document.getElementById('title-b').textContent = sc.titleB;
             document.getElementById('save-b').textContent = sc.saveB;
@@ -285,7 +302,7 @@
             document.getElementById('total-money').textContent = sc.money;
             document.getElementById('total-co2').textContent = sc.co2;
 
-            // Dots aktualisieren
+            // Dots anpassen
             for (let i = 0; i < 3; i++) {
                 const dot = document.getElementById(`dot-${i}`);
                 if (i === index) {
@@ -294,7 +311,41 @@
                     dot.className = 'w-2 h-2 rounded-full bg-gray-200 transition-all duration-300';
                 }
             }
-        }, 5000);
+
+            // SCHRITT 1: Großes Intro-Match sichtbar machen, Transportweg verstecken
+            const intro = document.getElementById('match-intro');
+            const cards = document.getElementById('property-cards');
+            const transport = document.getElementById('transport-section');
+
+            intro.style.opacity = '1';
+            intro.style.transform = 'scale(1)';
+            cards.style.opacity = '0';
+            transport.style.opacity = '0';
+
+            // SCHRITT 2: Nach 1.8 Sekunden wandern die Grundstücke nach oben & Transport startet
+            setTimeout(() => {
+                intro.style.opacity = '0';
+                intro.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                    cards.style.opacity = '1';
+                    transport.style.opacity = '1';
+                }, 300);
+            }, 2000);
+        }
+
+        // Initialer Start
+        runScenarioAnimation();
+
+        // Loop alle 5.5 Sekunden zum nächsten Szenario
+        setInterval(() => {
+            index = (index + 1) % scenarios.length;
+            // Intro-Box vorübergehend wieder einblenden für den Übergang
+            const intro = document.getElementById('match-intro');
+            intro.style.display = 'flex';
+            runScenarioAnimation();
+        }, 5500);
     });
     </script>
 </section>
