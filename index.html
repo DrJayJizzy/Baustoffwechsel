@@ -119,7 +119,7 @@
 
             <!-- Rechte Spalte: Story-Choreografie -->
             <div class="lg:col-span-5 relative">
-                <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden min-h-[410px] flex flex-col justify-between">
+                <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden min-h-[430px] flex flex-col justify-between">
                     
                     <!-- Header-Info -->
                     <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -134,85 +134,83 @@
                         </div>
                     </div>
 
-                    <!-- Animations-Fläche -->
-                    <div class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 my-3 flex-1 flex flex-col justify-between overflow-hidden">
+                    <!-- Haupt-Animationscontainer (Wird als Ganzes am Ende ausgeblendet) -->
+                    <div id="animation-canvas" class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 my-3 flex-1 flex flex-col justify-between overflow-hidden transition-opacity duration-500">
                         
-                        <!-- MATCH INTRO & COMPACT CARDS -->
-                        <div class="relative min-h-[90px]">
+                        <!-- MATCH AREA: Rutscht geschmeidig nach oben -->
+                        <div class="relative min-h-[100px]">
                             <!-- Phase 1: Großes Match-Intro -->
-                            <div id="match-intro" class="absolute inset-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur rounded-xl p-3 z-20 transition-all duration-500 shadow-sm border border-gray-100">
-                                <span class="text-[10px] font-black text-moss uppercase tracking-widest bg-moss/10 px-2.5 py-0.5 rounded-full mb-2">Neues Match!</span>
+                            <div id="match-intro" class="absolute inset-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur rounded-xl p-3 z-20 transition-all duration-700 ease-out shadow-sm border border-gray-100">
+                                <span class="text-xs font-black text-moss uppercase tracking-widest bg-moss/10 px-3 py-1 rounded-full mb-2">Neues Match!</span>
                                 <div class="flex items-center justify-center space-x-4 w-full">
                                     <div class="text-center">
-                                        <span class="text-2xl" id="intro-icon-a">🚜</span>
-                                        <p class="text-[11px] font-bold text-slateDark mt-0.5" id="intro-title-a">12 m³ Mutterboden</p>
+                                        <span class="text-3xl" id="intro-icon-a">🚜</span>
+                                        <p class="text-sm font-bold text-slateDark mt-1" id="intro-title-a">12 m³ Mutterboden</p>
                                     </div>
-                                    <span class="text-xs font-black text-moss animate-pulse">⚡</span>
+                                    <span class="text-sm font-black text-moss animate-pulse">⚡</span>
                                     <div class="text-center">
-                                        <span class="text-2xl" id="intro-icon-b">🏡</span>
-                                        <p class="text-[11px] font-bold text-slateDark mt-0.5" id="intro-title-b">Garten-Auffüllung</p>
+                                        <span class="text-3xl" id="intro-icon-b">🏡</span>
+                                        <p class="text-sm font-bold text-slateDark mt-1" id="intro-title-b">Garten-Auffüllung</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Kompakte Karten oben -->
-                            <div id="property-cards" class="grid grid-cols-2 gap-2.5 opacity-0 transition-all duration-500 transform translate-y-1">
-                                <div class="bg-white/90 backdrop-blur p-2 rounded-xl border border-gray-200 shadow-sm">
-                                    <span class="text-[9px] font-black text-terra uppercase block mb-0.5">Grundstück A</span>
+                            <!-- Kompakte Karten oben (Erscheinen beim Hochschieben) -->
+                            <div id="property-cards" class="grid grid-cols-2 gap-3 opacity-0 transition-all duration-700 ease-out transform translate-y-2">
+                                <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm">
+                                    <span class="text-[10px] font-black text-terra uppercase block mb-0.5">Grundstück A</span>
                                     <div class="flex items-center space-x-2">
-                                        <span class="text-base" id="icon-a">🚜</span>
-                                        <p class="text-xs font-bold text-slateDark truncate" id="title-a">12 m³ Mutterboden</p>
+                                        <span class="text-lg" id="icon-a">🚜</span>
+                                        <p class="text-xs sm:text-sm font-bold text-slateDark truncate" id="title-a">12 m³ Mutterboden</p>
                                     </div>
                                 </div>
-                                <div class="bg-white/90 backdrop-blur p-2 rounded-xl border border-gray-200 shadow-sm">
-                                    <span class="text-[9px] font-black text-moss uppercase block mb-0.5">Grundstück B</span>
+                                <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm">
+                                    <span class="text-[10px] font-black text-moss uppercase block mb-0.5">Grundstück B</span>
                                     <div class="flex items-center space-x-2">
-                                        <span class="text-base" id="icon-b">🏡</span>
-                                        <p class="text-xs font-bold text-slateDark truncate" id="title-b">Garten-Auffüllung</p>
+                                        <span class="text-lg" id="icon-b">🏡</span>
+                                        <p class="text-xs sm:text-sm font-bold text-slateDark truncate" id="title-b">Garten-Auffüllung</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Phase 2: Die LKW-Fahrt & Entkoppelter Deponie-Bogen -->
+                        <!-- Phase 2: Die LKW-Fahrt & Deponie-Bogen -->
                         <div class="relative my-2 py-1 opacity-0 transition-opacity duration-500" id="transport-section">
-                            <!-- Höher gesetzter, optisch getrennter Deponie-Umweg -->
-                            <div class="absolute inset-x-0 -top-4 flex justify-center opacity-40">
+                            <div class="absolute inset-x-0 -top-3 flex justify-center opacity-40">
                                 <div class="w-4/5 h-8 border-t-2 border-dashed border-gray-400 rounded-t-full flex items-center justify-center">
-                                    <span class="text-[8px] bg-white/90 px-1.5 py-0.5 rounded text-gray-500 font-medium -mt-6 shadow-xs" id="route-deponie">Umweg zur Deponie (45 km)</span>
+                                    <span class="text-[9px] bg-white/90 px-2 py-0.5 rounded text-gray-600 font-semibold -mt-6 shadow-xs" id="route-deponie">Umweg zur Deponie (45 km)</span>
                                 </div>
                             </div>
 
-                            <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible mt-6">
+                            <div class="w-full h-2.5 bg-gray-200 rounded-full relative overflow-visible mt-6">
                                 <div class="absolute top-0 left-0 h-full bg-moss rounded-full w-full opacity-30"></div>
-                                <!-- LKW mit langsamerer Fahrzeit -->
                                 <div class="absolute -top-3.5 left-0 flex items-center" id="truck-element">
-                                    <span class="text-xl transform -scale-x-100 filter drop-shadow">🚚</span>
+                                    <span class="text-2xl transform -scale-x-100 filter drop-shadow">🚚</span>
                                 </div>
                             </div>
                             
-                            <div class="flex justify-between text-[10px] text-slateGray mt-1.5 font-bold">
+                            <div class="flex justify-between text-xs text-slateGray mt-2 font-bold">
                                 <span>Start</span>
-                                <span class="text-moss font-extrabold" id="route-distance">Direktweg 3,2 km</span>
+                                <span class="text-moss font-extrabold text-sm" id="route-distance">Direktweg 3,2 km</span>
                                 <span>Ziel</span>
                             </div>
                         </div>
 
-                        <!-- Phase 3: Ersparnis-Ergebnis -->
-                        <div id="results-box" class="bg-slateDark text-white p-3 rounded-xl flex items-center justify-between shadow-inner opacity-0 scale-95 transition-all duration-500">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-sm">💶</span>
+                        <!-- Phase 3: Ersparnis-Ergebnis (Größere Typografie) -->
+                        <div id="results-box" class="bg-slateDark text-white p-3.5 rounded-xl flex items-center justify-between shadow-inner opacity-0 scale-95 transition-all duration-500">
+                            <div class="flex items-center space-x-2.5">
+                                <span class="text-base">💶</span>
                                 <div>
-                                    <p class="text-[9px] text-gray-300 uppercase tracking-wider font-bold">Gesamtersparnis</p>
-                                    <p class="text-xs sm:text-sm font-black text-amber-400" id="total-money">ca. 800 € gespart</p>
+                                    <p class="text-[10px] text-gray-300 uppercase tracking-wider font-bold">Gesamtersparnis</p>
+                                    <p class="text-sm sm:text-base font-black text-amber-400" id="total-money">ca. 800 € gespart</p>
                                 </div>
                             </div>
-                            <div class="h-6 w-px bg-gray-700"></div>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-sm">🌱</span>
+                            <div class="h-7 w-px bg-gray-700"></div>
+                            <div class="flex items-center space-x-2.5">
+                                <span class="text-base">🌱</span>
                                 <div>
-                                    <p class="text-[9px] text-gray-300 uppercase tracking-wider font-bold">CO₂ vermieden</p>
-                                    <p class="text-xs sm:text-sm font-black text-emerald-400" id="total-co2">115 kg CO₂</p>
+                                    <p class="text-[10px] text-gray-300 uppercase tracking-wider font-bold">CO₂ vermieden</p>
+                                    <p class="text-sm sm:text-base font-black text-emerald-400" id="total-co2">115 kg CO₂</p>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +229,6 @@
         </div>
     </div>
 
-    <!-- CSS für entspannte, langsamere LKW-Fahrt -->
     <style>
     .truck-drive-active {
         animation: driveTruck 4.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
@@ -245,7 +242,6 @@
     }
     </style>
 
-    <!-- Ablauf-Choreografie JS -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const scenarios = [
@@ -270,18 +266,30 @@
         ];
 
         let index = 0;
-        let currentTimeout = null;
 
         function runChoreography() {
             const sc = scenarios[index];
 
+            const canvas = document.getElementById('animation-canvas');
             const intro = document.getElementById('match-intro');
             const cards = document.getElementById('property-cards');
             const transport = document.getElementById('transport-section');
             const truck = document.getElementById('truck-element');
             const results = document.getElementById('results-box');
 
-            // Vorheriges Ausblenden erzwingen, damit nichts durchblitzt
+            // 1. ZURÜCKSETZEN ALLER ELEMENTE AUF STARTZUSTAND
+            canvas.style.opacity = '1';
+            
+            intro.style.display = 'flex';
+            intro.style.opacity = '1';
+            intro.style.transform = 'translateY(0)';
+
+            cards.style.opacity = '0';
+            cards.style.transform = 'translateY(8px)';
+            
+            transport.style.opacity = '0';
+            truck.classList.remove('truck-drive-active');
+
             results.style.opacity = '0';
             results.classList.remove('scale-100');
             results.classList.add('scale-95');
@@ -308,56 +316,46 @@
                 dot.className = i === index ? 'w-4 h-2 rounded-full bg-moss transition-all duration-300' : 'w-2 h-2 rounded-full bg-gray-200 transition-all duration-300';
             }
 
-            // PHASE 1: Match anzeigen
-            intro.style.display = 'flex';
-            intro.style.opacity = '1';
-            intro.style.transform = 'scale(1)';
-
-            cards.style.opacity = '0';
-            transport.style.opacity = '0';
-            truck.classList.remove('truck-drive-active');
-
-            // Nach 1.8 Sek: Match wandert nach oben
+            // PHASE 1: Match anzeigen (1.6 Sek), dann geschmeidig nach Oben schieben (Slide-Up)
             setTimeout(() => {
+                intro.style.transform = 'translateY(-20px)';
                 intro.style.opacity = '0';
-                intro.style.transform = 'scale(0.95)';
+
+                cards.style.opacity = '1';
+                cards.style.transform = 'translateY(0)';
 
                 setTimeout(() => {
                     intro.style.display = 'none';
-                    cards.style.opacity = '1';
                     transport.style.opacity = '1';
 
-                    // PHASE 2: LKW startet Fahrt (jetzt etwas langsamer mit 4.0s)
+                    // PHASE 2: LKW startet direkt im Anschluss die Fahrt
+                    truck.classList.add('truck-drive-active');
+
+                    // PHASE 3: Ziel erreicht (nach 4.0s) -> Ergebnis-Box ploppt auf
                     setTimeout(() => {
-                        truck.classList.add('truck-drive-active');
+                        results.style.opacity = '1';
+                        results.classList.remove('scale-95');
+                        results.classList.add('scale-100');
 
-                        // PHASE 3: Ziel erreicht -> Ergebnisse ploppen auf
+                        // PHASE 4: Lesepause, danach ALLES SYNCHRON ausblenden!
                         setTimeout(() => {
-                            results.style.opacity = '1';
-                            results.classList.remove('scale-95');
-                            results.classList.add('scale-100');
+                            canvas.style.opacity = '0'; // Der gesamte Bereich blendet sauber aus
 
-                            // PHASE 4: Lesepause, danach sanft ausblenden für nahtlosen Loop
                             setTimeout(() => {
-                                results.style.opacity = '0';
-                                
-                                setTimeout(() => {
-                                    index = (index + 1) % scenarios.length;
-                                    runChoreography();
-                                }, 500); // Kurze Blende-Pause
+                                index = (index + 1) % scenarios.length;
+                                runChoreography(); // Neustart für das nächste Szenario
+                            }, 500);
 
-                            }, 3500);
+                        }, 3500);
 
-                        }, 4000); // Exakt passend zur 4s LKW-Fahrt
-
-                    }, 200);
+                    }, 4000);
 
                 }, 400);
 
-            }, 1800);
+            }, 1600);
         }
 
-        // Start der Choreografie
+        // Initialer Start
         runChoreography();
     });
     </script>
