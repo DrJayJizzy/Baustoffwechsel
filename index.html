@@ -117,98 +117,110 @@
                 </p>
             </div>
 
-            <!-- Rechte Spalte: Animierte Direkt-Route -->
+            <!-- Rechte Spalte: Professionelle Story-Animation -->
             <div class="lg:col-span-5 relative">
-                <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden">
+                <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden min-h-[380px] flex flex-col justify-between">
                     
-                    <!-- Header-Info -->
-                    <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                    <!-- Header-Info & Beispiel-Indikator -->
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-3">
                         <div class="flex items-center space-x-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
                             <span class="text-xs font-bold text-slateDark uppercase tracking-wider">Direkt-Route vor Ort</span>
                         </div>
-                        <span class="text-[11px] font-semibold text-moss bg-moss/10 px-2.5 py-0.5 rounded-full">Direkt statt Deponie</span>
+                        <!-- Szenario-Tabs / Indikatoren -->
+                        <div class="flex items-center space-x-1" id="scenario-dots">
+                            <span class="w-2 h-2 rounded-full bg-moss transition-all duration-300" id="dot-0"></span>
+                            <span class="w-2 h-2 rounded-full bg-gray-200 transition-all duration-300" id="dot-1"></span>
+                            <span class="w-2 h-2 rounded-full bg-gray-200 transition-all duration-300" id="dot-2"></span>
+                        </div>
                     </div>
 
-                    <!-- Visuelle Animations-Fläche -->
-                    <div class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 min-h-[220px] flex flex-col justify-between overflow-hidden">
+                    <!-- Dynamischer Animationsbereich -->
+                    <div class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 my-3 flex-1 flex flex-col justify-between overflow-hidden">
                         
-                        <!-- Grundstück A & B -->
-                        <div class="grid grid-cols-2 gap-4 relative z-10">
-                            <div class="bg-white/80 backdrop-blur p-2.5 rounded-xl border border-gray-200/80 shadow-sm">
+                        <!-- Stufe 1: Grundstück A & B (rutschen sanft nach oben) -->
+                        <div id="property-cards" class="grid grid-cols-2 gap-3 transition-all duration-700 ease-in-out">
+                            <!-- Grundstück A -->
+                            <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm transition-all duration-500">
                                 <div class="flex items-center justify-between mb-1">
                                     <span class="text-[10px] font-black text-terra uppercase">Grundstück A</span>
-                                    <span class="text-[10px] font-bold text-slateGray">Hat Aushub</span>
+                                    <span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">Geld gespart</span>
                                 </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="text-lg">🚜</div>
-                                    <div>
-                                        <p class="text-xs font-bold text-slateDark leading-none">12 m³ Mutterboden</p>
-                                        <p class="text-[10px] text-slateGray mt-0.5">Will entsorgen</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <div class="text-base" id="icon-a">🚜</div>
+                                    <div class="overflow-hidden">
+                                        <p class="text-xs font-bold text-slateDark truncate" id="title-a">12 m³ Mutterboden</p>
+                                        <p class="text-[10px] font-medium text-emerald-600" id="save-a">0 € Deponie</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="bg-white/80 backdrop-blur p-2.5 rounded-xl border border-gray-200/80 shadow-sm">
+                            <!-- Grundstück B -->
+                            <div class="bg-white/90 backdrop-blur p-2.5 rounded-xl border border-gray-200 shadow-sm transition-all duration-500">
                                 <div class="flex items-center justify-between mb-1">
                                     <span class="text-[10px] font-black text-moss uppercase">Grundstück B</span>
-                                    <span class="text-[10px] font-bold text-slateGray">Sucht Aushub</span>
+                                    <span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">Neukauf gespart</span>
                                 </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="text-lg">🏡</div>
-                                    <div>
-                                        <p class="text-xs font-bold text-slateDark leading-none">Garten-Auffüllung</p>
-                                        <p class="text-[10px] text-slateGray mt-0.5">Braucht Material</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <div class="text-base" id="icon-b">🏡</div>
+                                    <div class="overflow-hidden">
+                                        <p class="text-xs font-bold text-slateDark truncate" id="title-b">Garten-Auffüllung</p>
+                                        <p class="text-[10px] font-medium text-emerald-600" id="save-b">380 € gespart</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- LKW Strecke -->
-                        <div class="relative my-4 py-2">
-                            <div class="absolute inset-x-0 -top-1 flex justify-center opacity-40">
-                                <div class="w-3/4 h-6 border-t-2 border-dashed border-gray-400 rounded-t-full flex items-center justify-center">
-                                    <span class="text-[9px] bg-white px-1 text-gray-500 font-medium -mt-5">Teure Deponie (45 km)</span>
+                        <!-- Stufe 2: LKW-Transportweg (Erscheint dynamisch) -->
+                        <div class="relative my-3 py-2 opacity-100 transition-opacity duration-500">
+                            <!-- Deponie-Umweg (gestrichelt) -->
+                            <div class="absolute inset-x-0 -top-1 flex justify-center opacity-30">
+                                <div class="w-3/4 h-5 border-t-2 border-dashed border-gray-500 rounded-t-full flex items-center justify-center">
+                                    <span class="text-[8px] bg-white/80 px-1 text-gray-500 font-medium -mt-4" id="route-deponie">Deponie (45 km)</span>
                                 </div>
                             </div>
 
-                            <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible">
+                            <!-- Direktweg-Schiene -->
+                            <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible mt-2">
                                 <div class="absolute top-0 left-0 h-full bg-moss rounded-full w-full opacity-30"></div>
+                                
+                                <!-- LKW -->
                                 <div class="absolute -top-3.5 left-0 animate-[drive_4s_infinite_linear] flex items-center">
                                     <span class="text-xl transform -scale-x-100 filter drop-shadow">🚚</span>
                                 </div>
                             </div>
                             
-                            <div class="flex justify-between text-[9px] text-slateGray mt-1 font-semibold">
-                                <span>Start: Nachbarschaft</span>
-                                <span class="text-moss font-bold">Direktweg (3,2 km)</span>
-                                <span>Ziel: Ankunft</span>
+                            <!-- Schlanke Beschriftung -->
+                            <div class="flex justify-between text-[10px] text-slateGray mt-1.5 font-bold">
+                                <span>Start</span>
+                                <span class="text-moss" id="route-distance">Direktweg 3,2 km</span>
+                                <span>Ziel</span>
                             </div>
                         </div>
 
-                        <!-- Ersparnis-Anzeige -->
+                        <!-- Stufe 3: Ersparnis-Anzeige (Gesamtnutzen beider Parteien + CO2) -->
                         <div class="bg-slateDark text-white p-3 rounded-xl flex items-center justify-between shadow-inner">
                             <div class="flex items-center space-x-2">
-                                <span class="text-xs">💰</span>
+                                <span class="text-sm">💶</span>
                                 <div>
-                                    <p class="text-[10px] text-gray-300 uppercase tracking-wider font-bold">Geld gespart</p>
-                                    <p class="text-xs sm:text-sm font-black text-amber-400">ca. 420 € Deponie</p>
+                                    <p class="text-[9px] text-gray-300 uppercase tracking-wider font-bold">Gesamtersparnis</p>
+                                    <p class="text-xs sm:text-sm font-black text-amber-400" id="total-money">ca. 800 € gespart</p>
                                 </div>
                             </div>
                             <div class="h-6 w-px bg-gray-700"></div>
                             <div class="flex items-center space-x-2">
-                                <span class="text-xs">🌱</span>
+                                <span class="text-sm">🌱</span>
                                 <div>
-                                    <p class="text-[10px] text-gray-300 uppercase tracking-wider font-bold">CO₂ vermieden</p>
-                                    <p class="text-xs sm:text-sm font-black text-emerald-400">~115 kg Diesel</p>
+                                    <p class="text-[9px] text-gray-300 uppercase tracking-wider font-bold">CO₂ vermieden</p>
+                                    <p class="text-xs sm:text-sm font-black text-emerald-400" id="total-co2">115 kg CO₂</p>
                                 </div>
                             </div>
                         </div>
 
                     </div>
 
-                    <p class="text-[11px] text-center text-slateGray mt-3">
-                        Keine Umwege zur Deponie. Material bleibt in der Region.
+                    <p class="text-[11px] text-center text-slateGray font-medium">
+                        Beide Seiten sparen – Material bleibt in der Region.
                     </p>
                 </div>
 
@@ -219,15 +231,72 @@
         </div>
     </div>
 
-    <!-- CSS Keyframes für die LKW-Fahrt -->
+    <!-- Animation & Dynamic Wechsel-Skript -->
     <style>
     @keyframes drive {
         0% { left: 0%; opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { left: 85%; opacity: 0; }
+        8% { opacity: 1; }
+        85% { opacity: 1; }
+        95% { opacity: 0; left: 88%; }
+        100% { opacity: 0; left: 88%; }
     }
     </style>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const scenarios = [
+            {
+                iconA: '🚜', titleA: '12 m³ Mutterboden', saveA: '420 € Deponie gespart',
+                iconB: '🏡', titleB: 'Garten-Auffüllung', saveB: '380 € Neukauf gespart',
+                distance: 'Direktweg 3,2 km', deponie: 'Deponie (45 km)',
+                money: '800 € Ersparnis', co2: '115 kg CO₂'
+            },
+            {
+                iconA: '🧱', titleA: '80 m² Pflastersteine', saveA: '250 € Entsorgung gespart',
+                iconB: '🏗️', titleB: 'Hofeinfahrt Projekt', saveB: '640 € Material gespart',
+                distance: 'Direktweg 5,8 km', deponie: 'Deponie (38 km)',
+                money: '890 € Ersparnis', co2: '180 kg CO₂'
+            },
+            {
+                iconA: '🪨', titleA: '15 t Schotter / Kies', saveA: '310 € Abtransport gespart',
+                iconB: '🪵', titleB: 'Terrassen-Unterbau', saveB: '450 € Neukauf gespart',
+                distance: 'Direktweg 2,1 km', deponie: 'Deponie (52 km)',
+                money: '760 € Ersparnis', co2: '140 kg CO₂'
+            }
+        ];
+
+        let index = 0;
+
+        setInterval(() => {
+            index = (index + 1) % scenarios.length;
+            const sc = scenarios[index];
+
+            // Updates mit leichtem Fade-Effekt
+            document.getElementById('icon-a').textContent = sc.iconA;
+            document.getElementById('title-a').textContent = sc.titleA;
+            document.getElementById('save-a').textContent = sc.saveA;
+
+            document.getElementById('icon-b').textContent = sc.iconB;
+            document.getElementById('title-b').textContent = sc.titleB;
+            document.getElementById('save-b').textContent = sc.saveB;
+
+            document.getElementById('route-distance').textContent = sc.distance;
+            document.getElementById('route-deponie').textContent = sc.deponie;
+            document.getElementById('total-money').textContent = sc.money;
+            document.getElementById('total-co2').textContent = sc.co2;
+
+            // Dots aktualisieren
+            for (let i = 0; i < 3; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (i === index) {
+                    dot.className = 'w-4 h-2 rounded-full bg-moss transition-all duration-300';
+                } else {
+                    dot.className = 'w-2 h-2 rounded-full bg-gray-200 transition-all duration-300';
+                }
+            }
+        }, 5000);
+    });
+    </script>
 </section>
 
     <!-- Marketplace Section -->
