@@ -103,15 +103,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
-            <!-- Linke Spalte: Text & Botschaft (Optimierter Zeilenumbruch) -->
+            <!-- Linke Spalte: Text & Botschaft (Kompakter, ausbalancierter Titel) -->
             <div class="lg:col-span-7">
                 <div class="inline-flex items-center space-x-2 bg-moss/10 text-moss text-xs font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-6 border border-moss/20">
                     <span class="w-2 h-2 rounded-full bg-moss animate-pulse"></span>
                     <span>Revolution im Tief- & Gartenbau</span>
                 </div>
-                <!-- Sauberer Umbruch per br, damit "weitergeben" nicht alleine steht -->
+                <!-- Baustoffe & Aushub bleibt als geschlossene Zeile 1 bestehen -->
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slateDark tracking-tight leading-[1.12] max-w-2xl">
-                    Baustoffe & Aushub direkt<br class="hidden sm:inline"> vor Ort weitergeben.
+                    Baustoffe & Aushub<br class="hidden sm:inline"> direkt vor Ort weitergeben.
                 </h1>
                 <p class="text-slateGray text-lg sm:text-xl mt-6 font-normal leading-relaxed max-w-xl">
                     Vermeide teure Deponiegebühren und lange Transportwege. Wir verbinden Angebot und Nachfrage in deiner Region und schaffen gemeinsam einen <span class="font-extrabold text-slateDark">baustoffwechsel</span>.
@@ -138,7 +138,7 @@
                     <!-- Haupt-Animationscontainer -->
                     <div id="animation-canvas" class="relative bg-gradient-to-b from-amber-50/40 to-emerald-50/30 rounded-2xl p-4 border border-gray-100 my-3 flex-1 flex flex-col justify-between overflow-hidden transition-opacity duration-700">
                         
-                        <!-- MATCH AREA: Rutscht geschmeidig nach oben -->
+                        <!-- MATCH AREA -->
                         <div class="relative min-h-[100px]">
                             <!-- Phase 1: Großes Match-Intro -->
                             <div id="match-intro" class="absolute inset-0 flex flex-col items-center justify-center bg-white/95 backdrop-blur rounded-xl p-3 z-20 transition-all duration-700 ease-out shadow-sm border border-gray-100">
@@ -231,7 +231,6 @@
         </div>
     </div>
 
-    <!-- CSS für ruhige, langsame LKW-Fahrt -->
     <style>
     .truck-drive-active {
         animation: driveTruck 7.0s linear forwards;
@@ -280,7 +279,6 @@
             const truck = document.getElementById('truck-element');
             const results = document.getElementById('results-box');
 
-            // 1. ZURÜCKSETZEN ALLER ZUSTÄNDE (Während Canvas unsichtbar ist)
             intro.style.display = 'flex';
             intro.style.opacity = '1';
             intro.style.transform = 'translateY(0)';
@@ -295,7 +293,6 @@
             results.classList.remove('scale-100');
             results.classList.add('scale-95');
 
-            // Neue Daten eintragen
             document.getElementById('intro-icon-a').textContent = sc.iconA;
             document.getElementById('intro-title-a').textContent = sc.titleA;
             document.getElementById('intro-icon-b').textContent = sc.iconB;
@@ -311,17 +308,14 @@
             document.getElementById('total-money').textContent = sc.money;
             document.getElementById('total-co2').textContent = sc.co2;
 
-            // Dots aktualisieren
             for (let i = 0; i < 3; i++) {
                 const dot = document.getElementById(`dot-${i}`);
                 dot.className = i === index ? 'w-4 h-2 rounded-full bg-moss transition-all duration-300' : 'w-2 h-2 rounded-full bg-gray-200 transition-all duration-300';
             }
 
-            // 2. CANVAS SANFT EINBLENDEN
             setTimeout(() => {
                 canvas.style.opacity = '1';
 
-                // PHASE 1: Match anzeigen (3,5 Sekunden), dann sanft hochschieben
                 setTimeout(() => {
                     intro.style.transform = 'translateY(-20px)';
                     intro.style.opacity = '0';
@@ -333,20 +327,16 @@
                         intro.style.display = 'none';
                         transport.style.opacity = '1';
 
-                        // PHASE 2: LKW startet ruhige Fahrt (7,0 Sekunden)
                         truck.classList.add('truck-drive-active');
 
-                        // PHASE 3: Ziel erreicht -> Ergebnisse ploppen auf
                         setTimeout(() => {
                             results.style.opacity = '1';
                             results.classList.remove('scale-95');
                             results.classList.add('scale-100');
 
-                            // PHASE 4: Lesepause (3,5 Sek), dann geschmeidiger Fade-Out des gesamten Feldes
                             setTimeout(() => {
                                 canvas.style.opacity = '0';
 
-                                // Wenn komplett unsichtbar -> Nächstes Szenario laden
                                 setTimeout(() => {
                                     index = (index + 1) % scenarios.length;
                                     runChoreography();
@@ -354,16 +344,15 @@
 
                             }, 3500);
 
-                        }, 6000); // Exakt nach der 6-Sekunden-Fahrt
+                        }, 7000);
 
                     }, 500);
 
-                }, 400000); // 4 Sekunden Anzeigedauer für das Match
+                }, 3500);
 
             }, 100);
         }
 
-        // Initialer Start
         runChoreography();
     });
     </script>
