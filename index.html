@@ -103,7 +103,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
-            <!-- Linke Spalte: Text & Botschaft (Typografie & Umbrüche optimiert) -->
+            <!-- Linke Spalte: Text & Botschaft -->
             <div class="lg:col-span-7">
                 <div class="inline-flex items-center space-x-2 bg-moss/10 text-moss text-xs font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-6 border border-moss/20">
                     <span class="w-2 h-2 rounded-full bg-moss animate-pulse"></span>
@@ -117,7 +117,7 @@
                 </p>
             </div>
 
-            <!-- Rechte Spalte: Story-Choreografie (Match -> Fahrt -> Ergebnis) -->
+            <!-- Rechte Spalte: Story-Choreografie -->
             <div class="lg:col-span-5 relative">
                 <div class="bg-white p-5 sm:p-6 rounded-3xl border border-gray-200 shadow-xl relative z-10 overflow-hidden min-h-[410px] flex flex-col justify-between">
                     
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
 
-                            <!-- Kompakte Karten oben (nach dem Match) -->
+                            <!-- Kompakte Karten oben -->
                             <div id="property-cards" class="grid grid-cols-2 gap-2.5 opacity-0 transition-all duration-500 transform translate-y-1">
                                 <div class="bg-white/90 backdrop-blur p-2 rounded-xl border border-gray-200 shadow-sm">
                                     <span class="text-[9px] font-black text-terra uppercase block mb-0.5">Grundstück A</span>
@@ -174,17 +174,18 @@
                             </div>
                         </div>
 
-                        <!-- Phase 2: Die LKW-Fahrt -->
+                        <!-- Phase 2: Die LKW-Fahrt & Entkoppelter Deponie-Bogen -->
                         <div class="relative my-2 py-1 opacity-0 transition-opacity duration-500" id="transport-section">
-                            <div class="absolute inset-x-0 -top-1 flex justify-center opacity-30">
-                                <div class="w-3/4 h-5 border-t-2 border-dashed border-gray-500 rounded-t-full flex items-center justify-center">
-                                    <span class="text-[8px] bg-white/80 px-1 text-gray-500 font-medium -mt-4" id="route-deponie">Deponie (45 km)</span>
+                            <!-- Höher gesetzter, optisch getrennter Deponie-Umweg -->
+                            <div class="absolute inset-x-0 -top-4 flex justify-center opacity-40">
+                                <div class="w-4/5 h-8 border-t-2 border-dashed border-gray-400 rounded-t-full flex items-center justify-center">
+                                    <span class="text-[8px] bg-white/90 px-1.5 py-0.5 rounded text-gray-500 font-medium -mt-6 shadow-xs" id="route-deponie">Umweg zur Deponie (45 km)</span>
                                 </div>
                             </div>
 
-                            <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible mt-3">
+                            <div class="w-full h-2 bg-gray-200 rounded-full relative overflow-visible mt-6">
                                 <div class="absolute top-0 left-0 h-full bg-moss rounded-full w-full opacity-30"></div>
-                                <!-- LKW mit gesteuerter JS-Klasse für exakten Start -->
+                                <!-- LKW mit langsamerer Fahrzeit -->
                                 <div class="absolute -top-3.5 left-0 flex items-center" id="truck-element">
                                     <span class="text-xl transform -scale-x-100 filter drop-shadow">🚚</span>
                                 </div>
@@ -197,7 +198,7 @@
                             </div>
                         </div>
 
-                        <!-- Phase 3: Ersparnis-Ergebnis (Ploppt erst bei Ankunft auf) -->
+                        <!-- Phase 3: Ersparnis-Ergebnis -->
                         <div id="results-box" class="bg-slateDark text-white p-3 rounded-xl flex items-center justify-between shadow-inner opacity-0 scale-95 transition-all duration-500">
                             <div class="flex items-center space-x-2">
                                 <span class="text-sm">💶</span>
@@ -230,16 +231,16 @@
         </div>
     </div>
 
-    <!-- CSS für kontrollierte LKW-Fahrt -->
+    <!-- CSS für entspannte, langsamere LKW-Fahrt -->
     <style>
     .truck-drive-active {
-        animation: driveTruck 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        animation: driveTruck 4.0s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
     @keyframes driveTruck {
         0% { left: 0%; opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
+        8% { opacity: 1; }
+        92% { opacity: 1; }
         100% { left: 86%; opacity: 1; }
     }
     </style>
@@ -251,24 +252,25 @@
             {
                 iconA: '🚜', titleA: '12 m³ Mutterboden',
                 iconB: '🏡', titleB: 'Garten-Auffüllung',
-                distance: 'Direktweg 3,2 km', deponie: 'Deponie (45 km)',
+                distance: 'Direktweg 3,2 km', deponie: 'Umweg zur Deponie (45 km)',
                 money: 'ca. 800 € gespart', co2: '115 kg CO₂'
             },
             {
                 iconA: '🧱', titleA: '80 m² Pflastersteine',
                 iconB: '🏗️', titleB: 'Hofeinfahrt Projekt',
-                distance: 'Direktweg 5,8 km', deponie: 'Deponie (38 km)',
+                distance: 'Direktweg 5,8 km', deponie: 'Umweg zur Deponie (38 km)',
                 money: 'ca. 890 € gespart', co2: '180 kg CO₂'
             },
             {
                 iconA: '🪨', titleA: '15 t Schotter / Kies',
                 iconB: '🪵', titleB: 'Terrassen-Unterbau',
-                distance: 'Direktweg 2,1 km', deponie: 'Deponie (52 km)',
+                distance: 'Direktweg 2,1 km', deponie: 'Umweg zur Deponie (52 km)',
                 money: 'ca. 760 € gespart', co2: '140 kg CO₂'
             }
         ];
 
         let index = 0;
+        let currentTimeout = null;
 
         function runChoreography() {
             const sc = scenarios[index];
@@ -279,18 +281,10 @@
             const truck = document.getElementById('truck-element');
             const results = document.getElementById('results-box');
 
-            // 1. RESET ALL STATES
-            intro.style.display = 'flex';
-            intro.style.opacity = '1';
-            intro.style.transform = 'scale(1)';
-
-            cards.style.opacity = '0';
-            transport.style.opacity = '0';
+            // Vorheriges Ausblenden erzwingen, damit nichts durchblitzt
             results.style.opacity = '0';
             results.classList.remove('scale-100');
             results.classList.add('scale-95');
-
-            truck.classList.remove('truck-drive-active');
 
             // Daten eintragen
             document.getElementById('intro-icon-a').textContent = sc.iconA;
@@ -314,9 +308,17 @@
                 dot.className = i === index ? 'w-4 h-2 rounded-full bg-moss transition-all duration-300' : 'w-2 h-2 rounded-full bg-gray-200 transition-all duration-300';
             }
 
-            // PHASE 1: Match anzeigen (1.8 Sekunden stehen lassen)
+            // PHASE 1: Match anzeigen
+            intro.style.display = 'flex';
+            intro.style.opacity = '1';
+            intro.style.transform = 'scale(1)';
+
+            cards.style.opacity = '0';
+            transport.style.opacity = '0';
+            truck.classList.remove('truck-drive-active');
+
+            // Nach 1.8 Sek: Match wandert nach oben
             setTimeout(() => {
-                // Match schrumpft weg
                 intro.style.opacity = '0';
                 intro.style.transform = 'scale(0.95)';
 
@@ -325,23 +327,28 @@
                     cards.style.opacity = '1';
                     transport.style.opacity = '1';
 
-                    // PHASE 2: LKW startet JETZT mit der Fahrt
+                    // PHASE 2: LKW startet Fahrt (jetzt etwas langsamer mit 4.0s)
                     setTimeout(() => {
                         truck.classList.add('truck-drive-active');
 
-                        // PHASE 3: LKW kommt im Ziel an (nach 2.8s Fahrtzeit) -> Ergebnisse ploppen auf!
+                        // PHASE 3: Ziel erreicht -> Ergebnisse ploppen auf
                         setTimeout(() => {
                             results.style.opacity = '1';
                             results.classList.remove('scale-95');
                             results.classList.add('scale-100');
 
-                            // PHASE 4: Pause zum Lesen, dann nächstes Szenario
+                            // PHASE 4: Lesepause, danach sanft ausblenden für nahtlosen Loop
                             setTimeout(() => {
-                                index = (index + 1) % scenarios.length;
-                                runChoreography();
+                                results.style.opacity = '0';
+                                
+                                setTimeout(() => {
+                                    index = (index + 1) % scenarios.length;
+                                    runChoreography();
+                                }, 500); // Kurze Blende-Pause
+
                             }, 3500);
 
-                        }, 2800);
+                        }, 4000); // Exakt passend zur 4s LKW-Fahrt
 
                     }, 200);
 
