@@ -84,15 +84,17 @@
             </nav>
 
             <!-- User Actions (Mobil-optimiert) -->
-            <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
-                <button id="btnOpenLogin" type="button" class="text-slateDark hover:text-moss font-bold text-xs sm:text-sm px-2 sm:px-3 py-2 flex items-center space-x-1 transition duration-200 cursor-pointer shrink-0">
-                    <svg class="w-5 h-5 text-slateGray shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                    <span class="hidden xs:inline">Anmelden</span>
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <button id="btnOpenLogin" type="button" class="text-slateDark hover:text-moss font-bold text-xs sm:text-sm px-2 sm:px-3 py-2 flex items-center space-x-1 transition duration-200 cursor-pointer">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-slateGray shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <span>Anmelden</span>
                 </button>
 
-                <button id="btnOpenInserat" type="button" onclick="toggleInseratModal()" class="bg-moss hover:bg-mossDark text-white px-3 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-1.5 transform hover:-translate-y-0.5 cursor-pointer shrink-0">
+                <button id="btnOpenInserat" type="button" onclick="toggleInseratModal()" class="bg-moss hover:bg-mossDark text-white px-3 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-1.5 cursor-pointer">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-                    <span class="whitespace-nowrap">Inserat erstellen</span>
+                    <!-- Auf dem Handy steht "+ Inserat", ab Tablet/PC "Inserat erstellen" -->
+                    <span class="sm:hidden">+ Inserat</span>
+                    <span class="hidden sm:inline">Inserat erstellen</span>
                 </button>
             </div>
         </div>
