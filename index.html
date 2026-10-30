@@ -547,21 +547,39 @@
     </section>
 
     
-<!-- About Section (Philosophie & Vision) -->
+<!-- About Section (Philosophie & Vision mit integriertem Bild) -->
 <section id="ueber-uns" class="bg-gradient-to-b from-creamBg to-warmSand/40 py-20 border-b border-gray-200 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <!-- Linksbündiger Sektions-Header -->
-        <div class="max-w-3xl mb-14">
-            <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">
-                Philosophie & Vision
-            </span>
-            <h2 class="text-3xl sm:text-4xl font-black text-slateDark tracking-tight leading-snug">
-                Regionale Ressourcen sichtbar machen.
-            </h2>
-            <p class="text-slateGray text-base sm:text-lg mt-4 leading-relaxed">
-                Ob Mutterboden beim Aushub oder Pflastersteine vom Umbau: Fast jedes Baumaterial ist in deiner Region bereits vorhanden. Wir verbinden Angebot und Nachfrage direkt im Umkreis – unkompliziert, kosteneffizient und ohne Umwege.
-            </p>
+        <!-- Sektions-Header: Split-Layout (Links Text, Rechts Bild) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-14">
+            
+            <!-- Linke Spalte: Text & Vision -->
+            <div class="lg:col-span-7">
+                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">
+                    Philosophie & Vision
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slateDark tracking-tight leading-snug">
+                    Regionale Ressourcen sichtbar machen.
+                </h2>
+                <p class="text-slateGray text-base sm:text-lg mt-4 leading-relaxed">
+                    Ob Mutterboden beim Aushub oder Pflastersteine vom Umbau: Fast jedes Baumaterial ist in deiner Region bereits vorhanden. Wir verbinden Angebot und Nachfrage direkt im Umkreis – unkompliziert, kosteneffizient und ohne Umwege.
+                </p>
+            </div>
+
+            <!-- Rechte Spalte: Hochwertig eingebettetes Bild -->
+            <div class="lg:col-span-5">
+                <div class="relative group">
+                    <!-- Dezenter Hintergrund-Akzent für Tiefe -->
+                    <div class="absolute -inset-2 bg-gradient-to-r from-moss/20 to-terra/20 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition duration-500"></div>
+                    
+                    <!-- Bild-Container -->
+                    <div class="relative bg-white p-2 rounded-3xl border border-gray-200 shadow-soft overflow-hidden">
+                        <img src="watermarked_img_5421307893468995099.jpg" alt="Frischer Mutterboden in Händen" class="w-full h-64 sm:h-72 object-cover rounded-2xl transform group-hover:scale-102 transition duration-500">
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- Vorher / Nachher Vergleichs-Karten -->
@@ -635,7 +653,7 @@
 
         </div>
 
-        <!-- Dezentes Gewerbe- & Handwerk-Banner (mit vergrößerter Überschrift) -->
+        <!-- Dezentes Gewerbe- & Handwerk-Banner -->
         <div class="bg-warmSand/60 rounded-3xl p-6 sm:p-10 border border-moss/20 shadow-xs">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div class="space-y-3 max-w-3xl">
