@@ -1464,11 +1464,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // I. Scroll-Spy
+            // I. Scroll-Spy (Korrigiert, damit beim Seitenaufruf nichts aktiv ist, solange man ganz oben ist)
             const sections = document.querySelectorAll('section[id], main[id]');
             const navLinks = document.querySelectorAll('.nav-link');
 
-            window.addEventListener('scroll', function() {
+            function updateNavOnScroll() {
+                // Wenn ganz oben (scrollY === 0), alle aktiven Klassen entfernen
+                if (window.scrollY < 50) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    return;
+                }
+
                 let currentSectionId = '';
                 sections.forEach(function(section) {
                     const sectionTop = section.offsetTop - 140;
@@ -1483,7 +1489,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         link.classList.add('active');
                     }
                 });
-            });
+            }
+
+            window.addEventListener('scroll', updateNavOnScroll);
+            
+            // Initial direkt beim Laden einmal ausführen, um den Zustand zu prüfen
+            updateNavOnScroll();
 
             // J. Start Counters
             initAnimatedCounters();
