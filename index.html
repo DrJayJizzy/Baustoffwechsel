@@ -1464,12 +1464,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // I. Scroll-Spy (Korrigiert, damit beim Seitenaufruf nichts aktiv ist, solange man ganz oben ist)
+            // I. Scroll-Spy (Sofort beim Laden und bei jedem Scrollen prüfen)
             const sections = document.querySelectorAll('section[id], main[id]');
             const navLinks = document.querySelectorAll('.nav-link');
 
             function updateNavOnScroll() {
-                // Wenn ganz oben (scrollY === 0), alle aktiven Klassen entfernen
+                // Wenn man sich ganz oben befindet (unter 50px), wird gar nichts markiert
                 if (window.scrollY < 50) {
                     navLinks.forEach(link => link.classList.remove('active'));
                     return;
@@ -1491,10 +1491,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            window.addEventListener('scroll', updateNavOnScroll);
-            
-            // Initial direkt beim Laden einmal ausführen, um den Zustand zu prüfen
+            // 1. Direkt beim Laden der Seite einmal ausführen (verhindert das kurze Aufleuchten)
             updateNavOnScroll();
+
+            // 2. Bei jedem Scrollen ausführen
+            window.addEventListener('scroll', updateNavOnScroll);
 
             // J. Start Counters
             initAnimatedCounters();
