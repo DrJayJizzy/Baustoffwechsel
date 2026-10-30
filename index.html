@@ -547,84 +547,129 @@
     </section>
 
     
-    <!-- About Section (Über das Projekt / Mehrwert) -->
-    <section id="ueber-uns" class="bg-creamBg py-20 border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mb-14">
-                <span class="text-xs font-extrabold text-moss uppercase tracking-wider block mb-2">Philosophie & Vision</span>
-                <h2 class="text-3xl sm:text-4xl font-black text-slateDark">Die regionale Drehscheibe für Baustoffe</h2>
-                <p class="text-slateGray text-lg mt-4 leading-relaxed">
-                    <span class="font-extrabold text-slateDark">baustoffwechsel</span> vernetzt Angebot und Nachfrage direkt in deiner Region. Anstatt intakten Aushub teuer zu entsorgen und andernorts neu zu kaufen, schaffen wir kurze Wege und eine direkte Verbindung zwischen allen Akteuren.
-                </p>
-            </div>
+    <!-- Über das Projekt / Philosophie & Vision (Neugestalteter Entwurf) -->
+<section id="ueber-uns" class="bg-gradient-to-b from-creamBg to-warmSand/40 py-20 border-b border-gray-200 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Sektions-Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-xs font-extrabold text-moss uppercase tracking-widest bg-moss/10 px-3.5 py-1.5 rounded-full mb-3 inline-block border border-moss/20">
+                Worum es wirklich geht
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-black text-slateDark tracking-tight mt-2">
+                Schluss mit teuren Umwegen. <br>Willkommen im <span class="text-moss">baustoffwechsel</span>.
+            </h2>
+            <p class="text-slateGray text-base sm:text-lg mt-4 leading-relaxed">
+                Keine Deponiegebühren beim Abgeben, kein teurer Neukauf beim Auffüllen und null Leerfahrten für Lkw & Bauunternehmen in deiner Region.
+            </p>
+        </div>
 
-            <!-- 3 Feature Cards (Schnittstellen & Mehrwert) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Visuelle Isometrie-Bühne (Netzwerk-Look) -->
+        <div class="relative bg-white p-6 sm:p-10 lg:p-12 rounded-3xl border border-gray-200 shadow-soft mb-12 overflow-hidden">
+            
+            <!-- Subtiles Punkt-Raster im Hintergrund -->
+            <div class="absolute inset-0 opacity-25 bg-[radial-gradient(#5B7837_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none"></div>
+
+            <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
                 
-                <!-- Karte 1: Privat & Gewerbe Schnittstelle -->
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-hover-card transition-all duration-300 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center space-x-2 mb-6">
-                            <span class="bg-moss/10 text-moss text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Privat ⇄ Privat</span>
-                            <span class="bg-slateDark/10 text-slateDark text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Privat ⇄ Gewerbe</span>
+                <!-- Linke Spalte: Isometrisches 2D-Karten-Netzwerk -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <!-- Knoten 1: Bauherr / Aushub -->
+                    <div class="bg-creamBg p-5 sm:p-6 rounded-2xl border border-gray-200 shadow-sm relative group hover:border-terra transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-10 h-10 bg-terra/10 text-terra rounded-xl flex items-center justify-center font-black text-lg">
+                                🚜
+                            </span>
+                            <span class="text-[10px] font-extrabold text-terra bg-terra/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Prio 1: Ersparnis</span>
                         </div>
-                        <div class="w-12 h-12 bg-moss text-white rounded-2xl flex items-center justify-center font-bold text-xl mb-5 shadow-md">
-                            🔄
-                        </div>
-                        <h3 class="font-extrabold text-xl text-slateDark mb-3">Intelligente Vernetzung</h3>
-                        <p class="text-sm text-slateGray leading-relaxed">
-                            Ob der Häuslebauer mit überschüssigem Mutterboden, der Gala-Bauer mit Pflasterstein-Restbeständen oder der Privatgarten: Unsere Plattform verbindet Angebot und Nachfrage nahtlos und hürdenfrei.
+                        <h4 class="font-extrabold text-slateDark text-base mb-1">1. Aushub & Überschuss</h4>
+                        <p class="text-xs text-slateGray leading-relaxed">
+                            Keine teuren Deponiegebühren zahlen. Mutterboden oder Schotter direkt vor Ort zur Abholung freigeben.
                         </p>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center text-xs font-bold text-moss">
-                        <span>Direkter lokaler Austausch</span>
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+
+                    <!-- Knoten 2: Tief- & GaLa-Bau / Gewerbe -->
+                    <div class="bg-creamBg p-5 sm:p-6 rounded-2xl border border-gray-200 shadow-sm relative group hover:border-moss transition-all duration-300 transform hover:-translate-y-1 sm:translate-y-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-10 h-10 bg-moss/10 text-moss rounded-xl flex items-center justify-center font-black text-lg">
+                                🏗️
+                            </span>
+                            <span class="text-[10px] font-extrabold text-moss bg-moss/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Profis & Kunden</span>
+                        </div>
+                        <h4 class="font-extrabold text-slateDark text-base mb-1">2. Gewerbe-Match</h4>
+                        <p class="text-xs text-slateGray leading-relaxed">
+                            Tief- und GaLa-Bauer finden Kunden mit passendem Material oder Abnehmer im unmittelbaren Umkreis.
+                        </p>
                     </div>
+
+                    <!-- Knoten 3: Lkw / Logistik -->
+                    <div class="bg-creamBg p-5 sm:p-6 rounded-2xl border border-gray-200 shadow-sm relative group hover:border-slateDark transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-10 h-10 bg-slateDark/10 text-slateDark rounded-xl flex items-center justify-center font-black text-lg">
+                                🚛
+                            </span>
+                            <span class="text-[10px] font-extrabold text-slateDark bg-slateDark/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Null Leerfahrten</span>
+                        </div>
+                        <h4 class="font-extrabold text-slateDark text-base mb-1">3. Direkte Routen</h4>
+                        <p class="text-xs text-slateGray leading-relaxed">
+                            Lkw-Fahrten von Baustelle zu Baustelle ohne kilometerlange Umwege zur nächsten Deponie.
+                        </p>
+                    </div>
+
+                    <!-- Knoten 4: Umwelt-Effekt -->
+                    <div class="bg-white p-5 sm:p-6 rounded-2xl border-2 border-dashed border-moss/30 shadow-sm relative group transition-all duration-300 transform hover:-translate-y-1 sm:translate-y-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center font-black text-lg">
+                                🌲
+                            </span>
+                            <span class="text-[10px] font-extrabold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full uppercase tracking-wider">Nebeneffekt</span>
+                        </div>
+                        <h4 class="font-extrabold text-slateDark text-base mb-1">4. CO₂-Ersparnis</h4>
+                        <p class="text-xs text-slateGray leading-relaxed">
+                            Nachhaltigkeit auf dem Papier ist gut – ergibt sich hier ganz automatisch durch kurze Wege.
+                        </p>
+                    </div>
+
                 </div>
 
-                <!-- Karte 2: Ökologischer Mehrwert -->
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-hover-card transition-all duration-300 flex flex-col justify-between">
+                <!-- Rechte Spalte: Argumentation & Nutzen -->
+                <div class="lg:col-span-5 space-y-6 lg:pl-4">
                     <div>
-                        <div class="flex items-center space-x-2 mb-6">
-                            <span class="bg-terra/10 text-terra text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Nachhaltigkeit</span>
-                        </div>
-                        <div class="w-12 h-12 bg-terra text-white rounded-2xl flex items-center justify-center font-bold text-xl mb-5 shadow-md">
-                            🌱
-                        </div>
-                        <h3 class="font-extrabold text-xl text-slateDark mb-3">Ökologischer Mehrwert</h3>
-                        <p class="text-sm text-slateGray leading-relaxed">
-                            Jeder wiederverwendete Kubikmeter spart weite LKW-Transportwege, entlastet die regionalen Deponien und verhindert den Raubbau an natürlichen Ressourcen.
-                        </p>
+                        <span class="text-xs font-black text-moss uppercase tracking-wider block mb-1">Echter wirtschaftlicher Mehrwert</span>
+                        <h3 class="text-2xl sm:text-3xl font-black text-slateDark tracking-tight">
+                            Warum sich das Angebot sofort rechnet.
+                        </h3>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center text-xs font-bold text-terra">
-                        <span>Massive CO₂-Reduktion</span>
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </div>
-                </div>
 
-                <!-- Karte 3: Ökonomischer Vorteil -->
-                <div class="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm hover:shadow-hover-card transition-all duration-300 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center space-x-2 mb-6">
-                            <span class="bg-slateDark/10 text-slateDark text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Win-Win Effekt</span>
+                    <div class="space-y-4 text-sm text-slateGray">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-moss/10 text-moss flex items-center justify-center font-black text-xs shrink-0 mt-0.5">✓</div>
+                            <p><strong class="text-slateDark">Keine Entsorgungskosten:</strong> Wer Aushub abgibt, spart hunderte Euro an Deponiegebühren pro Lkw-Ladung.</p>
                         </div>
-                        <div class="w-12 h-12 bg-slateDark text-white rounded-2xl flex items-center justify-center font-bold text-xl mb-5 shadow-md">
-                            💡
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-moss/10 text-moss flex items-center justify-center font-black text-xs shrink-0 mt-0.5">✓</div>
+                            <p><strong class="text-slateDark">Günstiger Materialbezug:</strong> Abnehmer (Privat & GaLa-Bau) erhalten Mutterboden oder Steine oft geschenkt oder zum Bruchteil des Marktpreises.</p>
                         </div>
-                        <h3 class="font-extrabold text-xl text-slateDark mb-3">Finanzieller Vorteil</h3>
-                        <p class="text-sm text-slateGray leading-relaxed">
-                            Abgeber sparen teure Deponie- und Entsorgungsgebühren, Abnehmer erhalten hochwertige Baustoffe günstig oder sogar geschenkt aus der unmittelbaren Nachbarschaft.
-                        </p>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-moss/10 text-moss flex items-center justify-center font-black text-xs shrink-0 mt-0.5">✓</div>
+                            <p><strong class="text-slateDark">Regionale Betriebe vernetzen:</strong> Tiefbauer und Fuhrunternehmen finden direkt freie Kapazitäten und passende Aufträge im Umkreis.</p>
+                        </div>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-gray-100 flex items-center text-xs font-bold text-slateDark">
-                        <span>Spart Zeit & Deponiegebühren</span>
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+
+                    <div class="pt-2">
+                        <a href="#marktplatz" class="inline-flex items-center space-x-2 bg-slateDark hover:bg-moss text-white font-extrabold text-xs px-6 py-3.5 rounded-xl shadow-md transition-all duration-200">
+                            <span>Direkt regionale Angebote finden</span>
+                            <span>→</span>
+                        </a>
                     </div>
                 </div>
 
             </div>
         </div>
-    </section>
+
+    </div>
+</section>
 
 <!-- Impact & Live Counter Section -->
 <section id="impact-stats" class="py-16 bg-white border-t border-gray-200">
